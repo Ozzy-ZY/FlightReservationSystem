@@ -1,9 +1,13 @@
 package Models;
 
-public class Passenger {
+public class Passenger extends User {
     private String passportid;
     private String phonenumber;
     private String birthdate;
+
+    public Passenger(String email, String name, String password) {
+        super(email, name, password);
+    }
 
     public void setPassportid(String passportid) {
     }
