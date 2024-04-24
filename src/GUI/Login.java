@@ -37,6 +37,17 @@ public class Login extends JFrame{
                 loginFrame.dispose();
             }
         });
+        usernameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String password = passwordField.getText();
+                if(username.equals("admin") && password.equals("admin")){
+                    Flights flights = new Flights();
+                    loginFrame.dispose();
+                }
+            }
+        });
         backButton.setBounds(0, 0, 50, 30);
         usernameLabel.setBounds(70, 200, 100, 30);
         usernameField.setBounds(150, 200, 300, 30);
