@@ -4,8 +4,8 @@ import Models.Flight;
 import Models.Plane;
 
 public class Data {
-    Plane plane = new Plane("Boeing 737", 150);
-   public Flight[] fLights = new Flight[5];{
+    private Plane plane = new Plane("Boeing 737", 150);
+    public Flight[] fLights = new Flight[5];{
         fLights[0] = new Flight("1","Cairo","NewYork",plane,"14.9.2024");
         fLights[1] = new Flight("2","Alexandria","Chicago",plane,"19.11.2024");
         fLights[2] = new Flight("3","Mecca","Cairo",plane,"8.12.2024");
