@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class HomePage {
+    static Boolean status = false;
     JFrame mainFrame = new JFrame("Right Flight");
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
@@ -30,6 +31,7 @@ public class HomePage {
         mainPanel.add(Flights);
         mainPanel.add(Tickets);
         mainPanel.add(Account);
+
         loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Login login = new Login();
@@ -39,11 +41,14 @@ public class HomePage {
         Flights.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(!status){
+                    JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
+                    return;
+                }
                 FlightsPage Flight = new FlightsPage();
                 mainFrame.dispose();
             }
         });
-        loginLabel.setOpaque(true);
         loginLabel.setFont(new Font("New", Font.ITALIC, 16));
         loginLabel.setForeground(Color.BLUE);
         loginLabel.setBounds(420, 190, 500, 30);

@@ -6,12 +6,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
+import static Controllers.LoginControl.*;
 
 public class Login extends JFrame{
+
+    boolean[] totalStatus = {false, false, false};
     JFrame loginFrame = new JFrame("Login");
     JPanel loginPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<<--");
+    JButton loginButton = new JButton("Login");
     JTextField usernameField = new JTextField(30);
     JLabel registerHeader = new JLabel("Register");
     JLabel emailLabel = new JLabel("Email:");
@@ -36,6 +40,7 @@ public class Login extends JFrame{
         loginPanel.add(registerHeader);
         loginPanel.add(emailField);
         loginPanel.add(emailLabel);
+        loginPanel.add(loginButton);
 
         backButton.setLayout(new BorderLayout());
         backButton.addActionListener(new ActionListener() {
@@ -45,12 +50,41 @@ public class Login extends JFrame{
                 loginFrame.dispose();
             }
         });
+        emailField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String email = emailField.getText();
+                if(ValidateEmail(email)){
+                    totalStatus[0] = true;
+                }
+                //add error message
+            }
+        });
         usernameField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
+                if(ValidateUsername(username)){
+                    totalStatus[1] = true;
+                }
+                //add error message
+            }
+        });
+        passwordField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 String password = Arrays.toString(passwordField.getPassword());
-                if(username.equals("admin") && password.equals("admin")){
+                if(ValidatePassword(password)){
+                    totalStatus[2] = true;
+                }
+                //add error message
+            }
+        });
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
+                    HomePage.status = true;
                     FlightsPage flights = new FlightsPage();
                     loginFrame.dispose();
                 }
@@ -59,18 +93,20 @@ public class Login extends JFrame{
         loginPanel.setBackground(new Color(70, 109, 176));
         registerHeader.setFont(new Font("Arial", Font.BOLD, 18));
         registerHeader.setForeground(Color.CYAN);
-        registerHeader.setBounds(250, 100, 100, 30);
+        registerHeader.setBounds(230, 100, 100, 30);
         backButton.setBounds(0, 0, 50, 30);
         backButton.setBackground(Color.CYAN);
-        emailLabel.setBounds(70, 150, 100, 30);
+        emailLabel.setBounds(50, 150, 100, 30);
         emailLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        emailField.setBounds(150, 150, 300, 30);
-        usernameLabel.setBounds(70, 200, 100, 30);
+        emailField.setBounds(130, 150, 300, 30);
+        usernameLabel.setBounds(50, 200, 100, 30);
         usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        usernameField.setBounds(150, 200, 300, 30);
-        passwordLabel.setBounds(70, 250, 100, 30);
+        usernameField.setBounds(130, 200, 300, 30);
+        passwordLabel.setBounds(50, 250, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        passwordField.setBounds(150, 250, 300, 30);
+        passwordField.setBounds(130, 250, 300, 30);
+        loginButton.setBounds(200, 300, 100, 30);
+        loginButton.setBackground(Color.GREEN);
         loginFrame.setVisible(true);
         loginFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
