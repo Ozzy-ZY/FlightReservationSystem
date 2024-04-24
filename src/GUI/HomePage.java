@@ -18,6 +18,7 @@ public class HomePage {
     public HomePage(){
         mainFrame.setSize(500, 600);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setIconImage(icon.getImage());
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.add(mainPanel);
@@ -38,7 +39,7 @@ public class HomePage {
         Flights.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login();
+                FlightsPage Flight = new FlightsPage();
                 mainFrame.dispose();
             }
         });
