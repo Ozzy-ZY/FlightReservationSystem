@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="google.zxing.android.core" type="repository">
+    <properties maven-id="com.google.zxing:android-core:3.3.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/zxing/android-core/3.3.0/android-core-3.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
