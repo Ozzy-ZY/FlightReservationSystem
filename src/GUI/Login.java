@@ -1,29 +1,27 @@
 package GUI;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.Arrays;
+
 import static Controllers.LoginControl.*;
 
 public class Login extends JFrame{
 
-    boolean[] totalStatus = {false, false, false};
+    boolean[] totalStatus={false,false,false};
     JFrame loginFrame = new JFrame("Login");
     JPanel loginPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<<--");
     JButton loginButton = new JButton("Login");
-    JTextField usernameField = new JTextField(30);
-    JLabel registerHeader = new JLabel("Register");
-    JLabel emailLabel = new JLabel("Email:");
-    JTextField emailField = new JTextField(30);
-    JLabel usernameLabel = new JLabel("Username:");
+    JLabel loginHeader = new JLabel("Login");
+    JLabel usernameoremailLabel = new JLabel("Username or Email:");
+    JTextField usernameoremailField = new JTextField(30);
     JPasswordField passwordField = new JPasswordField(30);
     JLabel passwordLabel = new JLabel("Password:");
-    public Login(){
+    public Login()
+    {
         loginFrame.setSize(500, 600);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setIconImage(icon.getImage());
@@ -32,86 +30,108 @@ public class Login extends JFrame{
         loginFrame.add(loginPanel);
 
         loginPanel.setLayout(null);
-        loginPanel.add(usernameField);
-        loginPanel.add(usernameLabel);
         loginPanel.add(passwordField);
         loginPanel.add(passwordLabel);
         loginPanel.add(backButton);
-        loginPanel.add(registerHeader);
-        loginPanel.add(emailField);
-        loginPanel.add(emailLabel);
+        loginPanel.add(loginHeader);
+        loginPanel.add(usernameoremailField);
+        loginPanel.add(usernameoremailLabel);
         loginPanel.add(loginButton);
 
         backButton.setLayout(new BorderLayout());
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                HomePage homePage = new HomePage();
-                loginFrame.dispose();
-            }
+        backButton.addActionListener(e ->
+        {
+            HomePage homePage = new HomePage();
+            loginFrame.dispose();
         });
-        emailField.addActionListener(new ActionListener() {
+        usernameoremailField.addFocusListener(new FocusAdapter()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String email = emailField.getText();
-                if(ValidateEmail(email)){
+            public void focusLost(FocusEvent e) {
+                String usernameoremail = usernameoremailField.getText();
+                if(ValidateEmail(usernameoremail)){
                     totalStatus[0] = true;
                 }
-                //add error message
-            }
-        });
-        usernameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                if(ValidateUsername(username)){
+                else {
+                    totalStatus[0] = false;
+                }
+                if(ValidateUsername(usernameoremail)){
                     totalStatus[1] = true;
                 }
-                //add error message
+                else {
+                    totalStatus[1] = false;
+                }
             }
         });
-        passwordField.addActionListener(new ActionListener() {
+        passwordField.addFocusListener(new FocusAdapter()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void focusLost(FocusEvent e)
+            {
                 String password = Arrays.toString(passwordField.getPassword());
-                if(ValidatePassword(password)){
+                if(ValidatePassword(password))
+                {
                     totalStatus[2] = true;
                 }
-                //add error message
-            }
-        });
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
-                    HomePage.status = true;
-                    FlightsPage flights = new FlightsPage();
-                    loginFrame.dispose();
+                else {
+                    totalStatus[1] = false;
                 }
             }
         });
-        loginPanel.setBackground(new Color(70, 109, 176));
-        registerHeader.setFont(new Font("Arial", Font.BOLD, 18));
-        registerHeader.setForeground(Color.CYAN);
-        registerHeader.setBounds(230, 100, 100, 30);
-        backButton.setBounds(0, 0, 50, 30);
-        backButton.setBackground(Color.CYAN);
-        emailLabel.setBounds(50, 150, 100, 30);
-        emailLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        emailField.setBounds(130, 150, 300, 30);
-        usernameLabel.setBounds(50, 200, 100, 30);
-        usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        usernameField.setBounds(130, 200, 300, 30);
-        passwordLabel.setBounds(50, 250, 100, 30);
-        passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        passwordField.setBounds(130, 250, 300, 30);
-        loginButton.setBounds(200, 300, 100, 30);
-        loginButton.setBackground(Color.GREEN);
-        loginFrame.setVisible(true);
-        loginFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+            loginButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+
+                    // Check all elements in totalStatus are true
+                    if ((totalStatus[0] || totalStatus[1]) && totalStatus[2])
+                    {
+                        HomePage.status = true;
+                        HomePage homePage = new HomePage();
+                        loginFrame.dispose();
+                        JOptionPane.showMessageDialog(null, "Welcome back!");
+                    }
+                    else
+                    {
+                        // Unsuccessful Login: Provide feedback
+                        String errorMessage = "Login failed: ";
+                        if(!(totalStatus[0]||totalStatus[1]))
+                            errorMessage+="\n Wrong Username or Email. ";
+                            else if (!totalStatus[2])
+                                errorMessage+="\n Wrong Password. ";
+                                   else
+                                       errorMessage+="Unknown error. ";
+
+                        // Login panel refresh and retry prompt
+                        loginPanel.revalidate();
+                        loginPanel.repaint();
+                        JOptionPane.showMessageDialog(null, errorMessage);
+
+                    }
+                }
+            });
+            loginPanel.setBackground(new Color(70, 109, 176));
+            loginHeader.setFont(new Font("Arial", Font.BOLD, 18));
+            loginHeader.setForeground(Color.CYAN);
+            loginHeader.setBounds(230, 100, 100, 30);
+            backButton.setBounds(0, 0, 50, 30);
+            backButton.setBackground(Color.CYAN);
+            usernameoremailLabel.setBounds(100, 150, 200, 30);
+            usernameoremailLabel.setFont(new Font("Arial",Font.BOLD, 15));
+            usernameoremailField.setBounds(100, 175, 300, 30);
+            passwordLabel.setBounds(100, 225, 100, 30);
+            passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
+            passwordField.setBounds(100, 250, 300, 30);
+            loginButton.setBounds(200, 300, 100, 30);
+            loginButton.setBackground(Color.GREEN);
+            loginFrame.setVisible(true);
+            loginFrame.addWindowListener(new WindowAdapter()
+            {
+                public void windowClosing(WindowEvent e)
+                {
+                    System.exit(0);
+                }
+            });
     }
 }

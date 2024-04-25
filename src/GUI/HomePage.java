@@ -11,6 +11,7 @@ public class HomePage {
             getScaledInstance(500, 190, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
     JLabel loginLabel = new JLabel("..Login..");
+    JLabel signupLabel = new JLabel("..Sign Up..");
     JLabel logoLabel = new JLabel(scaledIcon);
     JLabel welcomeLabel = new JLabel("Welcome to Right Flight!");
     JButton Flights = new JButton("Flights");
@@ -25,6 +26,7 @@ public class HomePage {
         mainFrame.add(mainPanel);
 
         mainPanel.add(loginLabel);
+        mainPanel.add(signupLabel);
         mainPanel.setLayout(null);
         mainPanel.add(logoLabel);
         mainPanel.add(welcomeLabel);
@@ -32,9 +34,15 @@ public class HomePage {
         mainPanel.add(Tickets);
         mainPanel.add(Account);
 
-        loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        loginLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
                 Login login = new Login();
+                mainFrame.dispose();
+            }
+        });
+        signupLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                SignUp signup = new SignUp();
                 mainFrame.dispose();
             }
         });
@@ -52,6 +60,9 @@ public class HomePage {
         loginLabel.setFont(new Font("New", Font.ITALIC, 16));
         loginLabel.setForeground(Color.BLUE);
         loginLabel.setBounds(420, 190, 500, 30);
+        signupLabel.setFont(new Font("New", Font.ITALIC, 16));
+        signupLabel.setForeground(Color.BLUE);
+        signupLabel.setBounds(350, 190, 500, 30);
         logoLabel.setBounds(0, 0, 500, 190);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setBounds(130, 200, 400, 30);
