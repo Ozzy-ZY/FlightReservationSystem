@@ -3,11 +3,7 @@ import java.util.regex.*;
 
 public class LoginControl {
     public static boolean ValidatePassword(String Password){
-<<<<<<< HEAD
-        return true;
-=======
         return Password.length() >= 8;
->>>>>>> c2c28d7011fed7d44847ddee1edbf72a4f47adf1
     }
     public static String tostring(char[] arrOfChar){
         StringBuilder sb = new StringBuilder();
@@ -18,17 +14,10 @@ public class LoginControl {
     }
 
     public  static boolean ValidateUsername(String Username){
-<<<<<<< HEAD
-        return true;
-=======
         return 3 <= Username.length() && Username.length() <= 20;
->>>>>>> c2c28d7011fed7d44847ddee1edbf72a4f47adf1
     }
     
     public static boolean ValidateEmail(String Email){
-<<<<<<< HEAD
-        return true;
-=======
         String regexPattern = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"; // OWASP Validation Regex
 
         return patternMatches(Email, regexPattern);
@@ -38,6 +27,5 @@ public class LoginControl {
         return Pattern.compile(regexPattern)
           .matcher(emailAddress)
           .matches();
->>>>>>> c2c28d7011fed7d44847ddee1edbf72a4f47adf1
     }
 }
