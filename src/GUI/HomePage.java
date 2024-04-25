@@ -1,5 +1,6 @@
 package GUI;
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -49,6 +50,7 @@ public class HomePage {
                 mainFrame.dispose();
             }
         });
+
         loginLabel.setFont(new Font("New", Font.ITALIC, 16));
         loginLabel.setForeground(Color.BLUE);
         loginLabel.setBounds(420, 190, 500, 30);

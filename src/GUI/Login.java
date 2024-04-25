@@ -92,7 +92,7 @@ public class Login extends JFrame{
         passwordField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String password = Arrays.toString(passwordField.getPassword());
+                String password = tostring(passwordField.getPassword());
                 if(ValidatePassword(password)){
                     totalStatus[2] = true;
                     errorPassword.setVisible(false);

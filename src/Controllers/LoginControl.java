@@ -1,10 +1,16 @@
 package Controllers;
-
 import java.util.regex.*;
 
 public class LoginControl {
     public static boolean ValidatePassword(String Password){
-        return !Password.contains(" ") || Password.length() >= 24;
+        return Password.length() >= 8;
+    }
+    public static String tostring(char[] arrOfChar){
+        StringBuilder sb = new StringBuilder();
+        for (char c : arrOfChar) {
+                sb.append(c);
+        }
+        return sb.toString();
     }
 
     public  static boolean ValidateUsername(String Username){
