@@ -10,7 +10,8 @@ public class HomePage {
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
             getScaledInstance(500, 190, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
-    JLabel loginLabel = new JLabel("Register");
+    JLabel loginLabel = new JLabel("Login");
+    JLabel registerLabel = new JLabel("Register");
     JLabel logoLabel = new JLabel(scaledIcon);
     JLabel welcomeLabel = new JLabel("Welcome to Right Flight!");
     JButton Flights = new JButton("Flights");
@@ -25,6 +26,7 @@ public class HomePage {
         mainFrame.add(mainPanel);
 
         mainPanel.add(loginLabel);
+        mainPanel.add(registerLabel);
         mainPanel.setLayout(null);
         mainPanel.add(logoLabel);
         mainPanel.add(welcomeLabel);
@@ -32,9 +34,15 @@ public class HomePage {
         mainPanel.add(Tickets);
         mainPanel.add(Account);
 
-        loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        loginLabel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                Login login = new Login();
+                mainFrame.dispose();
+            }
+        });
+        registerLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Register login = new Register();
+                Register register = new Register();
                 mainFrame.dispose();
             }
         });
@@ -52,7 +60,10 @@ public class HomePage {
 
         loginLabel.setFont(new Font("New", Font.ITALIC, 16));
         loginLabel.setForeground(Color.BLUE);
-        loginLabel.setBounds(410, 190, 500, 30);
+        loginLabel.setBounds(420, 190, 500, 30);
+        registerLabel.setFont(new Font("New", Font.ITALIC, 16));
+        registerLabel.setForeground(Color.BLUE);
+        registerLabel.setBounds(350, 190, 500, 30);
         logoLabel.setBounds(0, 0, 500, 190);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setBounds(130, 200, 400, 30);
