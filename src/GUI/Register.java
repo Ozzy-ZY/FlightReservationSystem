@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import static Controllers.LoginControl.*;
+import static Controllers.RegisterControl.*;
 
 public class Register extends JFrame{
 

@@ -1,4 +1,3 @@
-import Controllers.LoginControl;
 import GUI.HomePage;
 import Models.Flight;
 import Models.Plane;
