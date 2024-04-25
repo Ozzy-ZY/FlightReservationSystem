@@ -4,7 +4,7 @@ import java.util.regex.*;
 
 public class LoginControl {
     public static boolean ValidatePassword(String Password){
-        return 8 <= Password.length();
+        return !Password.contains(" ") || Password.length() >= 24;
     }
 
     public  static boolean ValidateUsername(String Username){

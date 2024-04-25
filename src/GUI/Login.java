@@ -25,7 +25,7 @@ public class Login extends JFrame{
     JLabel passwordLabel = new JLabel("Password:");
     JLabel errorEmail = new JLabel("Invalid Email");
     JLabel errorUsername = new JLabel("Username must be between 3 and 20 characters long");
-    JLabel errorPassword = new JLabel("Passwords must be at least 8 characters long");
+    JLabel errorPassword = new JLabel("Please enter a valid password");
     public Login(){
         loginFrame.setSize(500, 600);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
