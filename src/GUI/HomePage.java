@@ -1,6 +1,5 @@
 package GUI;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -11,7 +10,7 @@ public class HomePage {
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
             getScaledInstance(500, 190, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
-    JLabel loginLabel = new JLabel("..Login..");
+    JLabel loginLabel = new JLabel("Register");
     JLabel logoLabel = new JLabel(scaledIcon);
     JLabel welcomeLabel = new JLabel("Welcome to Right Flight!");
     JButton Flights = new JButton("Flights");
@@ -35,7 +34,7 @@ public class HomePage {
 
         loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Login login = new Login();
+                Register login = new Register();
                 mainFrame.dispose();
             }
         });
@@ -53,7 +52,7 @@ public class HomePage {
 
         loginLabel.setFont(new Font("New", Font.ITALIC, 16));
         loginLabel.setForeground(Color.BLUE);
-        loginLabel.setBounds(420, 190, 500, 30);
+        loginLabel.setBounds(410, 190, 500, 30);
         logoLabel.setBounds(0, 0, 500, 190);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setBounds(130, 200, 400, 30);

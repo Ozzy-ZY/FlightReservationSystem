@@ -3,19 +3,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import static Controllers.LoginControl.*;
 
-public class Login extends JFrame{
+public class Register extends JFrame{
 
     boolean[] totalStatus = {false, false, false};
-    JFrame loginFrame = new JFrame("Login");
+    JFrame loginFrame = new JFrame("Register");
     JPanel loginPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<<--");
-    JButton loginButton = new JButton("Login");
+    JButton loginButton = new JButton("Register");
     JTextField usernameField = new JTextField(30);
     JLabel registerHeader = new JLabel("Register");
     JLabel emailLabel = new JLabel("Email:");
@@ -26,7 +24,7 @@ public class Login extends JFrame{
     JLabel errorEmail = new JLabel("Invalid Email");
     JLabel errorUsername = new JLabel("Username must be between 3 and 20 characters long");
     JLabel errorPassword = new JLabel("Please enter a valid password");
-    public Login(){
+    public Register(){
         loginFrame.setSize(500, 600);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setIconImage(icon.getImage());
