@@ -63,7 +63,7 @@ public class HomePage {
         loginLabel.setBounds(420, 190, 500, 30);
         registerLabel.setFont(new Font("New", Font.ITALIC, 16));
         registerLabel.setForeground(Color.BLUE);
-        registerLabel.setBounds(350, 190, 500, 30);
+        registerLabel.setBounds(25, 190, 500, 30);
         logoLabel.setBounds(0, 0, 500, 190);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setBounds(130, 200, 400, 30);

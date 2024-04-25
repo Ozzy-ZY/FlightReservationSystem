@@ -9,11 +9,11 @@ import static Controllers.RegisterControl.*;
 public class Register extends JFrame{
 
     boolean[] totalStatus = {false, false, false};
-    JFrame loginFrame = new JFrame("Register");
-    JPanel loginPanel = new JPanel();
+    JFrame registerFrame = new JFrame("Register");
+    JPanel registerPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<<--");
-    JButton loginButton = new JButton("Register");
+    JButton registerButton = new JButton("Register");
     JTextField usernameField = new JTextField(30);
     JLabel registerHeader = new JLabel("Register");
     JLabel emailLabel = new JLabel("Email:");
@@ -25,26 +25,26 @@ public class Register extends JFrame{
     JLabel errorUsername = new JLabel("Username must be between 3 and 20 characters long");
     JLabel errorPassword = new JLabel("Please enter a valid password");
     public Register(){
-        loginFrame.setSize(500, 600);
-        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        loginFrame.setIconImage(icon.getImage());
-        loginFrame.setResizable(false);
-        loginFrame.setLocationRelativeTo(null);
-        loginFrame.add(loginPanel);
+        registerFrame.setSize(500, 600);
+        registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        registerFrame.setIconImage(icon.getImage());
+        registerFrame.setResizable(false);
+        registerFrame.setLocationRelativeTo(null);
+        registerFrame.add(registerPanel);
 
-        loginPanel.setLayout(null);
-        loginPanel.add(usernameField);
-        loginPanel.add(usernameLabel);
-        loginPanel.add(passwordField);
-        loginPanel.add(passwordLabel);
-        loginPanel.add(backButton);
-        loginPanel.add(registerHeader);
-        loginPanel.add(emailField);
-        loginPanel.add(emailLabel);
-        loginPanel.add(loginButton);
-        loginPanel.add(errorEmail);
-        loginPanel.add(errorUsername);
-        loginPanel.add(errorPassword);
+        registerPanel.setLayout(null);
+        registerPanel.add(usernameField);
+        registerPanel.add(usernameLabel);
+        registerPanel.add(passwordField);
+        registerPanel.add(passwordLabel);
+        registerPanel.add(backButton);
+        registerPanel.add(registerHeader);
+        registerPanel.add(emailField);
+        registerPanel.add(emailLabel);
+        registerPanel.add(registerButton);
+        registerPanel.add(errorEmail);
+        registerPanel.add(errorUsername);
+        registerPanel.add(errorPassword);
 
         errorEmail.setVisible(false);
         errorUsername.setVisible(false);
@@ -55,7 +55,7 @@ public class Register extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 HomePage homePage = new HomePage();
-                loginFrame.dispose();
+                registerFrame.dispose();
             }
         });
 
@@ -101,7 +101,7 @@ public class Register extends JFrame{
             }
         });
 
-        loginButton.addActionListener(new ActionListener() {
+        registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
@@ -134,12 +134,12 @@ public class Register extends JFrame{
                 if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
                     HomePage.status = true;
                     FlightsPage flights = new FlightsPage();
-                    loginFrame.dispose();
+                    registerFrame.dispose();
                 }
             }
         });
 
-        loginPanel.setBackground(new Color(70, 109, 176));
+        registerPanel.setBackground(new Color(70, 109, 176));
         registerHeader.setFont(new Font("Arial", Font.BOLD, 18));
         registerHeader.setForeground(Color.CYAN);
         registerHeader.setBounds(230, 100, 100, 30);
@@ -164,8 +164,8 @@ public class Register extends JFrame{
         errorPassword.setForeground(Color.RED);
         errorPassword.setBounds(115, 275, 300, 30);
 
-        loginButton.setBounds(200, 300, 100, 30);
-        loginButton.setBackground(Color.GREEN);
-        loginFrame.setVisible(true);
+        registerButton.setBounds(200, 300, 100, 30);
+        registerButton.setBackground(Color.GREEN);
+        registerFrame.setVisible(true);
     }
 }
