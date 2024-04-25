@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.util.regex.*;
+
 public class LoginControl {
     public static boolean ValidatePassword(String Password){
         if(8 > Password.length())
