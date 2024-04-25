@@ -10,8 +10,12 @@ public class HomePage {
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
             getScaledInstance(500, 190, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
+<<<<<<< HEAD
     JLabel loginLabel = new JLabel("..Login..");
     JLabel signupLabel = new JLabel("..Sign Up..");
+=======
+    JLabel loginLabel = new JLabel("Register");
+>>>>>>> c2c28d7011fed7d44847ddee1edbf72a4f47adf1
     JLabel logoLabel = new JLabel(scaledIcon);
     JLabel welcomeLabel = new JLabel("Welcome to Right Flight!");
     JButton Flights = new JButton("Flights");
@@ -34,9 +38,15 @@ public class HomePage {
         mainPanel.add(Tickets);
         mainPanel.add(Account);
 
+<<<<<<< HEAD
         loginLabel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 Login login = new Login();
+=======
+        loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Register login = new Register();
+>>>>>>> c2c28d7011fed7d44847ddee1edbf72a4f47adf1
                 mainFrame.dispose();
             }
         });
@@ -57,12 +67,17 @@ public class HomePage {
                 mainFrame.dispose();
             }
         });
+
         loginLabel.setFont(new Font("New", Font.ITALIC, 16));
         loginLabel.setForeground(Color.BLUE);
+<<<<<<< HEAD
         loginLabel.setBounds(420, 190, 500, 30);
         signupLabel.setFont(new Font("New", Font.ITALIC, 16));
         signupLabel.setForeground(Color.BLUE);
         signupLabel.setBounds(350, 190, 500, 30);
+=======
+        loginLabel.setBounds(410, 190, 500, 30);
+>>>>>>> c2c28d7011fed7d44847ddee1edbf72a4f47adf1
         logoLabel.setBounds(0, 0, 500, 190);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setBounds(130, 200, 400, 30);
@@ -70,10 +85,5 @@ public class HomePage {
         Tickets.setBounds(50, 300, 400, 30);
         Account.setBounds(50, 350, 400, 30);
         mainFrame.setVisible(true);
-        mainFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
     }
 }

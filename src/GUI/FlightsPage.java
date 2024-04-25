@@ -71,11 +71,6 @@ public class FlightsPage extends JFrame {
         SearchField.setBounds(150, 100, 200, 30);
 
         flightsFrame.setVisible(true);
-        flightsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                System.exit(0);
-            }
-        });
     }
 
 }
