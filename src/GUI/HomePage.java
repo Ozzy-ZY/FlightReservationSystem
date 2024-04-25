@@ -59,10 +59,5 @@ public class HomePage {
         Tickets.setBounds(50, 300, 400, 30);
         Account.setBounds(50, 350, 400, 30);
         mainFrame.setVisible(true);
-        mainFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
     }
 }

@@ -4,16 +4,11 @@ import java.util.regex.*;
 
 public class LoginControl {
     public static boolean ValidatePassword(String Password){
-        if(8 > Password.length())
-            return false;
-        return true;
+        return 8 <= Password.length();
     }
 
     public  static boolean ValidateUsername(String Username){
-        if(3 > Username.length() || Username.length() > 20){
-            return false;
-        }
-        return true;
+        return 3 <= Username.length() && Username.length() <= 20;
     }
     
     public static boolean ValidateEmail(String Email){
