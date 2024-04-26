@@ -54,12 +54,15 @@ public class HomePage {
         loginLabel.setForeground(Color.lightGray);
         loginLabel.setBounds(30, 10, 500, 30);
         logoLabel.setBounds(0, 0, 525, 190);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
         welcomeLabel.setForeground(Color.decode("#FFFFFF"));
-        welcomeLabel.setBounds(175, 200, 400, 30);
+        welcomeLabel.setBounds(135, 200, 400, 30);
         Flights.setBounds(75, 280, 400, 60);
+        Flights.setFont(new Font("Arial", Font.BOLD, 18));
         Tickets.setBounds(75, 380, 400, 60);
+        Tickets.setFont(new Font("Arial", Font.BOLD, 18));
         Account.setBounds(75, 480, 400, 60);
+        Account.setFont(new Font("Arial", Font.BOLD, 18));
 
         mainFrame.setVisible(true);
     }
