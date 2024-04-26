@@ -151,7 +151,7 @@ public class Register extends JFrame{
         emailLabel.setForeground(Color.white);
         emailField.setBounds(130, 150, 300, 30);
         errorEmail.setHorizontalAlignment(SwingConstants.LEFT);
-        errorEmail.setForeground(Color.white);
+        errorEmail.setForeground(Color.decode("#db3125"));
         errorEmail.setBounds(130, 175, 300, 30);
 
 
@@ -160,7 +160,7 @@ public class Register extends JFrame{
         usernameLabel.setForeground(Color.white);
         usernameField.setBounds(130, 200, 300, 30);
         errorUsername.setHorizontalAlignment(SwingConstants.LEFT);
-        errorUsername.setForeground(Color.white);
+        errorUsername.setForeground(Color.decode("#db3125"));
         errorUsername.setBounds(130, 225, 350, 30);
 
 
@@ -169,7 +169,7 @@ public class Register extends JFrame{
         passwordLabel.setForeground(Color.white);
         passwordField.setBounds(130, 250, 300, 30);
         errorPassword.setHorizontalAlignment(SwingConstants.LEFT);
-        errorPassword.setForeground(Color.white);
+        errorPassword.setForeground(Color.decode("#db3125"));
         errorPassword.setBounds(130, 275, 300, 30);
 
 

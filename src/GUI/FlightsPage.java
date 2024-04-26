@@ -59,16 +59,18 @@ public class FlightsPage extends JFrame {
         });
 
         backButton.setBounds(0, 0, 50, 30);
-        backButton.setBackground(Color.CYAN);
+        backButton.setBackground(Color.white);
 
-        flightsPanel.setBackground(new java.awt.Color(70, 109, 176));
+        flightsPanel.setBackground(Color.decode("#213D58"));
 
-        flightHeader.setFont(new Font("Arial", Font.BOLD, 18));
+        flightHeader.setFont(new Font("Arial", Font.BOLD, 26));
+        flightHeader.setForeground(Color.WHITE);
         flightHeader.setBounds(200, 50, 100, 30);
 
-        SearchLabel.setBounds(30, 100, 150, 30);
+        SearchLabel.setBounds(100, 100, 150, 30);
         SearchLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        SearchField.setBounds(150, 100, 200, 30);
+        SearchLabel.setForeground(Color.WHITE);
+        SearchField.setBounds(100, 130, 300, 30);
 
         flightsFrame.setVisible(true);
     }
