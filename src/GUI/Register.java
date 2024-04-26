@@ -122,7 +122,7 @@ public class Register extends JFrame{
                     errorUsername.setVisible(true);
                 }
 
-                String password = Arrays.toString(passwordField.getPassword());
+                String password = tostring(passwordField.getPassword());
                 if(ValidatePassword(password)){
                     totalStatus[2] = true;
                     errorPassword.setVisible(false);
