@@ -5,7 +5,6 @@ import com.google.zxing.WriterException;
 import Utils.QrGenerator.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import static Utils.QrGenerator.generateQRCode;
 import static Utils.QrGenerator.saveQRCodeImage;
 
