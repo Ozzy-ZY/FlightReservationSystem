@@ -8,7 +8,7 @@ public class HomePage {
     JFrame mainFrame = new JFrame("Right Flight");
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
-            getScaledInstance(500, 190, Image.SCALE_SMOOTH));
+            getScaledInstance(400, 300, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
     JLabel loginLabel = new JLabel("Register");
     JLabel logoLabel = new JLabel(scaledIcon);
@@ -17,13 +17,13 @@ public class HomePage {
     JButton Tickets = new JButton("Tickets");
     JButton Account = new JButton("Account");
     public HomePage(){
-        mainFrame.setSize(500, 600);
+        mainFrame.setSize(550, 650);
+        mainPanel.setBackground(Color.decode("#213D58"));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setIconImage(icon.getImage());
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.add(mainPanel);
-
         mainPanel.add(loginLabel);
         mainPanel.setLayout(null);
         mainPanel.add(logoLabel);
@@ -50,15 +50,17 @@ public class HomePage {
             }
         });
 
-        loginLabel.setFont(new Font("New", Font.ITALIC, 16));
-        loginLabel.setForeground(Color.BLUE);
-        loginLabel.setBounds(410, 190, 500, 30);
-        logoLabel.setBounds(0, 0, 500, 190);
+        loginLabel.setFont(new Font("New", Font.ITALIC, 18));
+        loginLabel.setForeground(Color.lightGray);
+        loginLabel.setBounds(30, 10, 500, 30);
+        logoLabel.setBounds(0, 0, 525, 190);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        welcomeLabel.setBounds(130, 200, 400, 30);
-        Flights.setBounds(50, 250, 400, 30);
-        Tickets.setBounds(50, 300, 400, 30);
-        Account.setBounds(50, 350, 400, 30);
+        welcomeLabel.setForeground(Color.decode("#FFFFFF"));
+        welcomeLabel.setBounds(175, 200, 400, 30);
+        Flights.setBounds(75, 280, 400, 60);
+        Tickets.setBounds(75, 380, 400, 60);
+        Account.setBounds(75, 480, 400, 60);
+
         mainFrame.setVisible(true);
     }
 }
