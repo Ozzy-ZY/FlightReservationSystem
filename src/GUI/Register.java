@@ -139,33 +139,42 @@ public class Register extends JFrame{
             }
         });
 
-        loginPanel.setBackground(new Color(70, 109, 176));
+        loginPanel.setBackground(Color.decode("#213D58"));
         registerHeader.setFont(new Font("Arial", Font.BOLD, 18));
-        registerHeader.setForeground(Color.CYAN);
+        registerHeader.setForeground(Color.white);
         registerHeader.setBounds(230, 100, 100, 30);
         backButton.setBounds(0, 0, 50, 30);
-        backButton.setBackground(Color.CYAN);
+        backButton.setBackground(Color.white);
 
         emailLabel.setBounds(50, 150, 100, 30);
         emailLabel.setFont(new Font("Arial",Font.BOLD, 15));
+        emailLabel.setForeground(Color.white);
         emailField.setBounds(130, 150, 300, 30);
-        errorEmail.setForeground(Color.RED);
-        errorEmail.setBounds(115, 175, 300, 30);
+        errorEmail.setHorizontalAlignment(SwingConstants.LEFT);
+        errorEmail.setForeground(Color.decode("#db3125"));
+        errorEmail.setBounds(130, 175, 300, 30);
+
 
         usernameLabel.setBounds(50, 200, 100, 30);
         usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
+        usernameLabel.setForeground(Color.white);
         usernameField.setBounds(130, 200, 300, 30);
-        errorUsername.setForeground(Color.RED);
-        errorUsername.setBounds(115, 225, 350, 30);
+        errorUsername.setHorizontalAlignment(SwingConstants.LEFT);
+        errorUsername.setForeground(Color.decode("#db3125"));
+        errorUsername.setBounds(130, 225, 350, 30);
+
 
         passwordLabel.setBounds(50, 250, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
+        passwordLabel.setForeground(Color.white);
         passwordField.setBounds(130, 250, 300, 30);
-        errorPassword.setForeground(Color.RED);
-        errorPassword.setBounds(115, 275, 300, 30);
+        errorPassword.setHorizontalAlignment(SwingConstants.LEFT);
+        errorPassword.setForeground(Color.decode("#db3125"));
+        errorPassword.setBounds(130, 275, 300, 30);
+
 
         loginButton.setBounds(200, 300, 100, 30);
-        loginButton.setBackground(Color.GREEN);
+        loginButton.setBackground(Color.white);
         loginFrame.setVisible(true);
     }
 }
