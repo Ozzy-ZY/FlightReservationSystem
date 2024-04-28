@@ -25,7 +25,7 @@ public class LoginControl {
         String[] users = data.split("\n");
         for (String user : users) {
             String[] userData = user.split(" ");
-            if (userData[1].equals(email)) {
+            if (userData[0].equals(email)) {
                 return userData[0];
             }
         }
