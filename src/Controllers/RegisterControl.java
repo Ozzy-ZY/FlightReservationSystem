@@ -27,4 +27,15 @@ public class RegisterControl {
           .matcher(emailAddress)
           .matches();
     }
+
+    /**
+     * Saves the user data to dataFile seperated by a space
+     * @param email user's Email
+     * @param username user's Username
+     * @param password user's Password
+     */
+    public static void saveData(String email, String username, String password){
+        String data = username + " " + email + " " + password + "\n";
+        Utils.FileManager.append("Users.txt", data);
+    }
 }

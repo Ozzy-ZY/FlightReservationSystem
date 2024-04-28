@@ -2,18 +2,19 @@ package Models;
 
 public class User {
     private String email;
-    private String name;
+    private String username;
     private String password;
-    public User(String email,String name,String password){
+    public User(String email,String username, String password){
         this.email= email;
-        this.name = name;
+        this.username = username;
         this.password = password;
     }
     public String getEmail(){
         return email;
     }
-    public String getName(){
-        return name;
+    public String getUsername(){
+
+        return username;
     }
     public String getPassword(){
         return password;
@@ -21,8 +22,8 @@ public class User {
     public void setEmail(String Email){
         email = Email;
     }
-    public void setName(String Name){
-        name = Name;
+    public void setName(String username){
+        this.username = username;
     }
     public void setPassword(String Password){
         password = Password;
