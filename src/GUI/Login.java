@@ -63,21 +63,24 @@ public class Login extends JFrame{
                 errorLogin.setVisible(true);
             }
         });
-        loginPanel.setBackground(new Color(70, 109, 176));
+        loginPanel.setBackground(Color.decode("#213D58"));
         loginHeader.setFont(new Font("Arial", Font.BOLD, 18));
-        loginHeader.setForeground(Color.CYAN);
+        loginHeader.setForeground(Color.white);
         loginHeader.setBounds(230, 100, 100, 30);
         backButton.setBounds(0, 0, 50, 30);
-        backButton.setBackground(Color.CYAN);
+        backButton.setBackground(Color.white);
         emailLabel.setBounds(100, 150, 200, 30);
         emailLabel.setFont(new Font("Arial",Font.BOLD, 15));
+        emailLabel.setForeground(Color.white);
         emailField.setBounds(100, 175, 300, 30);
         passwordLabel.setBounds(100, 225, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
+        passwordLabel.setForeground(Color.white);
         passwordField.setBounds(100, 250, 300, 30);
         loginButton.setBounds(200, 300, 100, 30);
-        loginButton.setBackground(Color.GREEN);
-        errorLogin.setBounds(200, 350, 200, 30);
+        loginButton.setBackground(Color.white);
+        errorLogin.setBounds(180, 350, 200, 30);
+        errorLogin.setForeground(Color.decode("#db3125"));
         loginFrame.setVisible(true);
         loginFrame.addWindowListener(new WindowAdapter()
         {
