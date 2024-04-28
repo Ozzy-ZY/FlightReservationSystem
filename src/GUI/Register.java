@@ -136,10 +136,10 @@ public class Register extends JFrame{
 
                 if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
                     HomePage.status = true;
+                    saveData(email, username, password);
                     HomePage.currentUser = new User(emailField.getText(),
                             LoginControl.getUsername(emailField.getText()),
                             tostring(passwordField.getPassword()));
-                    saveData(email, username, password);
                     FlightsPage flights = new FlightsPage();
                     regFrame.dispose();
                 }
@@ -161,7 +161,6 @@ public class Register extends JFrame{
         errorEmail.setForeground(Color.decode("#db3125"));
         errorEmail.setBounds(130, 175, 300, 30);
 
-
         usernameLabel.setBounds(50, 200, 100, 30);
         usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
         usernameLabel.setForeground(Color.white);
@@ -169,7 +168,6 @@ public class Register extends JFrame{
         errorUsername.setHorizontalAlignment(SwingConstants.LEFT);
         errorUsername.setForeground(Color.decode("#db3125"));
         errorUsername.setBounds(130, 225, 350, 30);
-
 
         passwordLabel.setBounds(50, 250, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));

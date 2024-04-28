@@ -29,9 +29,9 @@ public class RegisterControl {
     }
 
     /**
-     * Saves the user data to dataFile
+     * Saves the user data to dataFile seperated by a space
      * @param email user's Email
-     * @param username user's First + " " + Last Name
+     * @param username user's Username
      * @param password user's Password
      */
     public static void saveData(String email, String username, String password){
