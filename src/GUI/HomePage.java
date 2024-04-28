@@ -10,7 +10,8 @@ public class HomePage {
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
             getScaledInstance(400, 300, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
-    JLabel loginLabel = new JLabel("Register");
+    JLabel regLabel = new JLabel("Register");
+    JLabel loginLabel = new JLabel("Login");
     JLabel logoLabel = new JLabel(scaledIcon);
     JLabel welcomeLabel = new JLabel("Welcome to Right Flight!");
     JButton Flights = new JButton("Flights");
@@ -24,6 +25,7 @@ public class HomePage {
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.add(mainPanel);
+        mainPanel.add(regLabel);
         mainPanel.add(loginLabel);
         mainPanel.setLayout(null);
         mainPanel.add(logoLabel);
@@ -32,9 +34,15 @@ public class HomePage {
         mainPanel.add(Tickets);
         mainPanel.add(Account);
 
+        regLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Register register = new Register();
+                mainFrame.dispose();
+            }
+        });
         loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Register login = new Register();
+                Login login = new Login();
                 mainFrame.dispose();
             }
         });
@@ -50,9 +58,12 @@ public class HomePage {
             }
         });
 
+        regLabel.setFont(new Font("New", Font.ITALIC, 18));
+        regLabel.setForeground(Color.lightGray);
+        regLabel.setBounds(30, 10, 100, 30);
         loginLabel.setFont(new Font("New", Font.ITALIC, 18));
         loginLabel.setForeground(Color.lightGray);
-        loginLabel.setBounds(30, 10, 500, 30);
+        loginLabel.setBounds(460, 10, 100, 30);
         logoLabel.setBounds(0, 0, 525, 190);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
         welcomeLabel.setForeground(Color.decode("#FFFFFF"));
