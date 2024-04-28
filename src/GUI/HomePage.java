@@ -1,16 +1,21 @@
 package GUI;
+import Models.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class HomePage {
     static Boolean status = false;
+    static User currentUser;
     JFrame mainFrame = new JFrame("Right Flight");
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
-            getScaledInstance(400, 300, Image.SCALE_SMOOTH));
+            getScaledInstance(300, 300, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
-    JLabel loginLabel = new JLabel("Register");
+    JLabel currentUserLabel = new JLabel();
+    JLabel regLabel = new JLabel("Register");
+    JLabel loginLabel = new JLabel("Login");
     JLabel logoLabel = new JLabel(scaledIcon);
     JLabel welcomeLabel = new JLabel("Welcome to Right Flight!");
     JButton Flights = new JButton("Flights");
@@ -24,6 +29,8 @@ public class HomePage {
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.add(mainPanel);
+
+        mainPanel.add(regLabel);
         mainPanel.add(loginLabel);
         mainPanel.setLayout(null);
         mainPanel.add(logoLabel);
@@ -31,10 +38,24 @@ public class HomePage {
         mainPanel.add(Flights);
         mainPanel.add(Tickets);
         mainPanel.add(Account);
+        mainPanel.add(currentUserLabel);
 
+        currentUserLabel.setVisible(false);
+        if(status){
+            regLabel.setVisible(false);
+            loginLabel.setVisible(false);
+            currentUserLabel.setText(currentUser.getUsername());
+            currentUserLabel.setVisible(true);
+        }
+        regLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Register register = new Register();
+                mainFrame.dispose();
+            }
+        });
         loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Register login = new Register();
+                Login login = new Login();
                 mainFrame.dispose();
             }
         });
@@ -50,10 +71,16 @@ public class HomePage {
             }
         });
 
+        regLabel.setFont(new Font("New", Font.ITALIC, 18));
+        regLabel.setForeground(Color.lightGray);
+        regLabel.setBounds(30, 10, 100, 30);
         loginLabel.setFont(new Font("New", Font.ITALIC, 18));
         loginLabel.setForeground(Color.lightGray);
-        loginLabel.setBounds(30, 10, 500, 30);
+        loginLabel.setBounds(460, 10, 100, 30);
         logoLabel.setBounds(0, 0, 525, 190);
+        currentUserLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        currentUserLabel.setForeground(Color.lightGray);
+        currentUserLabel.setBounds(30, 10, 300, 30);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
         welcomeLabel.setForeground(Color.decode("#FFFFFF"));
         welcomeLabel.setBounds(135, 200, 400, 30);
