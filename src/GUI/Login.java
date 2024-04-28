@@ -1,5 +1,8 @@
 package GUI;
 
+import Controllers.LoginControl;
+import Models.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,8 +11,6 @@ import java.util.Arrays;
 import static Controllers.RegisterControl.*;
 
 public class Login extends JFrame{
-
-    boolean[] totalStatus={false,false};
     JFrame loginFrame = new JFrame("Login");
     JPanel loginPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
@@ -48,16 +49,12 @@ public class Login extends JFrame{
             HomePage homePage = new HomePage();
             loginFrame.dispose();
         });
-        emailField.addActionListener(e -> {
-            totalStatus[0] = ValidateEmail(emailField.getText());
-        });
-        passwordField.addActionListener(e -> {
-            totalStatus[1] = ValidatePassword(tostring(passwordField.getPassword()));
-        });
         loginButton.addActionListener(e -> {
-            totalStatus[0] = ValidateEmail(emailField.getText());
-            totalStatus[1] = ValidatePassword(tostring(passwordField.getPassword()));
-            if(totalStatus[0] && totalStatus[1]){
+            if(LoginControl.ValidateUser(emailField.getText(),
+                    tostring(passwordField.getPassword()))){
+                HomePage.currentUser = new User(emailField.getText(),
+                        LoginControl.getUsername(emailField.getText()),
+                        tostring(passwordField.getPassword()));
                 HomePage.status = true;
                 FlightsPage flightsPage = new FlightsPage();
                 loginFrame.dispose();

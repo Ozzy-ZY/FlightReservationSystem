@@ -1,4 +1,7 @@
 package GUI;
+import Controllers.LoginControl;
+import Models.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -133,6 +136,10 @@ public class Register extends JFrame{
 
                 if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
                     HomePage.status = true;
+                    HomePage.currentUser = new User(emailField.getText(),
+                            LoginControl.getUsername(emailField.getText()),
+                            tostring(passwordField.getPassword()));
+                    saveData(email, username, password);
                     FlightsPage flights = new FlightsPage();
                     regFrame.dispose();
                 }
