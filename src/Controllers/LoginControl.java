@@ -24,8 +24,8 @@ public class LoginControl {
         String data = Utils.FileManager.read("Users.txt");
         String[] users = data.split("\n");
         for (String user : users) {
-            String[] userData = user.split(" ");
-            if (userData[0].equals(email)) {
+            String[] userData = user.trim().split(" ");
+            if (userData[1].equals(email)) {
                 return userData[0];
             }
         }
