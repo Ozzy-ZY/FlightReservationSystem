@@ -3,7 +3,6 @@ import Models.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class HomePage {
     static Boolean status = false;
@@ -33,12 +32,12 @@ public class HomePage {
         mainPanel.add(regLabel);
         mainPanel.add(loginLabel);
         mainPanel.setLayout(null);
+        mainPanel.add(currentUserLabel);
         mainPanel.add(logoLabel);
         mainPanel.add(welcomeLabel);
         mainPanel.add(Flights);
         mainPanel.add(Tickets);
         mainPanel.add(Account);
-        mainPanel.add(currentUserLabel);
 
         currentUserLabel.setVisible(false);
         if(status){
@@ -49,26 +48,23 @@ public class HomePage {
         }
         regLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Register register = new Register();
+                new Register();
                 mainFrame.dispose();
             }
         });
         loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Login login = new Login();
+                new Login();
                 mainFrame.dispose();
             }
         });
-        Flights.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(!status){
-                    JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
-                    return;
-                }
-                FlightsPage Flight = new FlightsPage();
-                mainFrame.dispose();
+        Flights.addActionListener(e -> {
+            if(!status){
+                JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
+                return;
             }
+            new FlightsPage();
+            mainFrame.dispose();
         });
 
         regLabel.setFont(new Font("New", Font.ITALIC, 18));
