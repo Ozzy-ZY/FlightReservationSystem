@@ -28,29 +28,6 @@ public class RegisterControl {
           .matches();
     }
 
-    public static boolean emailstored(String email){
-        String data = Utils.FileManager.read("Users.txt");
-        String[] emails = data.split("\n");
-        for (String emailLine : emails) {
-            String[] userData = emailLine.split(" ");
-            if (userData[1].equals(email)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public static boolean usernamestored(String username){
-        String data = Utils.FileManager.read("Users.txt");
-        String[] users = data.split("\n");
-        for (String user : users) {
-            String[] userData = user.split(" ");
-            if (userData[0].equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Saves the user data to dataFile seperated by a space
      * @param email user's Email
