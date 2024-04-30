@@ -91,13 +91,13 @@ public class FlightsPage extends JFrame {
 
         backButton.setBounds(0, 0, 50, 30);
         backButton.setBackground(Color.white);
-//
+
         flightsPanel.setBackground(Color.decode("#213D58"));
-//
+
         flightHeader.setFont(new Font("Arial", Font.BOLD, 26));
         flightHeader.setForeground(Color.WHITE);
         flightHeader.setBounds(450, 50, 100, 30);
-//
+
         SearchLabel.setBounds(100, 100, 250, 30);
         SearchLabel.setFont(new Font("Arial", Font.BOLD, 14));
         SearchLabel.setForeground(Color.WHITE);
@@ -113,11 +113,10 @@ public class FlightsPage extends JFrame {
         cityList2.setBounds(600, 130, 300, 30);
         cityList2.setBackground(Color.WHITE);
         cityList2.setForeground(Color.BLACK);
-
+        
         errorLabel.setBounds(370, 170, 300, 30); // Set the position and size of the error label
         flightsPanel.add(errorLabel);
 
-//
         flightsFrame.setVisible(true);
     }
 
