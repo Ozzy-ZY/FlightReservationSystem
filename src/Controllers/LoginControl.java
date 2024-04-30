@@ -1,5 +1,7 @@
 package Controllers;
 
+import static Utils.FileManager.isFileEmpty;
+
 public class LoginControl {
     /**
      * Checks if the user's email and password are valid
@@ -9,6 +11,8 @@ public class LoginControl {
      * @return true if the user's email and password are valid
      */
     public static boolean ValidateUser(String email, String password){
+        if (isFileEmpty("Users.txt")) return false;
+
         String data = Utils.FileManager.read("Users.txt");
         String[] users = data.split("\n");
         for (String user : users) {

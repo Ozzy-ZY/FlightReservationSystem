@@ -1,4 +1,5 @@
 package Controllers;
+import java.io.File;
 import java.util.regex.*;
 public class RegisterControl {
     public static boolean ValidatePassword(String Password){
@@ -38,4 +39,8 @@ public class RegisterControl {
         String data = username + " " + email + " " + password + "\n";
         Utils.FileManager.append("Users.txt", data);
     }
+    public static void existingEmail(String email){
+
+    }
+
 }

@@ -2,10 +2,12 @@ package Utils;
 
 import Models.Flight;
 import Models.Plane;
+import Models.Ticket;
+
 import java.util.Random;
 
 public class Generator {
-    public static Flight FlightGen(String origin, String destination){
+    public static Flight flightGen(String origin, String destination){
         return new Flight(GenerateID(),destination,origin,
                 new Plane("Boeing 737",150),randomDateGen());
     }
