@@ -35,21 +35,52 @@ public class FlightsPage extends JFrame {
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<<--");
     JLabel flightHeader = new JLabel("Flights");
-    JLabel SearchLabel = new JLabel("Search By City:");
-    JTextField SearchField = new JTextField(30);
+    JLabel SearchLabel = new JLabel("Where are you travelling from?");
+    JLabel SearchLabel2 = new JLabel("Where are you travelling to?");
+    JLabel errorLabel = new JLabel();
+
+
+
     public FlightsPage(){
-        flightsFrame.setSize(500, 600);
+
+        Data data = new Data();
+
+        JComboBox<String> cityList = new JComboBox<>(data.cities);
+        JComboBox<String> cityList2 = new JComboBox<>(data.cities);
+
+
+        cityList.addActionListener(e -> {
+            if (cityList.getSelectedItem().equals(cityList2.getSelectedItem())) {
+                errorLabel.setText("No flights available from the city to itself");
+                errorLabel.setForeground(Color.RED);
+            } else {
+                errorLabel.setText("");
+            }
+        });
+
+        cityList2.addActionListener(e -> {
+            if (cityList.getSelectedItem().equals(cityList2.getSelectedItem())) {
+                errorLabel.setText("No flights available from the city to itself");
+                errorLabel.setForeground(Color.RED);
+            } else {
+                errorLabel.setText("");
+            }
+        });
+
+        flightsFrame.setSize(1000, 800);
         flightsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         flightsFrame.setIconImage(icon.getImage());
         flightsFrame.setResizable(false);
         flightsFrame.setLocationRelativeTo(null);
-        flightsFrame.add(flightsPanel);
 
         flightsPanel.setLayout(null);
         flightsPanel.add(SearchLabel);
-        flightsPanel.add(SearchField);
         flightsPanel.add(backButton);
         flightsPanel.add(flightHeader);
+        flightsPanel.add(cityList);
+        flightsPanel.add(SearchLabel2);
+        flightsPanel.add(cityList2);
+        flightsFrame.add(flightsPanel);
 
 
         backButton.setLayout(new BorderLayout());
@@ -65,14 +96,30 @@ public class FlightsPage extends JFrame {
 
         flightHeader.setFont(new Font("Arial", Font.BOLD, 26));
         flightHeader.setForeground(Color.WHITE);
-        flightHeader.setBounds(200, 50, 100, 30);
+        flightHeader.setBounds(450, 50, 100, 30);
 
-        SearchLabel.setBounds(100, 100, 150, 30);
+        SearchLabel.setBounds(100, 100, 250, 30);
         SearchLabel.setFont(new Font("Arial", Font.BOLD, 14));
         SearchLabel.setForeground(Color.WHITE);
-        SearchField.setBounds(100, 130, 300, 30);
+
+        cityList.setBounds(100, 130, 300, 30);
+        cityList.setBackground(Color.WHITE);
+        cityList.setForeground(Color.BLACK);
+
+        SearchLabel2.setBounds(600, 100, 250, 30);
+        SearchLabel2.setFont(new Font("Arial", Font.BOLD, 14));
+        SearchLabel2.setForeground(Color.WHITE);
+
+        cityList2.setBounds(600, 130, 300, 30);
+        cityList2.setBackground(Color.WHITE);
+        cityList2.setForeground(Color.BLACK);
+        
+        errorLabel.setBounds(370, 170, 300, 30); // Set the position and size of the error label
+        flightsPanel.add(errorLabel);
 
         flightsFrame.setVisible(true);
     }
 
 }
+
+
