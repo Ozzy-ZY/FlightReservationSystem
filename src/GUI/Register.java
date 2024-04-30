@@ -27,8 +27,6 @@ public class Register extends JFrame{
     JLabel errorEmail = new JLabel("Invalid Email");
     JLabel errorUsername = new JLabel("Username must be between 3 and 20 characters long");
     JLabel errorPassword = new JLabel("Please enter a valid password");
-    JLabel RedEmail = new JLabel("This Email already exist");
-    JLabel RedUsername = new JLabel("This Username already exist");
     public Register(){
         regFrame.setSize(500, 600);
         regFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,14 +48,10 @@ public class Register extends JFrame{
         regPanel.add(errorEmail);
         regPanel.add(errorUsername);
         regPanel.add(errorPassword);
-        regPanel.add(RedEmail);
-        regPanel.add(RedUsername);
 
         errorEmail.setVisible(false);
         errorUsername.setVisible(false);
         errorPassword.setVisible(false);
-        RedEmail.setVisible(false);
-        RedUsername.setVisible(false);
 
         backButton.setLayout(new BorderLayout());
         backButton.addActionListener(new ActionListener() {
@@ -115,33 +109,19 @@ public class Register extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
                 if(ValidateEmail(email)){
+                    totalStatus[0] = true;
                     errorEmail.setVisible(false);
-                    if(emailstored(email)) {
-                        RedEmail.setVisible(true);
-                    }
-                    else {
-                        RedEmail.setVisible(false);
-                        totalStatus[0] = true;
-                    }
                 }
                 else{
-                    RedEmail.setVisible(false);
                     errorEmail.setVisible(true);
                 }
 
                 String username = usernameField.getText();
                 if(ValidateUsername(username)){
+                    totalStatus[1] = true;
                     errorUsername.setVisible(false);
-                    if(usernamestored(username)) {
-                        RedUsername.setVisible(true);
-                    }
-                    else {
-                        RedUsername.setVisible(false);
-                        totalStatus[1] = true;
-                    }
                 }
                 else{
-                    RedUsername.setVisible(false);
                     errorUsername.setVisible(true);
                 }
 
@@ -156,12 +136,12 @@ public class Register extends JFrame{
 
                 if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
                     HomePage.status = true;
-                        saveData(email, username, password);
-                        HomePage.currentUser = new User(emailField.getText(),
-                                LoginControl.getUsername(emailField.getText()),
-                                tostring(passwordField.getPassword()));
-                        HomePage homePage = new HomePage();
-                        regFrame.dispose();
+                    saveData(email, username, password);
+                    HomePage.currentUser = new User(emailField.getText(),
+                            LoginControl.getUsername(emailField.getText()),
+                            tostring(passwordField.getPassword()));
+                    FlightsPage flights = new FlightsPage();
+                    regFrame.dispose();
                 }
             }
         });
@@ -180,9 +160,6 @@ public class Register extends JFrame{
         errorEmail.setHorizontalAlignment(SwingConstants.LEFT);
         errorEmail.setForeground(Color.decode("#db3125"));
         errorEmail.setBounds(130, 175, 300, 30);
-        RedEmail.setHorizontalAlignment(SwingConstants.LEFT);
-        RedEmail.setForeground(Color.decode("#db3125"));
-        RedEmail.setBounds(130, 175, 300, 30);
 
         usernameLabel.setBounds(50, 200, 100, 30);
         usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
@@ -191,9 +168,6 @@ public class Register extends JFrame{
         errorUsername.setHorizontalAlignment(SwingConstants.LEFT);
         errorUsername.setForeground(Color.decode("#db3125"));
         errorUsername.setBounds(130, 225, 350, 30);
-        RedUsername.setHorizontalAlignment(SwingConstants.LEFT);
-        RedUsername.setForeground(Color.decode("#db3125"));
-        RedUsername.setBounds(130, 225, 350, 30);
 
         passwordLabel.setBounds(50, 250, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
