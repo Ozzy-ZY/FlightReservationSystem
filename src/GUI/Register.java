@@ -72,12 +72,17 @@ public class Register extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
-                if(ValidateEmail(email)){
-                    totalStatus[0] = true;
+                if (ValidateEmail(email)) {
                     errorEmail.setVisible(false);
-                }
-                else{
-                errorEmail.setVisible(true);
+                    if (emailstored(email)) {
+                        RedEmail.setVisible(true);
+                    } else {
+                        RedEmail.setVisible(false);
+                        totalStatus[0] = true;
+                    }
+                } else {
+                    RedEmail.setVisible(false);
+                    errorEmail.setVisible(true);
                 }
             }
         });
@@ -87,11 +92,18 @@ public class Register extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 if(ValidateUsername(username)){
-                    totalStatus[1] = true;
                     errorUsername.setVisible(false);
+                    if(usernamestored(username)) {
+                        RedUsername.setVisible(true);
+                    }
+                    else {
+                        RedUsername.setVisible(false);
+                        totalStatus[1] = true;
+                    }
                 }
                 else{
-                errorUsername.setVisible(true);
+                    RedUsername.setVisible(false);
+                    errorUsername.setVisible(true);
                 }
             }
         });
