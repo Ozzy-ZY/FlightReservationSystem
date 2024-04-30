@@ -4,12 +4,15 @@ import Models.Flight;
 import Models.Plane;
 
 public class Data {
-    private Plane plane = new Plane("Boeing 737", 150);
-    public Flight[] fLights = new Flight[5];{
-        fLights[0] = new Flight("1","Cairo","NewYork",plane,"14.9.2024");
-        fLights[1] = new Flight("2","Alexandria","Chicago",plane,"19.11.2024");
-        fLights[2] = new Flight("3","Mecca","Cairo",plane,"8.12.2024");
-        fLights[3] = new Flight("4","London","Berlin",plane,"2.10.2024");
-        fLights[4] = new Flight("5","Los Angelos","Cairo",plane,"15.9.2024");
+    public String[] cities = {
+            "New York", "London", "Paris", "Tokyo", "Beijing", "Mumbai", "Sydney", "Melbourne", "Los Angeles", "Chicago",
+            "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Jacksonville",
+            "San Francisco", "Indianapolis", "Columbus", "Fort Worth", "Charlotte", "Memphis", "Boston", "Baltimore", "Detroit",
+            "El Paso", "Seattle", "Denver", "Washington D.C.", "Nashville", "Portland", "Oklahoma City", "Las Vegas", "Louisville",
+            "Milwaukee", "Albuquerque", "Tucson", "Fresno", "Sacramento", "Kansas City", "Long Beach", "Mesa", "Atlanta", "Colorado Springs",
+            "Virginia Beach", "Raleigh", "Omaha", "Miami", "Oakland", "Minneapolis", "Tulsa", "Wichita", "New Orleans", "Auckland",
+            "Bangkok", "Cairo", "Dubai", "Istanbul", "Johannesburg", "Kuala Lumpur", "Mexico City", "Moscow", "Rio de Janeiro", "Shanghai"
     };
 }
+
+
