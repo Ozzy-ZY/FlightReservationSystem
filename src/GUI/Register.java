@@ -125,6 +125,7 @@ public class Register extends JFrame{
                     }
                 }
                 else{
+                    RedEmail.setVisible(false);
                     errorEmail.setVisible(true);
                 }
 
@@ -140,6 +141,7 @@ public class Register extends JFrame{
                     }
                 }
                 else{
+                    RedUsername.setVisible(false);
                     errorUsername.setVisible(true);
                 }
 
