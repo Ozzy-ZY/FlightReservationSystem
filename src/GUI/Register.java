@@ -13,7 +13,20 @@ public class Register extends JFrame{
 
     boolean[] totalStatus = {false, false, false};
     JFrame regFrame = new JFrame("Register");
-    JPanel regPanel = new JPanel();
+    JPanel regPanel = new JPanel() {
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            int width = getWidth();
+            int height = getHeight();
+            Color color1 = new Color(36, 10, 52);
+            Color color2 = new Color(137, 22, 82);
+            GradientPaint gp = new GradientPaint(0, 750, color2, width, height, color1);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, width, height);
+        }
+    };
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<<--");
     JButton regButton = new JButton("Register");
@@ -48,6 +61,7 @@ public class Register extends JFrame{
         regPanel.add(errorEmail);
         regPanel.add(errorUsername);
         regPanel.add(errorPassword);
+
 
         errorEmail.setVisible(false);
         errorUsername.setVisible(false);
@@ -136,10 +150,11 @@ public class Register extends JFrame{
 
                 if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
                     HomePage.status = true;
+                    saveData(email, username, password);
                     HomePage.currentUser = new User(emailField.getText(),
                             LoginControl.getUsername(emailField.getText()),
                             tostring(passwordField.getPassword()));
-                    saveData(email, username, password);
+
                     FlightsPage flights = new FlightsPage();
                     regFrame.dispose();
                 }
@@ -148,14 +163,14 @@ public class Register extends JFrame{
 
         regPanel.setBackground(Color.decode("#213D58"));
         registerHeader.setFont(new Font("Arial", Font.BOLD, 18));
-        registerHeader.setForeground(Color.white);
+        registerHeader.setForeground(Color.decode("#ffffff"));
         registerHeader.setBounds(230, 100, 100, 30);
         backButton.setBounds(0, 0, 50, 30);
         backButton.setBackground(Color.white);
 
         emailLabel.setBounds(50, 150, 100, 30);
         emailLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        emailLabel.setForeground(Color.white);
+        emailLabel.setForeground(Color.decode("#ffffff"));
         emailField.setBounds(130, 150, 300, 30);
         errorEmail.setHorizontalAlignment(SwingConstants.LEFT);
         errorEmail.setForeground(Color.decode("#db3125"));
@@ -164,7 +179,7 @@ public class Register extends JFrame{
 
         usernameLabel.setBounds(50, 200, 100, 30);
         usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        usernameLabel.setForeground(Color.white);
+        usernameLabel.setForeground(Color.decode("#ffffff"));
         usernameField.setBounds(130, 200, 300, 30);
         errorUsername.setHorizontalAlignment(SwingConstants.LEFT);
         errorUsername.setForeground(Color.decode("#db3125"));
@@ -173,7 +188,7 @@ public class Register extends JFrame{
 
         passwordLabel.setBounds(50, 250, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
-        passwordLabel.setForeground(Color.white);
+        passwordLabel.setForeground(Color.decode("#ffffff"));
         passwordField.setBounds(130, 250, 300, 30);
         errorPassword.setHorizontalAlignment(SwingConstants.LEFT);
         errorPassword.setForeground(Color.decode("#db3125"));
@@ -181,7 +196,8 @@ public class Register extends JFrame{
 
 
         regButton.setBounds(200, 300, 100, 30);
-        regButton.setBackground(Color.white);
+        regButton.setBackground(Color.decode("#FFEDD8"));
+        regButton.setForeground(Color.decode("#401F71"));
         regFrame.setVisible(true);
     }
 }
