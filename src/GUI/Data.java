@@ -4,7 +4,7 @@ import Models.Flight;
 import Models.Plane;
 
 public class Data {
-    public String[] cities = {
+    public static String[] cities = {
             "New York", "London", "Paris", "Tokyo", "Beijing", "Mumbai", "Sydney", "Melbourne", "Los Angeles", "Chicago",
             "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Jacksonville",
             "San Francisco", "Indianapolis", "Columbus", "Fort Worth", "Charlotte", "Memphis", "Boston", "Baltimore", "Detroit",

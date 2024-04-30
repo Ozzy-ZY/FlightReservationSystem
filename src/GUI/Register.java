@@ -15,7 +15,7 @@ public class Register extends JFrame{
     JFrame regFrame = new JFrame("Register");
     JPanel regPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
-    JButton backButton = new JButton("<<--");
+    JButton backButton = new JButton("<");
     JButton regButton = new JButton("Register");
     JTextField usernameField = new JTextField(30);
     JLabel registerHeader = new JLabel("Register");

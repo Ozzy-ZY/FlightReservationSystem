@@ -1,7 +1,9 @@
 package Models;
 
+import java.util.Date;
+
 public class Flight {
-    private String id;
+    private String id; // a 16-char alphanumeric string containing
     private String destination;
     private String origin;
     private Plane plane;
@@ -57,4 +59,5 @@ public class Flight {
     public String toString() {
         return origin+"-->"+destination+"____Date: "+date+"____Plane: "+plane.getType();
     }
+
 }

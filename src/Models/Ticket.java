@@ -3,11 +3,11 @@ package Models;
 public class Ticket {
     private Passenger passenger;
     private Flight flight;
-    private int seatnumber;
-    public Ticket(Passenger passenger,Flight flight,int seatnumber){
+    private int seatNumber;
+    public Ticket(Passenger passenger,Flight flight,int seatNumber){
         this.passenger = passenger;
         this.flight = flight;
-        this.seatnumber = seatnumber;
+        this.seatNumber = seatNumber;
     }
 
     public Passenger getPassenger() {
@@ -26,11 +26,11 @@ public class Ticket {
         this.flight = flight;
     }
 
-    public int getSeatnumber() {
-        return seatnumber;
+    public int getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setSeatnumber(int seatnumber) {
-        this.seatnumber = seatnumber;
+    public void setSeatNumber(int seatNumber) {
+        this.seatNumber = seatNumber;
     }
 }

@@ -4,6 +4,8 @@ import Models.Flight;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
+
 class FlightContainer extends JLabel{
     JButton bookButton = new JButton("Book");
     JFrame bookingFrame = new JFrame("Booking");
@@ -29,11 +31,10 @@ class FlightContainer extends JLabel{
     }
 }
 public class FlightsPage extends JFrame {
-    Data data = new Data();
     JFrame flightsFrame = new JFrame("Flights");
     JPanel flightsPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
-    JButton backButton = new JButton("<<--");
+    JButton backButton = new JButton("<");
     JLabel flightHeader = new JLabel("Flights");
     JLabel SearchLabel = new JLabel("Where are you travelling from?");
     JLabel SearchLabel2 = new JLabel("Where are you travelling to?");
@@ -43,14 +44,12 @@ public class FlightsPage extends JFrame {
 
     public FlightsPage(){
 
-        Data data = new Data();
-
-        JComboBox<String> cityList = new JComboBox<>(data.cities);
-        JComboBox<String> cityList2 = new JComboBox<>(data.cities);
+        JComboBox<String> cityList = new JComboBox<>(Data.cities);
+        JComboBox<String> cityList2 = new JComboBox<>(Data.cities);
 
 
         cityList.addActionListener(e -> {
-            if (cityList.getSelectedItem().equals(cityList2.getSelectedItem())) {
+            if (Objects.equals(cityList.getSelectedItem(), cityList2.getSelectedItem())) {
                 errorLabel.setText("No flights available from the city to itself");
                 errorLabel.setForeground(Color.RED);
             } else {
@@ -59,7 +58,7 @@ public class FlightsPage extends JFrame {
         });
 
         cityList2.addActionListener(e -> {
-            if (cityList.getSelectedItem().equals(cityList2.getSelectedItem())) {
+            if (Objects.equals(cityList.getSelectedItem(), cityList2.getSelectedItem())) {
                 errorLabel.setText("No flights available from the city to itself");
                 errorLabel.setForeground(Color.RED);
             } else {
