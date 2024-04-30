@@ -1,14 +1,7 @@
 package Controllers;
 import java.io.File;
 import java.util.regex.*;
-
-import static Utils.FileManager.isFileEmpty;
-
 public class RegisterControl {
-    public static final int VALID_DATA = 0;
-    public static final int INVALID_DATA = 1;
-    public static final int ALREADY_EXISTS = 2;
-
     public static boolean ValidatePassword(String Password){
         return Password.length() >= 8;
     }
@@ -20,25 +13,14 @@ public class RegisterControl {
         return sb.toString();
     }
 
-    public  static int ValidateUsername(String Username){
-        if(isExistingUsername(Username)){
-            return ALREADY_EXISTS;
-        }
-        if(Username.length() >= 3){
-            return VALID_DATA;
-        }
-        return INVALID_DATA;
+    public  static boolean ValidateUsername(String Username){
+        return 3 <= Username.length() && Username.length() <= 20;
     }
     
-    public static int ValidateEmail(String Email){
+    public static boolean ValidateEmail(String Email){
         String regexPattern = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"; // OWASP Validation Regex
-        if(isExistingEmail(Email)){
-            return ALREADY_EXISTS;
-        }
-        if(patternMatches(Email, regexPattern)){
-            return 0;
-        }
-        return INVALID_DATA;
+
+        return patternMatches(Email, regexPattern);
     }
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {
@@ -57,32 +39,8 @@ public class RegisterControl {
         String data = username + " " + email + " " + password + "\n";
         Utils.FileManager.append("Users.txt", data);
     }
-    public static boolean isExistingEmail(String email){
-        if(isFileEmpty("Users.txt")){
-            return false;
-        }
-        String data = Utils.FileManager.read("Users.txt");
-        String[] users = data.split("\n");
-        for (String user : users) {
-            String[] userData = user.split(" ");
-            if(userData[1].equals(email)){
-                return true;
-            }
-        }
-        return false;
+    public static void existingEmail(String email){
+
     }
-    public static boolean isExistingUsername(String username){
-        if(isFileEmpty("Users.txt")){
-            return false;
-        }
-        String data = Utils.FileManager.read("Users.txt");
-        String[] users = data.split("\n");
-        for (String user : users) {
-            String[] userData = user.split(" ");
-            if(userData[0].equals(username)){
-                return true;
-            }
-        }
-        return false;
-    }
+
 }
