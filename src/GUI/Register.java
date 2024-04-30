@@ -27,6 +27,9 @@ public class Register extends JFrame{
     JLabel errorEmail = new JLabel("Invalid Email");
     JLabel errorUsername = new JLabel("Username must be between 3 and 20 characters long");
     JLabel errorPassword = new JLabel("Please enter a valid password");
+    JLabel emailAlreadyExists = new JLabel("Email already exists!");
+    JLabel usernameAlreadyExists = new JLabel("Username already exists!");
+
     public Register(){
         regFrame.setSize(500, 600);
         regFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,10 +51,14 @@ public class Register extends JFrame{
         regPanel.add(errorEmail);
         regPanel.add(errorUsername);
         regPanel.add(errorPassword);
+        regPanel.add(emailAlreadyExists);
+        regPanel.add(usernameAlreadyExists);
 
         errorEmail.setVisible(false);
         errorUsername.setVisible(false);
         errorPassword.setVisible(false);
+        emailAlreadyExists.setVisible(false);
+        usernameAlreadyExists.setVisible(false);
 
         backButton.setLayout(new BorderLayout());
         backButton.addActionListener(new ActionListener() {
@@ -66,12 +73,18 @@ public class Register extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
-                if(ValidateEmail(email)){
+                if(ValidateEmail(email) == VALID_DATA){
                     totalStatus[0] = true;
                     errorEmail.setVisible(false);
+                    emailAlreadyExists.setVisible(false);
+                }
+                else if(ValidateEmail(email) == ALREADY_EXISTS){
+                    errorEmail.setVisible(false);
+                    emailAlreadyExists.setVisible(true);
                 }
                 else{
-                errorEmail.setVisible(true);
+                    emailAlreadyExists.setVisible(false);
+                    errorEmail.setVisible(true);
                 }
             }
         });
@@ -80,12 +93,18 @@ public class Register extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
-                if(ValidateUsername(username)){
+                if(ValidateUsername(username)== VALID_DATA){
                     totalStatus[1] = true;
                     errorUsername.setVisible(false);
+                    usernameAlreadyExists.setVisible(false);
+                }
+                else if(ValidateUsername(username)== ALREADY_EXISTS){
+                    errorUsername.setVisible(false);
+                    usernameAlreadyExists.setVisible(true);
                 }
                 else{
-                errorUsername.setVisible(true);
+                    usernameAlreadyExists.setVisible(false);
+                    errorUsername.setVisible(true);
                 }
             }
         });
@@ -108,20 +127,31 @@ public class Register extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String email = emailField.getText();
-                if(ValidateEmail(email)){
+                if(ValidateEmail(email)== VALID_DATA){
                     totalStatus[0] = true;
                     errorEmail.setVisible(false);
+                    emailAlreadyExists.setVisible(false);
+                }
+                else if(ValidateEmail(email)== ALREADY_EXISTS){
+                    errorEmail.setVisible(false);
+                    emailAlreadyExists.setVisible(true);
                 }
                 else{
+                    emailAlreadyExists.setVisible(false);
                     errorEmail.setVisible(true);
                 }
-
                 String username = usernameField.getText();
-                if(ValidateUsername(username)){
+                if(ValidateUsername(username) == VALID_DATA){
                     totalStatus[1] = true;
+                    errorUsername.setVisible(false);
+                    usernameAlreadyExists.setVisible(false);
+                }
+                else if(ValidateUsername(username) == ALREADY_EXISTS){
+                    usernameAlreadyExists.setVisible(true);
                     errorUsername.setVisible(false);
                 }
                 else{
+                    usernameAlreadyExists.setVisible(false);
                     errorUsername.setVisible(true);
                 }
 
@@ -157,9 +187,13 @@ public class Register extends JFrame{
         emailLabel.setFont(new Font("Arial",Font.BOLD, 15));
         emailLabel.setForeground(Color.white);
         emailField.setBounds(130, 150, 300, 30);
+
         errorEmail.setHorizontalAlignment(SwingConstants.LEFT);
         errorEmail.setForeground(Color.decode("#db3125"));
         errorEmail.setBounds(130, 175, 300, 30);
+        emailAlreadyExists.setHorizontalAlignment(SwingConstants.LEFT);
+        emailAlreadyExists.setForeground(Color.decode("#db3125"));
+        emailAlreadyExists.setBounds(130, 175, 300, 30);
 
         usernameLabel.setBounds(50, 200, 100, 30);
         usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
@@ -169,6 +203,9 @@ public class Register extends JFrame{
         errorUsername.setHorizontalAlignment(SwingConstants.LEFT);
         errorUsername.setForeground(Color.decode("#db3125"));
         errorUsername.setBounds(130, 225, 350, 30);
+        usernameAlreadyExists.setHorizontalAlignment(SwingConstants.LEFT);
+        usernameAlreadyExists.setForeground(Color.decode("#db3125"));
+        usernameAlreadyExists.setBounds(130, 225, 350, 30);
 
         passwordLabel.setBounds(50, 250, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
