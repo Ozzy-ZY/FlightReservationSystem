@@ -74,7 +74,7 @@ public class Register extends JFrame{
                 if(ValidateEmail(email)){
                     totalStatus[0] = true;
                     errorEmail.setVisible(false);
-                    if(emailstored(email)) {
+                    if(isEmailStored(email)) {
                         RedEmail.setVisible(true);
                         totalStatus[0] = false;
                     }
@@ -97,7 +97,7 @@ public class Register extends JFrame{
                 if(ValidateUsername(username)){
                     totalStatus[1] = true;
                     errorUsername.setVisible(false);
-                    if(usernamestored(username)) {
+                    if(isUsernameStored(username)) {
                         totalStatus[1] = false;
                         RedUsername.setVisible(true);
                     }
@@ -134,7 +134,7 @@ public class Register extends JFrame{
                 if(ValidateEmail(email)) {
                     totalStatus[0] = true;
                     errorEmail.setVisible(false);
-                    if(emailstored(email)) {
+                    if(isEmailStored(email)) {
                         RedEmail.setVisible(true);
                         totalStatus[0] = false;
                     }
@@ -152,7 +152,7 @@ public class Register extends JFrame{
                 if(ValidateUsername(username)) {
                     totalStatus[1] = true;
                     errorUsername.setVisible(false);
-                    if(usernamestored(username)) {
+                    if(isUsernameStored(username)) {
                         totalStatus[1] = false;
                         RedUsername.setVisible(true);
                     }

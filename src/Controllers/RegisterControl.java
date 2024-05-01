@@ -1,6 +1,8 @@
 package Controllers;
-import java.io.File;
 import java.util.regex.*;
+
+import static Utils.FileManager.isFileEmpty;
+
 public class RegisterControl {
     public static boolean ValidatePassword(String Password){
         return Password.length() >= 8;
@@ -29,7 +31,9 @@ public class RegisterControl {
                 .matches();
     }
 
-    public static boolean emailstored(String email){
+    public static boolean isEmailStored(String email){
+        if(isFileEmpty("Users.txt"))
+            return false;
         String data = Utils.FileManager.read("Users.txt");
         String[] emails = data.split("\n");
         for (String emailLine : emails) {
@@ -40,7 +44,9 @@ public class RegisterControl {
         }
         return false;
     }
-    public static boolean usernamestored(String username){
+    public static boolean isUsernameStored(String username){
+        if(isFileEmpty("Users.txt"))
+            return false;
         String data = Utils.FileManager.read("Users.txt");
         String[] users = data.split("\n");
         for (String user : users) {
