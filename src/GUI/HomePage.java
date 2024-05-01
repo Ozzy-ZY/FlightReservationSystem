@@ -13,8 +13,7 @@ import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
 public class HomePage {
-
-    //a7a
+    //aloo
     static boolean status = false;
     static User currentUser;
     JFrame mainFrame = new JFrame("Right Flight");
