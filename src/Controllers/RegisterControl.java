@@ -8,7 +8,7 @@ public class RegisterControl {
     public static String tostring(char[] arrOfChar){
         StringBuilder sb = new StringBuilder();
         for (char c : arrOfChar) {
-                sb.append(c);
+            sb.append(c);
         }
         return sb.toString();
     }
@@ -16,7 +16,7 @@ public class RegisterControl {
     public  static boolean ValidateUsername(String Username){
         return 3 <= Username.length() && Username.length() <= 20;
     }
-    
+
     public static boolean ValidateEmail(String Email){
         String regexPattern = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"; // OWASP Validation Regex
 
@@ -25,8 +25,31 @@ public class RegisterControl {
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {
         return Pattern.compile(regexPattern)
-          .matcher(emailAddress)
-          .matches();
+                .matcher(emailAddress)
+                .matches();
+    }
+
+    public static boolean emailstored(String email){
+        String data = Utils.FileManager.read("Users.txt");
+        String[] emails = data.split("\n");
+        for (String emailLine : emails) {
+            String[] userData = emailLine.split(" ");
+            if (userData[1].equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean usernamestored(String username){
+        String data = Utils.FileManager.read("Users.txt");
+        String[] users = data.split("\n");
+        for (String user : users) {
+            String[] userData = user.split(" ");
+            if (userData[0].equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

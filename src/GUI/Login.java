@@ -56,7 +56,7 @@ public class Login extends JFrame{
                         LoginControl.getUsername(emailField.getText()),
                         tostring(passwordField.getPassword()));
                 HomePage.status = true;
-                FlightsPage flightsPage = new FlightsPage();
+                HomePage homePage = new HomePage();
                 loginFrame.dispose();
             }
             else{

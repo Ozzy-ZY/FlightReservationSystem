@@ -4,7 +4,14 @@ import Models.User;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.awt.font.TextAttribute;
+import java.util.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
+import java.awt.font.TextAttribute;
+import java.util.HashMap;
+import java.util.Map;
 public class HomePage {
     static boolean status = false;
     static User currentUser;
@@ -13,7 +20,7 @@ public class HomePage {
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
             getScaledInstance(300, 300, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
-    JLabel currentUserLabel = new JLabel();
+    JLabel currentUserLabel;
     JLabel regLabel = new JLabel("Register");
     JLabel loginLabel = new JLabel("Login");
     JLabel logoLabel = new JLabel(scaledIcon);
@@ -21,7 +28,9 @@ public class HomePage {
     JButton Flights = new JButton("Flights");
     JButton Tickets = new JButton("Tickets");
     JButton Account = new JButton("Account");
-    public HomePage(){
+    JMenuItem signOutItem = new JMenuItem("Sign Out");
+    JPopupMenu popupMenu = new JPopupMenu();
+    public HomePage() {
         mainFrame.setSize(550, 650);
         mainPanel.setBackground(Color.decode("#213D58"));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,14 +47,73 @@ public class HomePage {
         mainPanel.add(Flights);
         mainPanel.add(Tickets);
         mainPanel.add(Account);
-        mainPanel.add(currentUserLabel);
+        popupMenu.add(signOutItem);
 
-        currentUserLabel.setVisible(false);
-        if(status){
+        if (status) {
             regLabel.setVisible(false);
             loginLabel.setVisible(false);
-            currentUserLabel.setText(currentUser.getUsername());
+            this.currentUserLabel = new JLabel(currentUser.getUsername());
+            mainPanel.add(currentUserLabel);
             currentUserLabel.setVisible(true);
+            currentUserLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+            currentUserLabel.setForeground(Color.lightGray);
+            currentUserLabel.setBounds(30, 10, currentUserLabel.getMinimumSize().width + 10, currentUserLabel.getMinimumSize().height);
+
+            mainFrame.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (entered)
+                    {
+                        entered=false;
+                        exited = false;
+                    }
+                    else
+                        exited = true;
+                }
+            });
+            currentUserLabel.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //currentUserLabel.setForeground(Color.yellow);
+                    if (entered && !exited) {
+                        entered = false;
+                        exited = true;
+                        popupMenu.setVisible(false);
+
+                    }
+                    else if(!entered && exited) {
+                        entered = true;
+                        exited = false;
+                        showPopupMenu(currentUserLabel, currentUserLabel.getWidth() / 2, currentUserLabel.getHeight());
+                    }
+                    else
+                    {
+                        entered = true;
+                        exited = false;
+                    }
+                }
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    underlineLabel(currentUserLabel);
+                    if(!popupMenu.isVisible())
+                    {
+                        entered=false;
+                        exited=true;
+                    }
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    removeUnderline(currentUserLabel);
+                }
+            });
+            signOutItem.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent evt) {
+                    handleSignOut();
+                }
+            });
         }
         regLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -70,7 +138,7 @@ public class HomePage {
                 mainFrame.dispose();
             }
         });
-
+        popupMenu.setPreferredSize(new Dimension(75, 30));
         regLabel.setFont(new Font("New", Font.ITALIC, 18));
         regLabel.setForeground(Color.lightGray);
         regLabel.setBounds(30, 10, 100, 30);
@@ -78,9 +146,6 @@ public class HomePage {
         loginLabel.setForeground(Color.lightGray);
         loginLabel.setBounds(460, 10, 100, 30);
         logoLabel.setBounds(0, 0, 525, 190);
-        currentUserLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        currentUserLabel.setForeground(Color.lightGray);
-        currentUserLabel.setBounds(30, 10, 300, 30);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
         welcomeLabel.setForeground(Color.decode("#FFFFFF"));
         welcomeLabel.setBounds(135, 200, 400, 30);
@@ -92,5 +157,44 @@ public class HomePage {
         Account.setFont(new Font("Arial", Font.BOLD, 18));
 
         mainFrame.setVisible(true);
+    }
+    private void handleSignOut() {
+        String message = "Are you sure you want to sign out?\nYour unsaved work will be lost.";
+        String title = "Confirmation: Sign Out";
+        int confirmation = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            performSignOut();
+        }
+
+    }
+
+    private void performSignOut() {
+        // Add code here to handle sign out action
+        // For example:
+        // 1. Reset user status
+        // 2. Clear any session data
+        // 3. Navigate to sign-in screen or exit application
+        status = false;
+        new HomePage();
+        mainFrame.dispose();
+        // Add more actions as needed
+    }
+    boolean entered = false;
+    boolean exited = true;
+
+    public void showPopupMenu(JLabel label, int x, int y) {
+        popupMenu.show(label, x, y);
+    }
+    public void underlineLabel(JLabel label) {
+        Map<TextAttribute, Object> fontAttributes = new HashMap<>();
+        fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        label.setFont(label.getFont().deriveFont(fontAttributes));
+    }
+    public void removeUnderline(JLabel label) {
+        if (label.getFont() != null) {
+            Map<TextAttribute, Object> fontAttributes = new HashMap<>(label.getFont().getAttributes());
+            fontAttributes.put(TextAttribute.UNDERLINE, -1);
+            label.setFont(label.getFont().deriveFont(fontAttributes));
+        }
     }
 }
