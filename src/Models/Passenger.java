@@ -3,11 +3,11 @@ package Models;
 public class Passenger extends User {
     private String firstname;
     private String lastname;
-    private String passportid;
-    private String phonenumber;
+    private String passportId;
+    private String phoneNumber;
     private String birthdate;
 
-    public Passenger(String email, String fname,String lname, String password,String username) {
+    public Passenger(String email, String fName,String lName, String password,String username) {
         super(email, username ,password);
     }
 
@@ -17,30 +17,30 @@ public class Passenger extends User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    public void setPassportid(String passportid) {
-        this.passportid = passportid;
+    public void setPassportId(String passportId) {
+        this.passportId = passportId;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phonenumber) {
+        this.phoneNumber = phonenumber;
     }
 
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
-    public String getFirstname() {
+    public String getFirstName() {
         return firstname;
     }
-    public String getLastname() {
+    public String getLastName() {
         return lastname;
     }
-    public String getPassportid() {
-        return passportid;
+    public String getPassportId() {
+        return passportId;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getBirthdate() {

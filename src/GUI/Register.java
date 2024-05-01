@@ -15,7 +15,7 @@ public class Register extends JFrame{
     JFrame regFrame = new JFrame("Register");
     JPanel regPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
-    JButton backButton = new JButton("<<--");
+    JButton backButton = new JButton("<");
     JButton regButton = new JButton("Register");
     JTextField usernameField = new JTextField(30);
     JLabel registerHeader = new JLabel("Register");
@@ -165,6 +165,7 @@ public class Register extends JFrame{
         usernameLabel.setFont(new Font("Arial",Font.BOLD, 15));
         usernameLabel.setForeground(Color.white);
         usernameField.setBounds(130, 200, 300, 30);
+
         errorUsername.setHorizontalAlignment(SwingConstants.LEFT);
         errorUsername.setForeground(Color.decode("#db3125"));
         errorUsername.setBounds(130, 225, 350, 30);
@@ -173,10 +174,10 @@ public class Register extends JFrame{
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
         passwordLabel.setForeground(Color.white);
         passwordField.setBounds(130, 250, 300, 30);
+
         errorPassword.setHorizontalAlignment(SwingConstants.LEFT);
         errorPassword.setForeground(Color.decode("#db3125"));
         errorPassword.setBounds(130, 275, 300, 30);
-
 
         regButton.setBounds(200, 300, 100, 30);
         regButton.setBackground(Color.white);

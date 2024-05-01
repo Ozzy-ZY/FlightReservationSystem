@@ -30,4 +30,9 @@ public class FileManager {
             System.err.println("Error appending to file: " + e.getMessage());
         }
     }
+
+    public static boolean isFileEmpty(String path){
+        File file = new File(path);
+        return file.length() == 0;
+    }
 }

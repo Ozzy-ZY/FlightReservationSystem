@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class HomePage {
-    static Boolean status = false;
+    static boolean status = false;
     static User currentUser;
     JFrame mainFrame = new JFrame("Right Flight");
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
