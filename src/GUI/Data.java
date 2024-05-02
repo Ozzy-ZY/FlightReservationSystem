@@ -3,6 +3,8 @@ package GUI;
 import Models.Flight;
 import Models.Plane;
 
+import java.util.Arrays;
+
 public class Data {
     public static String[] cities = {
             "New York", "London", "Paris", "Tokyo", "Beijing", "Mumbai", "Sydney", "Melbourne", "Los Angeles", "Chicago",
@@ -13,6 +15,9 @@ public class Data {
             "Virginia Beach", "Raleigh", "Omaha", "Miami", "Oakland", "Minneapolis", "Tulsa", "Wichita", "New Orleans", "Auckland",
             "Bangkok", "Cairo", "Dubai", "Istanbul", "Johannesburg", "Kuala Lumpur", "Mexico City", "Moscow", "Rio de Janeiro", "Shanghai"
     };
+    public Data() {
+        Arrays.sort(cities);
+    }
 }
 
 

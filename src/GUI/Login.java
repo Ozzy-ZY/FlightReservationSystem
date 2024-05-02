@@ -1,5 +1,5 @@
 package GUI;
-
+import GUI.HomePage;
 import Controllers.LoginControl;
 import Models.User;
 
@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+
+import Utils.QrGenerator;
+import com.google.zxing.WriterException;
+import java.io.IOException;
 
 import static Controllers.RegisterControl.*;
 
@@ -56,6 +60,11 @@ public class Login extends JFrame{
                         LoginControl.getUsername(emailField.getText()),
                         tostring(passwordField.getPassword()));
                 HomePage.status = true;
+
+
+
+
+
                 HomePage homePage = new HomePage();
                 loginFrame.dispose();
             }
