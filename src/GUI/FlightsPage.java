@@ -1,5 +1,4 @@
 package GUI;
-import Models.Flight;
 import Utils.QrGenerator;
 import com.google.zxing.WriterException;
 import java.io.IOException;
@@ -7,34 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import Utils.Generator;
 
-class FlightContainer extends JLabel{
-    JButton bookButton = new JButton("Book");
-    JFrame bookingFrame = new JFrame("Booking");
-    JPanel bookingPanel = new JPanel();
-    public FlightContainer(Flight flight){
-        JDialog bookingDialog = new JDialog(bookingFrame, "Booking", true);
-        bookingPanel.setLayout(new BoxLayout(bookingPanel, BoxLayout.Y_AXIS));
-        bookingPanel.add(bookingPanel);
-
-        bookingFrame.setIconImage(new ImageIcon("Assets/Right_Flight.png").getImage());
-        bookingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        bookingFrame.setSize(300, 300);
-        bookingFrame.setLocationRelativeTo(FlightContainer.this);
-        bookingFrame.setVisible(true);
-
-        bookButton.setBackground(Color.GREEN);
-        bookButton.addActionListener(e -> {
-        });
-        this.setOpaque(true);
-        this.setBackground(Color.WHITE);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    }
-}
 public class FlightsPage extends JFrame {
 
 
@@ -107,7 +80,7 @@ public class FlightsPage extends JFrame {
 
         backButton.setLayout(new BorderLayout());
         backButton.addActionListener(e -> {
-            HomePage homePage = new HomePage();
+            new HomePage();
             flightsFrame.dispose();
         });
 
@@ -211,23 +184,20 @@ public class FlightsPage extends JFrame {
             flightsPanel.remove(qrcode); // Remove the old QR code from the panel
 
             // Create a timer that waits for 5 seconds before displaying the new QR code
-            Timer timer = new Timer(5000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    qrCode.getImage().flush();
-                    ImageIcon newQrCode = new ImageIcon("src/Utils/qrcode.png"); // Create a new ImageIcon
-                    qrcode = new JLabel(newQrCode); // Assign the new ImageIcon to the JLabel
-                    qrcode.setBounds(50, 400, 300, 300);
-                    flightsPanel.add(qrcode); // Add the new QR code to the panel
-                    flightsPanel.revalidate();
-                    flightsPanel.repaint();
-                    flightsPanel.remove(countdownLabel); // Remove the countdown label
-                    flightsPanel.add(username);
-                    flightsPanel.add(email);
-                    flightsPanel.add(ID);
-                    flightsPanel.add(AvailableFlights);
-                    flightsPanel.add(AvailableFlights2);
-                }
+            Timer timer = new Timer(5000, e -> {
+                qrCode.getImage().flush();
+                ImageIcon newQrCode = new ImageIcon("src/Utils/qrcode.png"); // Create a new ImageIcon
+                qrcode = new JLabel(newQrCode); // Assign the new ImageIcon to the JLabel
+                qrcode.setBounds(50, 400, 300, 300);
+                flightsPanel.add(qrcode); // Add the new QR code to the panel
+                flightsPanel.revalidate();
+                flightsPanel.repaint();
+                flightsPanel.remove(countdownLabel); // Remove the countdown label
+                flightsPanel.add(username);
+                flightsPanel.add(email);
+                flightsPanel.add(ID);
+                flightsPanel.add(AvailableFlights);
+                flightsPanel.add(AvailableFlights2);
             });
             timer.setRepeats(false); // Ensure the timer only runs once
             timer.start(); // Start the timer

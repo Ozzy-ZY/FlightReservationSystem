@@ -3,13 +3,10 @@ import Models.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.font.TextAttribute;
-import java.util.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
-import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
 public class HomePage {
@@ -118,26 +115,23 @@ public class HomePage {
         }
         regLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Register register = new Register();
+                new Register();
                 mainFrame.dispose();
             }
         });
         loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Login login = new Login();
+                new Login();
                 mainFrame.dispose();
             }
         });
-        Flights.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(!status){
-                    JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
-                    return;
-                }
-                FlightsPage Flight = new FlightsPage();
-                mainFrame.dispose();
+        Flights.addActionListener(e -> {
+            if(!status){
+                JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
+                return;
             }
+            new FlightsPage();
+            mainFrame.dispose();
         });
         popupMenu.setPreferredSize(new Dimension(75, 30));
         regLabel.setFont(new Font("New", Font.ITALIC, 18));
