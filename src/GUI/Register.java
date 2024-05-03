@@ -1,11 +1,8 @@
 package GUI;
 import Controllers.LoginControl;
 import Models.User;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static Controllers.RegisterControl.*;
 
@@ -60,131 +57,116 @@ public class Register extends JFrame{
         RedUsername.setVisible(false);
 
         backButton.setLayout(new BorderLayout());
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                HomePage homePage = new HomePage();
-                regFrame.dispose();
-            }
+        backButton.addActionListener(e -> {
+            new HomePage();
+            regFrame.dispose();
         });
-        emailField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String email = emailField.getText();
-                if(ValidateEmail(email)){
-                    totalStatus[0] = true;
-                    errorEmail.setVisible(false);
-                    if(isEmailStored(email)) {
-                        RedEmail.setVisible(true);
-                        totalStatus[0] = false;
-                    }
-                    else {
-                        RedEmail.setVisible(false);
-                        totalStatus[0] = true;
-                    }
-                }
-                else{
+        emailField.addActionListener(e -> {
+            String email = emailField.getText();
+            if(ValidateEmail(email)){
+                totalStatus[0] = true;
+                errorEmail.setVisible(false);
+                if(emailstored(email)) {
+                    RedEmail.setVisible(true);
                     totalStatus[0] = false;
+                }
+                else {
                     RedEmail.setVisible(false);
-                    errorEmail.setVisible(true);
+                    totalStatus[0] = true;
                 }
             }
+            else{
+                totalStatus[0] = false;
+                RedEmail.setVisible(false);
+                errorEmail.setVisible(true);
+            }
         });
-        usernameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                if(ValidateUsername(username)){
-                    totalStatus[1] = true;
-                    errorUsername.setVisible(false);
-                    if(isUsernameStored(username)) {
-                        totalStatus[1] = false;
-                        RedUsername.setVisible(true);
-                    }
-                    else {
-                        RedUsername.setVisible(false);
-                        totalStatus[1] = true;
-                    }
-                }
-                else{
+        usernameField.addActionListener(e -> {
+            String username = usernameField.getText();
+            if(ValidateUsername(username)){
+                totalStatus[1] = true;
+                errorUsername.setVisible(false);
+                if(usernamestored(username)) {
                     totalStatus[1] = false;
-                    RedUsername.setVisible(false);
-                    errorUsername.setVisible(true);
+                    RedUsername.setVisible(true);
                 }
+                else {
+                    RedUsername.setVisible(false);
+                    totalStatus[1] = true;
+                }
+            }
+            else{
+                totalStatus[1] = false;
+                RedUsername.setVisible(false);
+                errorUsername.setVisible(true);
             }
         });
 
-        passwordField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String password = tostring(passwordField.getPassword());
-                if(ValidatePassword(password)){
-                    totalStatus[2] = true;
-                    errorPassword.setVisible(false);
+        passwordField.addActionListener(e -> {
+            String password = tostring(passwordField.getPassword());
+            if(ValidatePassword(password)){
+                totalStatus[2] = true;
+                errorPassword.setVisible(false);
+            }
+            else{
+            errorPassword.setVisible(true);
+            }
+        });
+        regButton.addActionListener(e -> {
+            String email = emailField.getText();
+            if(ValidateEmail(email)) {
+                totalStatus[0] = true;
+                errorEmail.setVisible(false);
+                if(emailstored(email)) {
+                    RedEmail.setVisible(true);
+                    totalStatus[0] = false;
                 }
-                else{
+                else {
+                    RedEmail.setVisible(false);
+                    totalStatus[0] = true;
+                }
+            }
+            else{
+                totalStatus[0] = false;
+                RedEmail.setVisible(false);
+                errorEmail.setVisible(true);
+            }
+            String username = usernameField.getText();
+            if(ValidateUsername(username)) {
+                totalStatus[1] = true;
+                errorUsername.setVisible(false);
+                if(usernamestored(username)) {
+                    totalStatus[1] = false;
+                    RedUsername.setVisible(true);
+                }
+                else {
+                    RedUsername.setVisible(false);
+                    totalStatus[1] = true;
+                }
+            }
+            else{
+                totalStatus[1] = false;
+                RedUsername.setVisible(false);
+                errorUsername.setVisible(true);
+            }
+
+            String password = tostring(passwordField.getPassword());
+            if(ValidatePassword(password)){
+                totalStatus[2] = true;
+                errorPassword.setVisible(false);
+            }
+            else{
                 errorPassword.setVisible(true);
-                }
             }
-        });
-        regButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String email = emailField.getText();
-                if(ValidateEmail(email)) {
-                    totalStatus[0] = true;
-                    errorEmail.setVisible(false);
-                    if(isEmailStored(email)) {
-                        RedEmail.setVisible(true);
-                        totalStatus[0] = false;
-                    }
-                    else {
-                        RedEmail.setVisible(false);
-                        totalStatus[0] = true;
-                    }
-                }
-                else{
-                    totalStatus[0] = false;
-                    RedEmail.setVisible(false);
-                    errorEmail.setVisible(true);
-                }
-                String username = usernameField.getText();
-                if(ValidateUsername(username)) {
-                    totalStatus[1] = true;
-                    errorUsername.setVisible(false);
-                    if(isUsernameStored(username)) {
-                        totalStatus[1] = false;
-                        RedUsername.setVisible(true);
-                    }
-                    else {
-                        RedUsername.setVisible(false);
-                        totalStatus[1] = true;
-                    }
-                }
-                else{
-                    totalStatus[1] = false;
-                    RedUsername.setVisible(false);
-                    errorUsername.setVisible(true);
-                }
 
-                String password = tostring(passwordField.getPassword());
-                if(ValidatePassword(password)){
-                    totalStatus[2] = true;
-                    errorPassword.setVisible(false);
-                }
-                else{
-                    errorPassword.setVisible(true);
-                }
-
-                if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
-                    HomePage.status = true;
-                    saveData(email, username, password);
-                    HomePage.currentUser = new User(emailField.getText(),
-                            LoginControl.getUsername(emailField.getText()),
-                            tostring(passwordField.getPassword()));
-                    HomePage homePage = new HomePage();
-                    regFrame.dispose();
-                }
+            if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
+                HomePage.status = true;
+                saveData(email, username, password);
+                HomePage.currentUser = new User(emailField.getText(),
+                        LoginControl.getUsername(emailField.getText()),
+                        tostring(passwordField.getPassword()));
+                new HomePage();
+                regFrame.dispose();
             }
         });
 
