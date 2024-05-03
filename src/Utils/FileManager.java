@@ -1,5 +1,9 @@
 package Utils;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class FileManager {
     public static void write(String path, String data) {
@@ -29,6 +33,12 @@ public class FileManager {
         } catch (IOException e) {
             System.err.println("Error appending to file: " + e.getMessage());
         }
+    }
+
+    public static void deleteLine(String filePath,String lineToDelete) throws IOException {
+        List<String> lines = Files.readAllLines(Path.of(filePath));
+        lines.removeIf(line -> line.equals(lineToDelete));
+        Files.write(Path.of(filePath), lines);
     }
 
     public static boolean isFileEmpty(String path){

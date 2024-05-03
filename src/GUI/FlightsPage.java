@@ -9,8 +9,6 @@ import javax.swing.Timer;
 import Utils.Generator;
 
 public class FlightsPage extends JFrame {
-
-
     String city1;
     String city2;
     JFrame flightsFrame = new JFrame("Flights");
@@ -173,7 +171,9 @@ public class FlightsPage extends JFrame {
         if(city1 != null && city2 != null && !city1.equals(city2)) {
             try {
                 try {
-                    QrGenerator.saveQRCodeImage(QrGenerator.generateQRCode(HomePage.currentUser.getUsername() + " Going From " + city1 + " To " + city2), "src/Utils/qrcode.png");
+                    QrGenerator.saveQRCodeImage(QrGenerator.
+                            generateQRCode(HomePage.currentUser.getUsername() +
+                                    " Going From " + city1 + " To " + city2), "src/Utils/qrcode.png");
                 } catch (IOException z) {
                     throw new RuntimeException(z);
                 }

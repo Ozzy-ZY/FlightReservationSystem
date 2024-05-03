@@ -133,6 +133,14 @@ public class HomePage {
             new FlightsPage();
             mainFrame.dispose();
         });
+        Account.addActionListener(e -> {
+            if(!status){
+                JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
+                return;
+            }
+            new AccountPage();
+            mainFrame.dispose();
+        });
         popupMenu.setPreferredSize(new Dimension(75, 30));
         regLabel.setFont(new Font("New", Font.ITALIC, 18));
         regLabel.setForeground(Color.lightGray);
@@ -164,15 +172,9 @@ public class HomePage {
     }
 
     private void performSignOut() {
-        // Add code here to handle sign out action
-        // For example:
-        // 1. Reset user status
-        // 2. Clear any session data
-        // 3. Navigate to sign-in screen or exit application
         status = false;
         new HomePage();
         mainFrame.dispose();
-        // Add more actions as needed
     }
     boolean entered = false;
     boolean exited = true;
