@@ -1,7 +1,5 @@
 package Models;
 
-import java.util.Date;
-
 public class Flight {
     private String id; // a 16-char alphanumeric string containing
     private String destination;

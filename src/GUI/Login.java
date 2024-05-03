@@ -1,12 +1,9 @@
 package GUI;
-
 import Controllers.LoginControl;
 import Models.User;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 
 import static Controllers.RegisterControl.*;
 
@@ -46,7 +43,7 @@ public class Login extends JFrame{
         backButton.setLayout(new BorderLayout());
         backButton.addActionListener(e ->
         {
-            HomePage homePage = new HomePage();
+            new HomePage();
             loginFrame.dispose();
         });
         loginButton.addActionListener(e -> {
@@ -56,7 +53,12 @@ public class Login extends JFrame{
                         LoginControl.getUsername(emailField.getText()),
                         tostring(passwordField.getPassword()));
                 HomePage.status = true;
-                HomePage homePage = new HomePage();
+
+
+
+
+
+                new HomePage();
                 loginFrame.dispose();
             }
             else{

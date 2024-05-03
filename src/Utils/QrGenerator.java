@@ -51,6 +51,7 @@ public class QrGenerator {
     public static void saveQRCodeImage(BufferedImage qrCodeImage, String filePath) throws IOException {
         File outputFile = new File(filePath);
         ImageIO.write(qrCodeImage, "png", outputFile);
+        ImageIO.createImageOutputStream(outputFile).flush();
         System.out.println("QR Code saved to: " + outputFile.getAbsolutePath());
     }
 }

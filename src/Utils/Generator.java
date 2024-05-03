@@ -1,18 +1,14 @@
 package Utils;
 
-import Models.Flight;
-import Models.Plane;
-import Models.Ticket;
-
 import java.util.Random;
 
 public class Generator {
-    public static Flight flightGen(String origin, String destination){
-        return new Flight(GenerateID(),destination,origin,
-                new Plane("Boeing 737",150),randomDateGen());
+    public static String flightGen(String origin, String destination){
+
+        return "Flight From " + origin + " to " + destination + " at "+ randomDateGen();
     }
 
-    private static String GenerateID(){
+    public static String GenerateID(){
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
@@ -22,7 +18,7 @@ public class Generator {
         return sb.toString();
     }
 
-    private static String randomDateGen(){
+    public static String randomDateGen(){
         Random random = new Random();
         int year = 2025;
         int month = random.nextInt(12);
@@ -30,7 +26,7 @@ public class Generator {
         return String.format("%02d/%02d/%04d",day,month,year);
     }
 
-    private static int daysInMonth(int month,int year){
+    public static int daysInMonth(int month,int year){
         return switch (month) {
             case 0, 2, 4, 6, 7, 9, 11 -> 31;
             case 1 -> isLeapYear(year) ? 29 : 28;
@@ -38,7 +34,7 @@ public class Generator {
         };
     }
 
-    private static boolean isLeapYear(int year){
+    public static boolean isLeapYear(int year){
         return  year % 4 == 0 && (year % 100!= 0 || year % 400 == 0);
     }
 }
