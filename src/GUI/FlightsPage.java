@@ -159,12 +159,6 @@ public class FlightsPage extends JFrame {
             flightsPanel.repaint();
         });
         flightsPanel.add(confirmButton);
-
-
-
-
-
-
     }
 
     private void generateQRCode() {

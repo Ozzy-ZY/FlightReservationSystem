@@ -22,11 +22,14 @@ public class User {
     public void setEmail(String Email){
         email = Email;
     }
-    public void setName(String username){
+    public void setUsername(String username){
         this.username = username;
     }
     public void setPassword(String Password){
         password = Password;
     }
-
+    @Override
+    public String toString(){
+        return username + " " + email + " " + password;
+    }
 }
