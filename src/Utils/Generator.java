@@ -21,7 +21,7 @@ public class Generator {
     public static String randomDateGen(){
         Random random = new Random();
         int year = 2025;
-        int month = random.nextInt(12);
+        int month = random.nextInt(12) + 1;
         int day = random.nextInt(daysInMonth(month,year)) +1;
         return String.format("%02d/%02d/%04d",day,month,year);
     }

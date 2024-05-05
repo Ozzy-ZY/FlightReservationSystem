@@ -40,6 +40,15 @@ public class FileManager {
         lines.removeIf(line -> line.equals(lineToDelete));
         Files.write(Path.of(filePath), lines);
     }
+    public static void replaceLines(String filePath, String lineToReplace, String newLine) throws IOException {
+        List<String> lines = Files.readAllLines(Path.of(filePath));
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i).equals(lineToReplace)) {
+                lines.set(i, newLine);
+            }
+        }
+        Files.write(Path.of(filePath), lines);
+    }
 
     public static boolean isFileEmpty(String path){
         File file = new File(path);
