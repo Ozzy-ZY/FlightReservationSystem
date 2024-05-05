@@ -1,24 +1,27 @@
 package GUI;
+
+import Controllers.RegisterControl;
 import Utils.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class AccountPage extends JFrame{
+import static GUI.HomePage.currentUser;
+import static GUI.HomePage.status;
+
+public class AccountPage extends JFrame {
     JFrame accountFrame = new JFrame("Account");
     JFrame changePasswordPopup = new JFrame("Change Password");
     JFrame changeUsernamePopup = new JFrame("Change Username");
-    JLabel oldPasswordLabel = new JLabel("Old Password:");
-    JPasswordField oldPasswordField = new JPasswordField(30);
+    JLabel validatePasswordLabel = new JLabel("Your Password:");
+    JPasswordField validatePasswordField = new JPasswordField(30);
     JLabel newPasswordLabel = new JLabel("New Password:");
     JPasswordField newPasswordField = new JPasswordField(30);
     JButton changePasswordConfirmButton = new JButton("Confirm");
-    JLabel changePasswordErrorLabel = new JLabel("Invalid Password");
     JLabel ChangeUsernameLabel = new JLabel("New Username:");
     JTextField ChangeUsernameField = new JTextField(30);
     JButton changeUsernameConfirmButton = new JButton("Confirm");
-    JLabel changeUsernameErrorLabel = new JLabel("Username must be between 3 and 20 characters long");
     JPanel accountPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<");
@@ -27,8 +30,11 @@ public class AccountPage extends JFrame{
     JButton changePasswordButton = new JButton("Change Password");
     JButton changeUsernameButton = new JButton("Change Username");
     JButton deleteAccountButton = new JButton("Delete Account");
-    AccountPage(){
+    JLabel passwordError = new JLabel("Password is incorrect");
+    JLabel usernameError = new JLabel("invalid username");
 
+
+    AccountPage() {
         accountFrame.setSize(550, 650);
         accountFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         accountFrame.setIconImage(icon.getImage());
@@ -43,27 +49,54 @@ public class AccountPage extends JFrame{
         accountPanel.add(changePasswordButton);
         accountPanel.add(changeUsernameButton);
         accountPanel.add(deleteAccountButton);
+        if(!changePasswordPopup.isFocusOwner()){
+            changePasswordPopup.dispose();
+        }
 
+        changeUsernamePopup.setSize(400, 400);
+        changeUsernamePopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        changeUsernamePopup.setIconImage(icon.getImage());
+        changeUsernamePopup.setResizable(false);
+        changeUsernamePopup.add(validatePasswordLabel);
+        changeUsernamePopup.add(validatePasswordField);
+        changeUsernamePopup.add(ChangeUsernameLabel);
+        changeUsernamePopup.add(ChangeUsernameField);
+        changeUsernamePopup.add(changeUsernameConfirmButton);
+        changeUsernamePopup.add(usernameError);
+        changeUsernamePopup.setLocationRelativeTo(null);
 
         changePasswordPopup.setSize(400, 400);
         changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         changePasswordPopup.setIconImage(icon.getImage());
         changePasswordPopup.setResizable(false);
-        changePasswordPopup.add(oldPasswordLabel);
-        changePasswordPopup.add(oldPasswordField);
+        changePasswordPopup.add(validatePasswordLabel);
+        changePasswordPopup.add(validatePasswordField);
         changePasswordPopup.add(newPasswordLabel);
         changePasswordPopup.add(newPasswordField);
         changePasswordPopup.add(changePasswordConfirmButton);
-        changePasswordPopup.add(changePasswordErrorLabel);
+        changePasswordPopup.add(passwordError);
+        changePasswordPopup.setLocationRelativeTo(null);
 
-        oldPasswordLabel.setBounds(50, 50, 100, 30);
-        oldPasswordField.setBounds(150, 50, 200, 30);
+        validatePasswordLabel.setBounds(50, 50, 100, 30);
+        validatePasswordField.setBounds(150, 50, 200, 30);
+        ChangeUsernameLabel.setBounds(50, 100, 100, 30);
+        ChangeUsernameField.setBounds(150, 100, 200, 30);
+        changeUsernameConfirmButton.setBounds(150, 150, 100, 30);
+        usernameError.setBounds(150, 200, 200, 30);
+        usernameError.setVisible(false);
+        changeUsernamePopup.setResizable(false);
+
+
+        validatePasswordLabel.setBounds(50, 50, 100, 30);
+        validatePasswordField.setBounds(150, 50, 200, 30);
         newPasswordLabel.setBounds(50, 100, 100, 30);
         newPasswordField.setBounds(150, 100, 200, 30);
         changePasswordConfirmButton.setBounds(150, 150, 100, 30);
+        passwordError.setBounds(150, 200, 200, 30);
+        passwordError.setVisible(false);
         changePasswordPopup.setResizable(false);
 
-        changePasswordErrorLabel.setVisible(false);
+
 
         backButton.addActionListener(e -> {
             new HomePage();
@@ -74,15 +107,54 @@ public class AccountPage extends JFrame{
             new HomePage();
             accountFrame.dispose();
         });
-        changePasswordButton.addActionListener(e -> {
-            changePasswordPopup.setVisible(true);
+        changeUsernameButton.addActionListener(e -> changeUsernamePopup.setVisible(true));
+        changeUsernameConfirmButton.addActionListener(e -> {
+            if(!status){
+                changeUsernamePopup.setVisible(false);
+            }
+            String oldUser = currentUser.toString();
+            if(currentUser.getPassword().equals(String.valueOf
+                    (validatePasswordField.getPassword())) &&
+                    RegisterControl.ValidateUsername(ChangeUsernameField.getText())){
+                usernameError.setVisible(false);
+                currentUser.setUsername(ChangeUsernameField.getText());
+                try {
+                    FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+                changeUsernamePopup.dispose();
+            }
+            else{
+                usernameError.setVisible(true);
+            }
+        });
+        changePasswordButton.addActionListener(e -> changePasswordPopup.setVisible(true));
+        changePasswordConfirmButton.addActionListener(e -> {
+            if(!status){
+                changePasswordPopup.setVisible(false);
+            }
+            String oldUser = currentUser.toString();
+            if (currentUser.getPassword().equals(String.valueOf(validatePasswordField.getPassword()))&&
+                    RegisterControl.ValidatePassword(String.valueOf(newPasswordField.getPassword()))) {
+                passwordError.setVisible(false);
+                currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
+                try {
+                    FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+                changePasswordPopup.dispose();
+            }
+            else {
+                passwordError.setVisible(true);
+            }
         });
         deleteAccountButton.addActionListener(e -> {
             try {
-                FileManager.deleteLine("Users.txt",
-                        HomePage.currentUser.getUsername()
-                                + " " + HomePage.currentUser.getEmail()
-                                + " " + HomePage.currentUser.getPassword());
+                FileManager.deleteLine("Users.txt", currentUser.toString());
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
                 throw new RuntimeException(ex);
