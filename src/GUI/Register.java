@@ -11,9 +11,8 @@ public class Register extends JFrame{
     boolean[] totalStatus = {false, false, false};
     JFrame regFrame = new JFrame("Register");
     JPanel regPanel = new JPanel();
-
     JPanel topPanel = new JPanel ();
-    ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
+    ImageIcon icon = new ImageIcon("Assets/logo.png");
     JButton backButton = new JButton("<");
     JButton regButton = new JButton("Register");
     JTextField usernameField = new JTextField(30);
@@ -48,6 +47,7 @@ public class Register extends JFrame{
         regFrame.setIconImage(icon.getImage());
         regFrame.setResizable(false);
         regFrame.setLocationRelativeTo(null);
+        regFrame.setIconImage(icon.getImage());
         regFrame.add(regPanel);
 
         topPanel.setLayout ( null );

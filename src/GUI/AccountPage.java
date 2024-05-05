@@ -24,7 +24,8 @@ public class AccountPage extends JFrame {
     JPasswordField validatePasswordField = new JPasswordField(30);
     JLabel newPasswordLabel = new JLabel("New Password:");
     JPasswordField newPasswordField = new JPasswordField(30);
-    // Load the icon image
+    JLabel confirmNewPasswordLabel = new JLabel("Confirm:");
+    JPasswordField confirmNewPasswordField = new JPasswordField(30);
 
     JButton changePasswordConfirmButton = new JButton("Confirm");
     JLabel ChangeUsernameLabel = new JLabel("New Username:");
@@ -43,7 +44,7 @@ public class AccountPage extends JFrame {
     JLabel usernameError = new JLabel("invalid username");
 
     JLabel mailTxt = new JLabel ("E-MAIL");
-    JLabel mail = new JLabel ( currentUser.getEmail () );
+    JLabel mail = new JLabel ( "<html>"+currentUser.getEmail()+"</html>");
 
     ImageIcon delete = new ImageIcon("Assets/trash-can-regular.png");
     ImageIcon scaledDel = new ImageIcon(delete.getImage().
@@ -105,6 +106,8 @@ public class AccountPage extends JFrame {
         changePasswordPopup.add(newPasswordField);
         changePasswordPopup.add(changePasswordConfirmButton);
         changePasswordPopup.add(passwordError);
+        changePasswordPopup.add(confirmNewPasswordLabel);
+        changePasswordPopup.add(confirmNewPasswordField);
         changePasswordPopup.setLocationRelativeTo(null);
 
         validatePasswordLabel.setBounds(50, 50, 100, 30);
@@ -116,13 +119,13 @@ public class AccountPage extends JFrame {
         usernameError.setVisible(false);
         changeUsernamePopup.setResizable(false);
 
-
         validatePasswordLabel.setBounds(50, 50, 100, 30);
         validatePasswordField.setBounds(150, 50, 200, 30);
         newPasswordLabel.setBounds(50, 100, 100, 30);
         newPasswordField.setBounds(150, 100, 200, 30);
         changePasswordConfirmButton.setBounds(150, 150, 100, 30);
-        passwordError.setBounds(150, 200, 200, 30);
+        confirmNewPasswordLabel.setBounds(50, 200, 100, 30);
+        confirmNewPasswordField.setBounds(150, 200, 250, 40);
         passwordError.setVisible(false);
         changePasswordPopup.setResizable(false);
 
@@ -178,7 +181,10 @@ public class AccountPage extends JFrame {
             }
             String oldUser = currentUser.toString();
             if (currentUser.getPassword().equals(String.valueOf(validatePasswordField.getPassword())) &&
-                    RegisterControl.ValidatePassword(String.valueOf(newPasswordField.getPassword()))) {
+                    RegisterControl.ValidatePassword(String.valueOf(newPasswordField.getPassword()))
+                    && String.valueOf(newPasswordField.getPassword())
+                    .equals(String.valueOf(confirmNewPasswordField.getPassword())))
+            {
                 passwordError.setVisible(false);
                 currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
                 try {

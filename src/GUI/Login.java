@@ -26,7 +26,7 @@ public class Login extends JFrame{
     JButton backButton = new JButton("<");
     JButton loginButton = new JButton("Login");
     JLabel loginHeader = new JLabel("Login");
-    JLabel emailLabel = new JLabel("Email or Username");
+    JLabel emailLabel = new JLabel("Email");
     JLabel bgIcon = new JLabel (scaledBg);
     JLabel loginIcon = new JLabel (scaledLogin);
 

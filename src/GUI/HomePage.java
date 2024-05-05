@@ -66,7 +66,7 @@ public class HomePage {
             mainPanel.add(currentUserLabel);
             currentUserLabel.setVisible(true);
             currentUserLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-            currentUserLabel.setForeground(Color.lightGray);
+            currentUserLabel.setForeground(Color.decode("#FD9426"));
             currentUserLabel.setBounds(30, 10, currentUserLabel.getMinimumSize().width + 10, currentUserLabel.getMinimumSize().height);
 
             mainFrame.addMouseListener(new MouseAdapter() {
