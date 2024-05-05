@@ -43,7 +43,7 @@ public class AccountPage extends JFrame {
     JLabel usernameError = new JLabel("invalid username");
 
     JLabel mailTxt = new JLabel ("E-MAIL");
-    JLabel mail = new JLabel ( "sudi@gmail.com" );
+    JLabel mail = new JLabel ( currentUser.getEmail () );
 
     ImageIcon delete = new ImageIcon("Assets/trash-can-regular.png");
     ImageIcon scaledDel = new ImageIcon(delete.getImage().
