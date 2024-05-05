@@ -1,5 +1,5 @@
-# Right Flight 
-![Image description](Assets/Right_FlightforReadme.png)
+# RIHLA Flight 
+![Image description](Assets/Right_logo.png)
 ## Description
 ### A flight booking system that allows users to book flights, view their bookings, and cancel their bookings.
 ## Features
