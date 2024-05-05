@@ -140,7 +140,6 @@ public class AccountPage extends JFrame {
                 if(tokenExists()){
                     removeToken();
                 }
-                status = false;
                 new HomePage();
                 accountFrame.dispose();
             }

@@ -34,18 +34,12 @@ public class SessionControl {
     }
     public static boolean removeToken(){
         File file = new File("token.txt");
-        if(file.exists()){
             try{
                 return file.delete();
             }
             catch (Exception ex){
                 System.err.println(ex.getMessage());
             }
-        }
-        else{
-            System.err.println("File does not exist");
-            return false;
-        }
         return false;
     }
 }
