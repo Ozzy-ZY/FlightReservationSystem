@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
+import static Controllers.SessionControl.*;
 
 public class AccountPage extends JFrame {
 
@@ -136,7 +137,10 @@ public class AccountPage extends JFrame {
         });
         logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomePage.status = false;
+                if(tokenExists()){
+                    removeToken();
+                }
+                status = false;
                 new HomePage();
                 accountFrame.dispose();
             }
@@ -181,12 +185,11 @@ public class AccountPage extends JFrame {
             }
             String oldUser = currentUser.toString();
             if (currentUser.getPassword().equals(String.valueOf(validatePasswordField.getPassword())) &&
-                    RegisterControl.ValidatePassword(String.valueOf(newPasswordField.getPassword()))
-                    && String.valueOf(newPasswordField.getPassword())
-                    .equals(String.valueOf(confirmNewPasswordField.getPassword())))
+                    RegisterControl.ValidatePassword(String.valueOf(newPasswordField.getPassword())))
             {
                 passwordError.setVisible(false);
                 currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
+                generateToken(currentUser);
                 try {
                     FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
                 } catch (IOException ex) {
@@ -210,7 +213,7 @@ public class AccountPage extends JFrame {
                     System.out.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
-                HomePage.status = false;
+                removeToken();
                 new HomePage();
                 accountFrame.dispose();
             }

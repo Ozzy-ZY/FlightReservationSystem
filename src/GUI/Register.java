@@ -3,6 +3,7 @@ import Controllers.LoginControl;
 import Models.User;
 import javax.swing.*;
 import java.awt.*;
+import static Controllers.SessionControl.*;
 
 import static Controllers.RegisterControl.*;
 
@@ -182,11 +183,8 @@ public class Register extends JFrame{
             }
 
             if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
-                HomePage.status = true;
                 saveData(email, username, password);
-                HomePage.currentUser = new User(emailField.getText(),
-                        LoginControl.getUsername(emailField.getText()),
-                        tostring(passwordField.getPassword()));
+                generateToken(new User(email,username,password));
                 new HomePage();
                 regFrame.dispose();
             }
