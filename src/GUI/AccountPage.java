@@ -1,41 +1,68 @@
 package GUI;
 
 import Controllers.RegisterControl;
+import Models.User;
 import Utils.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
 
 public class AccountPage extends JFrame {
+
+    static User user;
     JFrame accountFrame = new JFrame("Account");
+
     JFrame changePasswordPopup = new JFrame("Change Password");
     JFrame changeUsernamePopup = new JFrame("Change Username");
     JLabel validatePasswordLabel = new JLabel("Your Password:");
     JPasswordField validatePasswordField = new JPasswordField(30);
     JLabel newPasswordLabel = new JLabel("New Password:");
     JPasswordField newPasswordField = new JPasswordField(30);
+    // Load the icon image
+
     JButton changePasswordConfirmButton = new JButton("Confirm");
     JLabel ChangeUsernameLabel = new JLabel("New Username:");
     JTextField ChangeUsernameField = new JTextField(30);
     JButton changeUsernameConfirmButton = new JButton("Confirm");
     JPanel accountPanel = new JPanel();
-    ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
+    ImageIcon icon = new ImageIcon("Assets/logo.png");
     JButton backButton = new JButton("<");
     JLabel accountHeader = new JLabel(HomePage.currentUser.getUsername() + "'s Account");
-    JButton logoutButton = new JButton("Logout");
-    JButton changePasswordButton = new JButton("Change Password");
-    JButton changeUsernameButton = new JButton("Change Username");
-    JButton deleteAccountButton = new JButton("Delete Account");
+
+    JLabel logoutButton = new JLabel("Logout");
+
+    ImageIcon icone = new ImageIcon("cloud.png");
+
     JLabel passwordError = new JLabel("Password is incorrect");
     JLabel usernameError = new JLabel("invalid username");
 
+    JLabel mailTxt = new JLabel ("E-MAIL");
+    JLabel mail = new JLabel ( currentUser.getEmail () );
+
+    ImageIcon delete = new ImageIcon("Assets/trash-can-regular.png");
+    ImageIcon scaledDel = new ImageIcon(delete.getImage().
+            getScaledInstance(20, 25, Image.SCALE_SMOOTH));
+    JLabel deleteAccountButton = new JLabel(scaledDel);
+
+    ImageIcon pencil = new ImageIcon("Assets/pen-to-square-regular.png");
+    ImageIcon scaledPencil = new ImageIcon(pencil.getImage().
+            getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+    JLabel changeUsernameButton = new JLabel(scaledPencil);
+
+    ImageIcon password = new ImageIcon("Assets/key-solid.png");
+    ImageIcon scaledPassword = new ImageIcon(password.getImage().
+            getScaledInstance(25, 25, Image.SCALE_SMOOTH));
+    JLabel changePasswordButton = new JLabel(scaledPassword);
+
 
     AccountPage() {
-        accountFrame.setSize(550, 650);
+        accountFrame.setSize(800, 400);
         accountFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         accountFrame.setIconImage(icon.getImage());
         accountFrame.setResizable(false);
@@ -49,7 +76,10 @@ public class AccountPage extends JFrame {
         accountPanel.add(changePasswordButton);
         accountPanel.add(changeUsernameButton);
         accountPanel.add(deleteAccountButton);
-        if(!changePasswordPopup.isFocusOwner()){
+        accountPanel.add(mailTxt);
+        accountPanel.add(mail);
+
+        if (!changePasswordPopup.isFocusOwner()) {
             changePasswordPopup.dispose();
         }
 
@@ -97,25 +127,31 @@ public class AccountPage extends JFrame {
         changePasswordPopup.setResizable(false);
 
 
-
         backButton.addActionListener(e -> {
             new HomePage();
             accountFrame.dispose();
         });
-        logoutButton.addActionListener(e -> {
-            HomePage.status = false;
-            new HomePage();
-            accountFrame.dispose();
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomePage.status = false;
+                new HomePage();
+                accountFrame.dispose();
+            }
         });
-        changeUsernameButton.addActionListener(e -> changeUsernamePopup.setVisible(true));
+        changeUsernameButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                changeUsernamePopup.setVisible(true);
+            }
+        });
         changeUsernameConfirmButton.addActionListener(e -> {
-            if(!status){
+            if (!status) {
                 changeUsernamePopup.setVisible(false);
             }
             String oldUser = currentUser.toString();
-            if(currentUser.getPassword().equals(String.valueOf
+            if (currentUser.getPassword().equals(String.valueOf
                     (validatePasswordField.getPassword())) &&
-                    RegisterControl.ValidateUsername(ChangeUsernameField.getText())){
+                    RegisterControl.ValidateUsername(ChangeUsernameField.getText())) {
                 usernameError.setVisible(false);
                 currentUser.setUsername(ChangeUsernameField.getText());
                 try {
@@ -125,18 +161,23 @@ public class AccountPage extends JFrame {
                     throw new RuntimeException(ex);
                 }
                 changeUsernamePopup.dispose();
-            }
-            else{
+            } else {
                 usernameError.setVisible(true);
             }
         });
-        changePasswordButton.addActionListener(e -> changePasswordPopup.setVisible(true));
+
+        changePasswordButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                changePasswordPopup.setVisible(true);
+            }
+        });
         changePasswordConfirmButton.addActionListener(e -> {
-            if(!status){
+            if (!status) {
                 changePasswordPopup.setVisible(false);
             }
             String oldUser = currentUser.toString();
-            if (currentUser.getPassword().equals(String.valueOf(validatePasswordField.getPassword()))&&
+            if (currentUser.getPassword().equals(String.valueOf(validatePasswordField.getPassword())) &&
                     RegisterControl.ValidatePassword(String.valueOf(newPasswordField.getPassword()))) {
                 passwordError.setVisible(false);
                 currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
@@ -147,35 +188,68 @@ public class AccountPage extends JFrame {
                     throw new RuntimeException(ex);
                 }
                 changePasswordPopup.dispose();
-            }
-            else {
+            } else {
                 passwordError.setVisible(true);
             }
         });
-        deleteAccountButton.addActionListener(e -> {
-            try {
-                FileManager.deleteLine("Users.txt", currentUser.toString());
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-                throw new RuntimeException(ex);
+        deleteAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    FileManager.deleteLine("Users.txt",
+                            HomePage.currentUser.getUsername()
+                                    + " " + HomePage.currentUser.getEmail()
+                                    + " " + HomePage.currentUser.getPassword());
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+                HomePage.status = false;
+                new HomePage();
+                accountFrame.dispose();
             }
-            HomePage.status = false;
-            new HomePage();
-            accountFrame.dispose();
         });
-        accountPanel.setBackground(Color.decode("#213D58"));
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Assuming the format in Users.txt is: username email password
+                String[] parts = line.split("\\s+"); // Split by one or more spaces
+                if (parts.length >= 3) {
+                    String username = parts[0].trim(); // Store the username to pass it into the quiz list label
+                    String storedEmail = parts[1].trim();
+                    String storedPassword = parts[2].trim();
+
+
+                }
+            }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error reading file: " + e.getMessage());
+        }
+
+        accountPanel.setBackground(Color.decode("#f8f8f8"));
         backButton.setBounds(0, 0, 50, 30);
         backButton.setBackground(Color.white);
-        accountHeader.setBounds(200, 10, 200, 50);
-        accountHeader.setFont(new Font("Arial", Font.BOLD, 20));
-        accountHeader.setForeground(Color.LIGHT_GRAY);
-        logoutButton.setBounds(200, 100, 150, 50);
-        changeUsernameButton.setBounds(200, 200, 150, 50);
-        changePasswordButton.setBounds(200, 300, 150, 50);
-        deleteAccountButton.setBounds(200, 400, 150, 50);
-        deleteAccountButton.setForeground(Color.RED);
+        accountHeader.setBounds(80, 50, 400, 80);
+        accountHeader.setFont(new Font("SansSerif", Font.BOLD, 30));
+        accountHeader.setForeground(Color.decode ( "#05203C" ));
+        logoutButton.setBounds(80, 100, 150, 50);
+        logoutButton.setFont ( new Font("SansSerif",Font.BOLD,15) );
+        logoutButton.setForeground ( Color.decode ( "#db3125" ) );
+        changeUsernameButton.setBounds(500, 70, 25, 25);
+        changePasswordButton.setBounds(550, 70, 25, 25);
+        deleteAccountButton.setBounds(600, 70, 20, 25);
+        mailTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 13 ) );
+        mailTxt.setForeground ( Color.decode ( "#FD9426" ) );
+        mailTxt.setBounds ( 80,250,150,20 );
+        mail.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
+        mail.setForeground ( Color.decode ( "#05203C" ) );
+        mail.setBounds ( 80,270,150,20 );
+
 
         accountFrame.setVisible(true);
     }
+
 
 }
