@@ -13,16 +13,24 @@ public class HomePage {
     //aloo
     static boolean status = false;
     static User currentUser;
-    JFrame mainFrame = new JFrame("Right Flight");
-    ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
+    JFrame mainFrame = new JFrame("Rihla Flights");
+
+    ImageIcon logo = new ImageIcon ("Assets/logo.png");
+    ImageIcon icon = new ImageIcon("Assets/image-removebg-preview.png");
     ImageIcon scaledIcon = new ImageIcon(icon.getImage().
-            getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+            getScaledInstance(300, 130, Image.SCALE_SMOOTH));
+
+    ImageIcon bg = new ImageIcon("Assets/homeBg.png");
+    ImageIcon scaledBg = new ImageIcon(bg.getImage().
+            getScaledInstance(550, 650, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
     JLabel currentUserLabel;
     JLabel regLabel = new JLabel("Register");
     JLabel loginLabel = new JLabel("Login");
     JLabel logoLabel = new JLabel(scaledIcon);
-    JLabel welcomeLabel = new JLabel("Welcome to Right Flight!");
+    JLabel bgLabel = new JLabel(scaledBg);
+
+    JLabel welcomeLabel = new JLabel("Welcome to Rihla Flight!");
     JButton Flights = new JButton("Flights");
     JButton Tickets = new JButton("Tickets");
     JButton Account = new JButton("Account");
@@ -30,12 +38,11 @@ public class HomePage {
     JPopupMenu popupMenu = new JPopupMenu();
     public HomePage() {
         mainFrame.setSize(550, 650);
-        mainPanel.setBackground(Color.decode("#213D58"));
+        mainPanel.setBackground(Color.decode("#FFFFFF"));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setIconImage(icon.getImage());
+        mainFrame.setIconImage(logo.getImage());
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
-        mainFrame.add(mainPanel);
 
         mainPanel.add(regLabel);
         mainPanel.add(loginLabel);
@@ -45,7 +52,12 @@ public class HomePage {
         mainPanel.add(Flights);
         mainPanel.add(Tickets);
         mainPanel.add(Account);
+        mainPanel.add(bgLabel);
         popupMenu.add(signOutItem);
+
+
+        mainFrame.add(mainPanel);
+
 
         if (status) {
             regLabel.setVisible(false);
@@ -143,21 +155,28 @@ public class HomePage {
         });
         popupMenu.setPreferredSize(new Dimension(75, 30));
         regLabel.setFont(new Font("New", Font.ITALIC, 18));
-        regLabel.setForeground(Color.lightGray);
+        regLabel.setForeground(Color.decode ( "#FD9426" ));
         regLabel.setBounds(30, 10, 100, 30);
         loginLabel.setFont(new Font("New", Font.ITALIC, 18));
-        loginLabel.setForeground(Color.lightGray);
+        loginLabel.setForeground(Color.decode ( "#FD9426" ));
         loginLabel.setBounds(460, 10, 100, 30);
-        logoLabel.setBounds(0, 0, 525, 190);
+        logoLabel.setBounds(0, 50, 525, 150);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        welcomeLabel.setForeground(Color.decode("#FFFFFF"));
+        welcomeLabel.setForeground(Color.decode("#05203C"));
         welcomeLabel.setBounds(135, 200, 400, 30);
         Flights.setBounds(75, 280, 400, 60);
         Flights.setFont(new Font("Arial", Font.BOLD, 18));
+        Flights.setForeground ( Color.white );
+        Flights.setBackground ( Color.decode ( "#0B3E91" ) );
         Tickets.setBounds(75, 380, 400, 60);
+        Tickets.setForeground ( Color.white );
+        Tickets.setBackground ( Color.decode ( "#0B3E91" ) );
         Tickets.setFont(new Font("Arial", Font.BOLD, 18));
         Account.setBounds(75, 480, 400, 60);
         Account.setFont(new Font("Arial", Font.BOLD, 18));
+        Account.setForeground ( Color.white );
+        Account.setBackground ( Color.decode ( "#0B3E91" ) );
+        bgLabel.setBounds ( 0,0,550,650 );
 
         mainFrame.setVisible(true);
     }
@@ -193,5 +212,9 @@ public class HomePage {
             fontAttributes.put(TextAttribute.UNDERLINE, -1);
             label.setFont(label.getFont().deriveFont(fontAttributes));
         }
+    }
+
+    public static void main(String[] args) {
+        new HomePage ();
     }
 }
