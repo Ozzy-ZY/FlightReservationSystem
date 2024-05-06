@@ -12,19 +12,21 @@ import java.io.IOException;
 
 import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
+import static Controllers.SessionControl.*;
+
 
 public class AccountPage extends JFrame {
 
     static User user;
     JFrame accountFrame = new JFrame("Account");
 
-    JFrame changePasswordPopup = new JFrame("Change Password");
     JFrame changeUsernamePopup = new JFrame("Change Username");
     JLabel validatePasswordLabel = new JLabel("Your Password:");
     JPasswordField validatePasswordField = new JPasswordField(30);
     JLabel newPasswordLabel = new JLabel("New Password:");
     JPasswordField newPasswordField = new JPasswordField(30);
-    // Load the icon image
+    JLabel confirmNewPasswordLabel = new JLabel("Confirm:");
+    JPasswordField confirmNewPasswordField = new JPasswordField(30);
 
     JButton changePasswordConfirmButton = new JButton("Confirm");
     JLabel ChangeUsernameLabel = new JLabel("New Username:");
@@ -43,7 +45,7 @@ public class AccountPage extends JFrame {
     JLabel usernameError = new JLabel("invalid username");
 
     JLabel mailTxt = new JLabel ("E-MAIL");
-    JLabel mail = new JLabel ( currentUser.getEmail () );
+    JLabel mail = new JLabel ( "<html>"+currentUser.getEmail()+"</html>");
 
     ImageIcon delete = new ImageIcon("Assets/trash-can-regular.png");
     ImageIcon scaledDel = new ImageIcon(delete.getImage().
@@ -79,9 +81,6 @@ public class AccountPage extends JFrame {
         accountPanel.add(mailTxt);
         accountPanel.add(mail);
 
-        if (!changePasswordPopup.isFocusOwner()) {
-            changePasswordPopup.dispose();
-        }
 
         changeUsernamePopup.setSize(400, 400);
         changeUsernamePopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -95,17 +94,7 @@ public class AccountPage extends JFrame {
         changeUsernamePopup.add(usernameError);
         changeUsernamePopup.setLocationRelativeTo(null);
 
-        changePasswordPopup.setSize(400, 400);
-        changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        changePasswordPopup.setIconImage(icon.getImage());
-        changePasswordPopup.setResizable(false);
-        changePasswordPopup.add(validatePasswordLabel);
-        changePasswordPopup.add(validatePasswordField);
-        changePasswordPopup.add(newPasswordLabel);
-        changePasswordPopup.add(newPasswordField);
-        changePasswordPopup.add(changePasswordConfirmButton);
-        changePasswordPopup.add(passwordError);
-        changePasswordPopup.setLocationRelativeTo(null);
+
 
         validatePasswordLabel.setBounds(50, 50, 100, 30);
         validatePasswordField.setBounds(150, 50, 200, 30);
@@ -117,14 +106,6 @@ public class AccountPage extends JFrame {
         changeUsernamePopup.setResizable(false);
 
 
-        validatePasswordLabel.setBounds(50, 50, 100, 30);
-        validatePasswordField.setBounds(150, 50, 200, 30);
-        newPasswordLabel.setBounds(50, 100, 100, 30);
-        newPasswordField.setBounds(150, 100, 200, 30);
-        changePasswordConfirmButton.setBounds(150, 150, 100, 30);
-        passwordError.setBounds(150, 200, 200, 30);
-        passwordError.setVisible(false);
-        changePasswordPopup.setResizable(false);
 
 
         backButton.addActionListener(e -> {
@@ -133,7 +114,9 @@ public class AccountPage extends JFrame {
         });
         logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomePage.status = false;
+                if(tokenExists()){
+                    removeToken();
+                }
                 new HomePage();
                 accountFrame.dispose();
             }
@@ -169,27 +152,7 @@ public class AccountPage extends JFrame {
         changePasswordButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                changePasswordPopup.setVisible(true);
-            }
-        });
-        changePasswordConfirmButton.addActionListener(e -> {
-            if (!status) {
-                changePasswordPopup.setVisible(false);
-            }
-            String oldUser = currentUser.toString();
-            if (currentUser.getPassword().equals(String.valueOf(validatePasswordField.getPassword())) &&
-                    RegisterControl.ValidatePassword(String.valueOf(newPasswordField.getPassword()))) {
-                passwordError.setVisible(false);
-                currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
-                try {
-                    FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                    throw new RuntimeException(ex);
-                }
-                changePasswordPopup.dispose();
-            } else {
-                passwordError.setVisible(true);
+                new ChangePassword ();
             }
         });
         deleteAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,7 +167,7 @@ public class AccountPage extends JFrame {
                     System.out.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
-                HomePage.status = false;
+                removeToken();
                 new HomePage();
                 accountFrame.dispose();
             }
@@ -245,7 +208,7 @@ public class AccountPage extends JFrame {
         mailTxt.setBounds ( 80,250,150,20 );
         mail.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
         mail.setForeground ( Color.decode ( "#05203C" ) );
-        mail.setBounds ( 80,270,150,20 );
+        mail.setBounds ( 80,270,150,40 );
 
 
         accountFrame.setVisible(true);

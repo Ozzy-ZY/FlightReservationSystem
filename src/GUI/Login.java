@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import static Controllers.LoginControl.getUsername;
+import static Controllers.SessionControl.*;
+
 import static Controllers.RegisterControl.*;
 
 public class Login extends JFrame{
@@ -74,11 +77,10 @@ public class Login extends JFrame{
             if(LoginControl.ValidateUser(emailField.getText(),
                     tostring(passwordField.getPassword()))){
                 HomePage.currentUser = new User(emailField.getText(),
-                        LoginControl.getUsername(emailField.getText()),
+                        getUsername(emailField.getText()),
                         tostring(passwordField.getPassword()));
-                HomePage.status = true;
-
-
+                generateToken(new User(emailField.getText(),getUsername(emailField.getText()),
+                        tostring(passwordField.getPassword())));
                 new HomePage();
                 loginFrame.dispose();
             }
