@@ -118,9 +118,6 @@ public class ChangePassword extends JFrame {
         });
 
         changePasswordConfirmButton.addActionListener(e -> {
-            validatePasswordField.setEchoChar('*');
-            newPasswordField.setEchoChar('*');
-            confirmNewPasswordField.setEchoChar('*');
             if (!status) {
                 changePasswordPopup.setVisible(false);
             }
@@ -158,7 +155,4 @@ public class ChangePassword extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        new ChangePassword ();
-    }
 }
