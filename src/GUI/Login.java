@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import static Controllers.LoginControl.getUsername;
+import static Controllers.SessionControl.*;
+
 import static Controllers.RegisterControl.*;
 
 public class Login extends JFrame{
@@ -27,6 +30,7 @@ public class Login extends JFrame{
     JButton loginButton = new JButton("Login");
     JLabel loginHeader = new JLabel("Login");
     JLabel emailLabel = new JLabel("Email or Username");
+    JLabel haveAcc=new JLabel("Don't Have an Account ? Sign Up");
     JLabel bgIcon = new JLabel (scaledBg);
     JLabel loginIcon = new JLabel (scaledLogin);
 
@@ -44,6 +48,7 @@ public class Login extends JFrame{
         loginFrame.setLocationRelativeTo(null);
         loginFrame.add(loginPanel);
         loginPanel.setLayout(null);
+        loginPanel.add(haveAcc);
         loginPanel.add(loginIcon);
         loginPanel.add(passwordField);
         loginPanel.add(passwordLabel);
@@ -62,15 +67,20 @@ public class Login extends JFrame{
             new HomePage();
             loginFrame.dispose();
         });
+        haveAcc.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                new Register(); // Open the Register frame
+                loginFrame.dispose(); // Dispose of the current Login frame
+            }
+        });
         loginButton.addActionListener(e -> {
             if(LoginControl.ValidateUser(emailField.getText(),
                     tostring(passwordField.getPassword()))){
                 HomePage.currentUser = new User(emailField.getText(),
-                        LoginControl.getUsername(emailField.getText()),
+                        getUsername(emailField.getText()),
                         tostring(passwordField.getPassword()));
-                HomePage.status = true;
-
-
+                generateToken(new User(emailField.getText(),getUsername(emailField.getText()),
+                        tostring(passwordField.getPassword())));
                 new HomePage();
                 loginFrame.dispose();
             }
@@ -102,6 +112,8 @@ public class Login extends JFrame{
         loginButton.setForeground ( Color.white );
         errorLogin.setBounds(180, 290, 200, 30);
         errorLogin.setForeground(Color.decode("#db3125"));
+        haveAcc.setBounds(75,365,haveAcc.getMinimumSize().width,haveAcc.getMinimumSize().height);
+        haveAcc.setForeground(Color.decode("#05203C"));
         bgIcon.setBounds ( 150,-20,500,600 );
         loginFrame.setVisible(true);
         loginFrame.addWindowListener(new WindowAdapter()

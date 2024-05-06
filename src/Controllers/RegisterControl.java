@@ -16,7 +16,13 @@ public class RegisterControl {
     }
 
     public  static boolean ValidateUsername(String Username){
-        return 3 <= Username.length() && Username.length() <= 20;
+        if(Username.contains(" ")){
+            return false;
+        }
+        else{
+            return Username.length() >= 3;
+        }
+
     }
 
     public static boolean ValidateEmail(String Email){
@@ -67,9 +73,6 @@ public class RegisterControl {
     public static void saveData(String email, String username, String password){
         String data = username + " " + email + " " + password + "\n";
         Utils.FileManager.append("Users.txt", data);
-    }
-    public static void existingEmail(String email){
-
     }
 
 }

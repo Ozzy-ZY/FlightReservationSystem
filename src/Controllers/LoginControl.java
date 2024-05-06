@@ -35,5 +35,4 @@ public class LoginControl {
         }
         return null;
     }
-
 }
