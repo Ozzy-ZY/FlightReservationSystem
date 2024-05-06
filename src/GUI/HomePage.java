@@ -10,8 +10,8 @@ import javax.swing.JLabel;
 import java.util.HashMap;
 import java.util.Map;
 import static Controllers.SessionControl.*;
-
 public class HomePage {
+
     //aloo
     static boolean status = false;
     static User currentUser;
