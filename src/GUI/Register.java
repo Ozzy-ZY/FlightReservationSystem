@@ -3,6 +3,7 @@ import Controllers.LoginControl;
 import Models.User;
 import javax.swing.*;
 import java.awt.*;
+import static Controllers.SessionControl.*;
 
 import static Controllers.RegisterControl.*;
 
@@ -11,9 +12,8 @@ public class Register extends JFrame{
     boolean[] totalStatus = {false, false, false};
     JFrame regFrame = new JFrame("Register");
     JPanel regPanel = new JPanel();
-
     JPanel topPanel = new JPanel ();
-    ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
+    ImageIcon icon = new ImageIcon("Assets/logo.png");
     JButton backButton = new JButton("<");
     JButton regButton = new JButton("Register");
     JTextField usernameField = new JTextField(30);
@@ -48,6 +48,7 @@ public class Register extends JFrame{
         regFrame.setIconImage(icon.getImage());
         regFrame.setResizable(false);
         regFrame.setLocationRelativeTo(null);
+        regFrame.setIconImage(icon.getImage());
         regFrame.add(regPanel);
 
         topPanel.setLayout ( null );
@@ -182,11 +183,8 @@ public class Register extends JFrame{
             }
 
             if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
-                HomePage.status = true;
                 saveData(email, username, password);
-                HomePage.currentUser = new User(emailField.getText(),
-                        LoginControl.getUsername(emailField.getText()),
-                        tostring(passwordField.getPassword()));
+                generateToken(new User(email,username,password));
                 new HomePage();
                 regFrame.dispose();
             }
