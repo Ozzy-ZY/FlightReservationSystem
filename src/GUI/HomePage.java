@@ -9,7 +9,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import java.util.HashMap;
 import java.util.Map;
+import static Controllers.SessionControl.*;
 public class HomePage {
+
     //aloo
     static boolean status = false;
     static User currentUser;
@@ -37,6 +39,12 @@ public class HomePage {
     JMenuItem signOutItem = new JMenuItem("Sign Out");
     JPopupMenu popupMenu = new JPopupMenu();
     public HomePage() {
+        if(tokenExists()){
+            status = true;
+            currentUser = returnTokenData();
+        }
+        else
+            status = false;
         mainFrame.setSize(550, 650);
         mainPanel.setBackground(Color.decode("#FFFFFF"));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +74,7 @@ public class HomePage {
             mainPanel.add(currentUserLabel);
             currentUserLabel.setVisible(true);
             currentUserLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-            currentUserLabel.setForeground(Color.lightGray);
+            currentUserLabel.setForeground(Color.decode("#FD9426"));
             currentUserLabel.setBounds(30, 10, currentUserLabel.getMinimumSize().width + 10, currentUserLabel.getMinimumSize().height);
 
             mainFrame.addMouseListener(new MouseAdapter() {
@@ -191,7 +199,11 @@ public class HomePage {
     }
 
     private void performSignOut() {
-        status = false;
+        if(tokenExists()){
+            if(!removeToken()){
+                System.err.println("error deleting current token");
+            }
+        }
         new HomePage();
         mainFrame.dispose();
     }
@@ -212,9 +224,5 @@ public class HomePage {
             fontAttributes.put(TextAttribute.UNDERLINE, -1);
             label.setFont(label.getFont().deriveFont(fontAttributes));
         }
-    }
-
-    public static void main(String[] args) {
-        new HomePage ();
     }
 }
