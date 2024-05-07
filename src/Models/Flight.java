@@ -5,7 +5,6 @@ public class Flight {
     private String destination;
     private String origin;
     private Plane plane;
-    private String details;
     private String date;
 
     public Flight(String id,String destination,String origin,Plane plane,String date){
