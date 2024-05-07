@@ -5,7 +5,9 @@ public class Flight {
     private String destination;
     private String origin;
     private Plane plane;
+    private String details;
     private String date;
+
     public Flight(String id,String destination,String origin,Plane plane,String date){
         this.id = id;
         this.destination = destination;
@@ -13,6 +15,8 @@ public class Flight {
         this.plane = plane;
         this.date = date;
     }
+
+
     public String getId() {
         return id;
     }
@@ -48,6 +52,7 @@ public class Flight {
     public void setPlane(Plane plane) {
         this.plane = plane;
     }
+
 
     public void setDate(String date) {
         this.date = date;
