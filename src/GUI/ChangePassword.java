@@ -16,7 +16,6 @@ import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
 
 public class ChangePassword extends JFrame {
-
     JFrame changePasswordPopup = new JFrame("Change Password");
 
     JPanel leftPanel = new JPanel ();
@@ -48,17 +47,13 @@ public class ChangePassword extends JFrame {
             getScaledInstance(450, 320, Image.SCALE_SMOOTH));
     JLabel passwordImg = new JLabel (scaledPassword);
 
-    private AccountPage accountPage;
 
-    public void xPassword(AccountPage accountPage) {
-        this.accountPage = accountPage;}
 
     ChangePassword(){
 
         changePasswordPopup.setLayout ( null );
         changePasswordPopup.setSize(800, 500);
         changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       // changePasswordPopup.setDefaultCloseOperation(new AccountPage());
         changePasswordPopup.setIconImage(icon.getImage());
         changePasswordPopup.setResizable(false);
         changePasswordPopup.setLocationRelativeTo(null);
@@ -98,7 +93,7 @@ public class ChangePassword extends JFrame {
         header.setBounds (120, 70,300,50 );
         header.setForeground ( Color.decode ( "#05203C" ) );
         header.setFont ( new Font ( "SansSerif", Font.BOLD , 20 ) );
-        validatePasswordLabel.setBounds(50, 120, 100, 50);
+        validatePasswordLabel.setBounds(50, 120, 300, 50);
         validatePasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
         validatePasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
         validatePasswordField.setBounds(50, 160, 300, 30);
@@ -120,12 +115,13 @@ public class ChangePassword extends JFrame {
         changePasswordConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
         passwordError.setVisible(false);
 
-        changePasswordPopup.addWindowListener(new WindowAdapter() {
+        changePasswordPopup.addWindowListener(new WindowAdapter () {
             @Override
             public void windowClosing(WindowEvent e) {
-                new AccountPage(); // Open the AccountPage when the ChangePassword frame is closed
+                AccountPage.accountFrame.setEnabled ( true );
             }
         });
+
         showPassword.addActionListener(e -> {
             boolean showPassword = ((JCheckBox) e.getSource()).isSelected();
             toggleFieldType(showPassword);
@@ -142,7 +138,7 @@ public class ChangePassword extends JFrame {
                 passwordError.setVisible(false);
                 currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
                 generateToken(currentUser);
-                removeToken();
+                removeToken ();
                 User afterUpdate= new User(currentUser.getEmail(),currentUser.getUsername(),String.valueOf(newPasswordField.getPassword()));
                 generateToken(afterUpdate);
 
@@ -152,16 +148,19 @@ public class ChangePassword extends JFrame {
                     System.out.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
+
                 changePasswordPopup.dispose();
-                new AccountPage();
+               AccountPage.accountFrame.setEnabled ( true );
+               new AccountPage();
+
             } else {
                 passwordError.setVisible(true);
             }
         });
 
+
         changePasswordPopup.setVisible ( true );
     }
-
 
     private void toggleFieldType(boolean showPassword) {
         if (showPassword) {
