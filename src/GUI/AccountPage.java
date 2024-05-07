@@ -6,12 +6,12 @@ import Utils.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import Controllers.SessionControl;
 import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
 import static Controllers.SessionControl.*;
@@ -30,12 +30,12 @@ public class AccountPage extends JFrame {
 
     ImageIcon scaledLogo = new ImageIcon(logoIcon.getImage().
             getScaledInstance(190, 80, Image.SCALE_SMOOTH));
-
     JLabel logo = new JLabel (scaledLogo);
     JButton backButton = new JButton("<");
     JLabel accountHeader = new JLabel(HomePage.currentUser.getUsername() + "'s Account");
 
     JLabel logoutButton = new JLabel("Logout");
+
 
     ImageIcon pencil = new ImageIcon("Assets/pen-to-square-regular.png");
     ImageIcon scaledPencil = new ImageIcon(pencil.getImage().
@@ -140,8 +140,10 @@ public class AccountPage extends JFrame {
         changeUsernameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
+
                 new ChangeUser ();
                 accountFrame.setEnabled(false);
+
             }
         });
 
