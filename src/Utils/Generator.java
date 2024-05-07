@@ -1,11 +1,13 @@
 package Utils;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import GUI.FlightsPage;
 
 public class Generator {
     public static String flightGen(String origin, String destination){
 
-        return "Flight From " + origin + " to " + destination + " at "+ randomDateGen();
+        return "Flight From " + origin + " to " + destination + " at ";
     }
 
     public static String GenerateID(){
@@ -18,12 +20,21 @@ public class Generator {
         return sb.toString();
     }
 
-    public static String randomDateGen(){
+    public static String randomDateGen(String startDate){
         Random random = new Random();
-        int year = 2025;
-        int month = random.nextInt(12) + 1;
-        int day = random.nextInt(daysInMonth(month,year)) +1;
-        return String.format("%02d/%02d/%04d",day,month,year);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Convert the input string to a LocalDate
+        LocalDate start = LocalDate.parse(startDate, formatter);
+
+        // Generate a random number between 2 and 14
+        int daysToAdd = random.nextInt(13) + 2;
+
+        // Add the random number of days to the start date
+        LocalDate newDate = start.plusDays(daysToAdd);
+
+        // Convert the new date back to a string
+        return newDate.format(formatter);
     }
 
     public static int daysInMonth(int month,int year){
