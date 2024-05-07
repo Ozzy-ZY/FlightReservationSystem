@@ -12,7 +12,7 @@ import java.util.Map;
 import static Controllers.SessionControl.*;
 public class HomePage {
 
-    //aloo
+
     static boolean status = false;
     static User currentUser;
     JFrame mainFrame = new JFrame("Rihla Flights");
@@ -101,16 +101,12 @@ public class HomePage {
                         popupMenu.setVisible(false);
 
                     }
-                    else if(!entered && exited) {
+                    else  {
                         entered = true;
                         exited = false;
                         showPopupMenu(currentUserLabel, currentUserLabel.getWidth() / 2, currentUserLabel.getHeight());
                     }
-                    else
-                    {
-                        entered = true;
-                        exited = false;
-                    }
+
                 }
                 @Override
                 public void mouseEntered(MouseEvent e) {

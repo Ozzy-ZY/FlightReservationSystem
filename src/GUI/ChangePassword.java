@@ -1,13 +1,17 @@
 package GUI;
 
 import Controllers.RegisterControl;
+import Models.User;
 import Utils.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import static Controllers.SessionControl.generateToken;
+import static Controllers.SessionControl.removeToken;
 import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
 
@@ -89,7 +93,7 @@ public class ChangePassword extends JFrame {
         header.setBounds (120, 70,300,50 );
         header.setForeground ( Color.decode ( "#05203C" ) );
         header.setFont ( new Font ( "SansSerif", Font.BOLD , 20 ) );
-        validatePasswordLabel.setBounds(50, 120, 100, 50);
+        validatePasswordLabel.setBounds(50, 120, 300, 50);
         validatePasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
         validatePasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
         validatePasswordField.setBounds(50, 160, 300, 30);
@@ -111,6 +115,12 @@ public class ChangePassword extends JFrame {
         changePasswordConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
         passwordError.setVisible(false);
 
+        changePasswordPopup.addWindowListener(new WindowAdapter () {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                AccountPage.accountFrame.setEnabled ( true );
+            }
+        });
 
         showPassword.addActionListener(e -> {
             boolean showPassword = ((JCheckBox) e.getSource()).isSelected();
@@ -128,17 +138,26 @@ public class ChangePassword extends JFrame {
                 passwordError.setVisible(false);
                 currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
                 generateToken(currentUser);
+                removeToken ();
+                User afterUpdate= new User(currentUser.getEmail(),currentUser.getUsername(),String.valueOf(newPasswordField.getPassword()));
+                generateToken(afterUpdate);
+
                 try {
                     FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
+
                 changePasswordPopup.dispose();
+               AccountPage.accountFrame.setEnabled ( true );
+               new AccountPage();
+
             } else {
                 passwordError.setVisible(true);
             }
         });
+
 
         changePasswordPopup.setVisible ( true );
     }
