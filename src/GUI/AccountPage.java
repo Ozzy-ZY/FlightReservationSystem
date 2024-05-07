@@ -6,10 +6,12 @@ import Utils.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import Controllers.SessionControl;
 import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
 import static Controllers.SessionControl.*;
@@ -46,7 +48,6 @@ public class AccountPage extends JFrame {
 
     JLabel mailTxt = new JLabel ("E-MAIL");
     JLabel mail = new JLabel ( "<html>"+currentUser.getEmail()+"</html>");
-
     ImageIcon delete = new ImageIcon("Assets/trash-can-regular.png");
     ImageIcon scaledDel = new ImageIcon(delete.getImage().
             getScaledInstance(20, 25, Image.SCALE_SMOOTH));
@@ -83,7 +84,6 @@ public class AccountPage extends JFrame {
 
 
         changeUsernamePopup.setSize(400, 400);
-        changeUsernamePopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         changeUsernamePopup.setIconImage(icon.getImage());
         changeUsernamePopup.setResizable(false);
         changeUsernamePopup.add(validatePasswordLabel);
@@ -105,7 +105,12 @@ public class AccountPage extends JFrame {
         usernameError.setVisible(false);
         changeUsernamePopup.setResizable(false);
 
-
+        changeUsernamePopup.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                accountFrame.setEnabled(true);
+            }
+        });
 
 
         backButton.addActionListener(e -> {
@@ -125,11 +130,13 @@ public class AccountPage extends JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 changeUsernamePopup.setVisible(true);
+                accountFrame.setEnabled(false);
             }
         });
         changeUsernameConfirmButton.addActionListener(e -> {
             if (!status) {
                 changeUsernamePopup.setVisible(false);
+
             }
             String oldUser = currentUser.toString();
             if (currentUser.getPassword().equals(String.valueOf
@@ -137,12 +144,18 @@ public class AccountPage extends JFrame {
                     RegisterControl.ValidateUsername(ChangeUsernameField.getText())) {
                 usernameError.setVisible(false);
                 currentUser.setUsername(ChangeUsernameField.getText());
+                removeToken();
+                User afterUpdate= new User(currentUser.getEmail(),ChangeUsernameField.getText(),currentUser.getPassword());
+                generateToken(afterUpdate);
+                accountFrame.setEnabled(true);
                 try {
                     FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
+                accountHeader.setText(currentUser.getUsername() + "'s Account"); // <--- Update the account header
+                accountFrame.repaint(); // <--- Repaint the account frame
                 changeUsernamePopup.dispose();
             } else {
                 usernameError.setVisible(true);
@@ -153,6 +166,7 @@ public class AccountPage extends JFrame {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 new ChangePassword ();
+                accountFrame.dispose();
             }
         });
         deleteAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -203,12 +217,12 @@ public class AccountPage extends JFrame {
         changeUsernameButton.setBounds(500, 70, 25, 25);
         changePasswordButton.setBounds(550, 70, 25, 25);
         deleteAccountButton.setBounds(600, 70, 20, 25);
-        mailTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 13 ) );
+        mailTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 23 ) );
         mailTxt.setForeground ( Color.decode ( "#FD9426" ) );
-        mailTxt.setBounds ( 80,250,150,20 );
+        mailTxt.setBounds ( 80,250,mailTxt.getMinimumSize().width,20 );
         mail.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
         mail.setForeground ( Color.decode ( "#05203C" ) );
-        mail.setBounds ( 80,270,150,40 );
+        mail.setBounds ( 80,270,mail.getMinimumSize().width,mail.getMinimumSize().height );
 
 
         accountFrame.setVisible(true);

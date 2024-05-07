@@ -1,17 +1,22 @@
 package GUI;
 
 import Controllers.RegisterControl;
+import Models.User;
 import Utils.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import static Controllers.SessionControl.generateToken;
+import static Controllers.SessionControl.removeToken;
 import static GUI.HomePage.currentUser;
 import static GUI.HomePage.status;
 
 public class ChangePassword extends JFrame {
+
     JFrame changePasswordPopup = new JFrame("Change Password");
 
     JPanel leftPanel = new JPanel ();
@@ -43,13 +48,17 @@ public class ChangePassword extends JFrame {
             getScaledInstance(450, 320, Image.SCALE_SMOOTH));
     JLabel passwordImg = new JLabel (scaledPassword);
 
+    private AccountPage accountPage;
 
+    public void xPassword(AccountPage accountPage) {
+        this.accountPage = accountPage;}
 
     ChangePassword(){
 
         changePasswordPopup.setLayout ( null );
         changePasswordPopup.setSize(800, 500);
         changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       // changePasswordPopup.setDefaultCloseOperation(new AccountPage());
         changePasswordPopup.setIconImage(icon.getImage());
         changePasswordPopup.setResizable(false);
         changePasswordPopup.setLocationRelativeTo(null);
@@ -111,7 +120,12 @@ public class ChangePassword extends JFrame {
         changePasswordConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
         passwordError.setVisible(false);
 
-
+        changePasswordPopup.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new AccountPage(); // Open the AccountPage when the ChangePassword frame is closed
+            }
+        });
         showPassword.addActionListener(e -> {
             boolean showPassword = ((JCheckBox) e.getSource()).isSelected();
             toggleFieldType(showPassword);
@@ -128,6 +142,10 @@ public class ChangePassword extends JFrame {
                 passwordError.setVisible(false);
                 currentUser.setPassword(String.valueOf(newPasswordField.getPassword()));
                 generateToken(currentUser);
+                removeToken();
+                User afterUpdate= new User(currentUser.getEmail(),currentUser.getUsername(),String.valueOf(newPasswordField.getPassword()));
+                generateToken(afterUpdate);
+
                 try {
                     FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
                 } catch (IOException ex) {
@@ -135,6 +153,7 @@ public class ChangePassword extends JFrame {
                     throw new RuntimeException(ex);
                 }
                 changePasswordPopup.dispose();
+                new AccountPage();
             } else {
                 passwordError.setVisible(true);
             }
@@ -142,6 +161,7 @@ public class ChangePassword extends JFrame {
 
         changePasswordPopup.setVisible ( true );
     }
+
 
     private void toggleFieldType(boolean showPassword) {
         if (showPassword) {
