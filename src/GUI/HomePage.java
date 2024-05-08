@@ -12,7 +12,6 @@ import java.util.Map;
 import static Controllers.SessionControl.*;
 public class HomePage {
 
-
     static boolean status = false;
     static User currentUser;
     JFrame mainFrame = new JFrame("Rihla Flights");
