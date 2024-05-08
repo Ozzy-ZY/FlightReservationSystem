@@ -27,7 +27,7 @@ public class Register extends JFrame{
     JPasswordField passwordField = new JPasswordField(30);
     JLabel passwordLabel = new JLabel("Password");
     JLabel errorEmail = new JLabel("Invalid Email");
-    JLabel errorUsername = new JLabel("Username must be between 3 and 20 characters long");
+    JLabel errorUsername = new JLabel("please enter a valid password");
     JLabel errorPassword = new JLabel("Please enter a valid password");
     JLabel RedEmail = new JLabel("This Email already exist");
     JLabel RedUsername = new JLabel("This Username already exist");
