@@ -14,7 +14,6 @@ import static Controllers.SessionControl.*;
 
 public class HomePage {
 
-
     static boolean status = false;
     static User currentUser;
 
