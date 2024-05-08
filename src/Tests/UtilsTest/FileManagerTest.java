@@ -1,5 +1,6 @@
-package Utils;
+package Tests.UtilsTest;
 
+import Utils.FileManager;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
