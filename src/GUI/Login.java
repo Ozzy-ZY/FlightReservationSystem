@@ -1,6 +1,10 @@
 package GUI;
 import Controllers.LoginControl;
+import Controllers.ThemeManager;
 import Models.User;
+import Utils.RoundedBorder;
+import static Controllers.LoginControl.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,14 +15,15 @@ import static Controllers.SessionControl.*;
 import static Controllers.RegisterControl.*;
 
 public class Login extends JFrame{
-
-
-
     JFrame loginFrame = new JFrame("Login");
     JPanel loginPanel = new JPanel();
 
     ImageIcon bg = new ImageIcon("Assets/loginBG.png");
     ImageIcon scaledBg = new ImageIcon(bg.getImage().
+            getScaledInstance(500, 600, Image.SCALE_SMOOTH));
+
+    ImageIcon bgD = new ImageIcon("Assets/loginBGD.png");
+    ImageIcon scaledBgD = new ImageIcon(bgD.getImage().
             getScaledInstance(500, 600, Image.SCALE_SMOOTH));
 
     ImageIcon login = new ImageIcon("Assets/logo.png");
@@ -74,13 +79,22 @@ public class Login extends JFrame{
             }
         });
         loginButton.addActionListener(e -> {
-            if(LoginControl.ValidateUser(emailField.getText(),
-                    tostring(passwordField.getPassword()))){
+            int flag = LoginControl.ValidateUser(emailField.getText(),
+                    tostring(passwordField.getPassword()));
+            if(flag == EMAIL_VALID){
                 HomePage.currentUser = new User(emailField.getText(),
                         getUsername(emailField.getText()),
                         tostring(passwordField.getPassword()));
                 generateToken(new User(emailField.getText(),getUsername(emailField.getText()),
                         tostring(passwordField.getPassword())));
+                new HomePage();
+                loginFrame.dispose();
+            }
+            else if (flag == USERNAME_VALID){
+                HomePage.currentUser = new User(getEmail(emailField.getText())
+                        ,emailField.getText(),tostring(passwordField.getPassword()));
+                generateToken(new User(getEmail(emailField.getText())
+                        ,emailField.getText(),tostring(passwordField.getPassword())));
                 new HomePage();
                 loginFrame.dispose();
             }
@@ -100,16 +114,19 @@ public class Login extends JFrame{
         emailLabel.setForeground(Color.decode("#05203C"));
         emailField.setBounds(75, 175, 300, 30);
         emailField.setSize (350, 35);
+        emailField.setBorder ( new RoundedBorder () );
         passwordLabel.setBounds(75, 225, 100, 30);
         passwordLabel.setFont(new Font("Arial",Font.BOLD, 15));
         passwordLabel.setForeground(Color.decode("#05203C"));
         passwordField.setBounds(75, 250, 300, 35);
         passwordField.setSize (350, 35);
+        passwordField.setBorder ( new RoundedBorder () );
         loginButton.setBounds(75, 320, 100, 30);
         loginButton.setBackground(Color.decode("#0B3E91"));
         loginButton.setSize ( 350,40 );
         loginButton.setFont ( new Font("Arial", Font.BOLD,16) );
         loginButton.setForeground ( Color.white );
+        loginButton.setBorder ( BorderFactory.createEmptyBorder () );
         errorLogin.setBounds(180, 290, 200, 30);
         errorLogin.setForeground(Color.decode("#db3125"));
         haveAcc.setBounds(75,365,haveAcc.getMinimumSize().width,haveAcc.getMinimumSize().height);
@@ -124,7 +141,43 @@ public class Login extends JFrame{
             }
         });
 
+        if ( ThemeManager.isDarkMode ()) {
+            setDarkMode();
+        } else {
+            setLightMode();
+        }
+    }
 
+    private void setLightMode() {
+        loginPanel.setBackground(Color.decode("#f6f6f6"));
+        loginHeader.setForeground(Color.decode("#05203C"));
+        backButton.setBackground(Color.decode("#f1f1f1"));
+        emailLabel.setForeground(Color.decode("#05203C"));
+        emailField.setBackground (Color.decode("#f6f6f6"));
+        emailField.setForeground ( Color.decode("#000000") );
+        passwordLabel.setForeground(Color.decode("#05203C"));
+        passwordField.setBackground (Color.decode("#f6f6f6"));
+        passwordField.setForeground ( Color.decode("#000000") );
+        haveAcc.setForeground(Color.decode("#05203C"));
+        bgIcon.setIcon ( scaledBg );
+        bgIcon.setBounds ( 150,-20,500,600 );
+        ThemeManager.setDarkMode ( false );
+    }
+
+    private void setDarkMode() {
+        loginPanel.setBackground(Color.decode("#111827"));
+        loginHeader.setForeground(Color.decode("#ffffff"));
+        backButton.setBackground(Color.decode("#f1f1f1"));
+        emailLabel.setForeground(Color.decode("#ffffff"));
+        emailField.setBackground (Color.decode("#111827"));
+        emailField.setForeground ( Color.decode("#ffffff") );
+        passwordLabel.setForeground(Color.decode("#ffffff"));
+        passwordField.setBackground (Color.decode("#111827"));
+        passwordField.setForeground ( Color.decode("#ffffff") );
+        haveAcc.setForeground(Color.decode("#ffffff"));
+        bgIcon.setIcon ( scaledBgD );
+        bgIcon.setBounds ( -280,0,500,600 );
+        ThemeManager.setDarkMode ( true );
     }
 
 }
