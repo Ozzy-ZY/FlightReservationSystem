@@ -1,5 +1,4 @@
 package GUI;
-import Controllers.LoginControl;
 import Controllers.ThemeManager;
 import Models.User;
 import Utils.RoundedBorder;
