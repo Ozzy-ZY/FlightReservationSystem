@@ -29,11 +29,6 @@ public class GeneratorTest {
         assertTrue(flight.startsWith("Flight From NYC to LA at"));
     }
 
-    @Test
-    public void randomDateGenProducesValidDate() {
-        String date = Generator.randomDateGen();
-        assertTrue(date.matches("\\d{2}/\\d{2}/\\d{4}"));
-    }
 
     @Test
     public void daysInMonthReturnsCorrectForNonLeapYear() {

@@ -1,19 +1,17 @@
 package GUI;
 
-import Controllers.RegisterControl;
+import Controllers.ThemeManager;
 import Models.User;
 import Utils.FileManager;
+import Utils.RoundedBorder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
-import Controllers.SessionControl;
-import static GUI.HomePage.currentUser;
-import static GUI.HomePage.status;
 import static Controllers.SessionControl.*;
 
 
@@ -22,6 +20,7 @@ public class AccountPage extends JFrame {
     static User user;
     static JFrame accountFrame = new JFrame("Account");
 
+    JLabel toggleButton = new JLabel ("Dark Mode");
 
     JPanel accountPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/logo.png");
@@ -120,6 +119,7 @@ public class AccountPage extends JFrame {
         accountPanel.add(delTxt);
         accountPanel.add(delLabel);
         accountPanel.add(deleteAccountButton);
+        accountPanel.add(toggleButton);
 
 
         backButton.addActionListener(e -> {
@@ -155,7 +155,7 @@ public class AccountPage extends JFrame {
             }
         });
 
-        deleteAccountButton.addActionListener(new ActionListener() {
+        deleteAccountButton.addActionListener(new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -173,6 +173,12 @@ public class AccountPage extends JFrame {
             }
         });
 
+        toggleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        toggleButton.addMouseListener(new MouseAdapter () {
+            public void mouseClicked(MouseEvent e) {
+                toggleMode();
+            }
+        });
 
         accountPanel.setBackground(Color.decode("#ffffff"));
 
@@ -201,6 +207,8 @@ public class AccountPage extends JFrame {
         username.setBounds ( 70, 245,270,40);
         username.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         username.setEditable(false);
+        username.setBorder ( new RoundedBorder () );
+
         changeUsernameButton.setBounds(340, 245, 40, 40);
 
 
@@ -210,6 +218,8 @@ public class AccountPage extends JFrame {
         userPassword.setBounds ( 410, 245,270,40);
         userPassword.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         userPassword.setEditable(false);
+        userPassword.setBorder ( new RoundedBorder () );
+
         changePasswordButton.setBounds(680, 245, 40, 40);
 
         personal.setBounds ( 70, 300,400,40 );
@@ -223,29 +233,35 @@ public class AccountPage extends JFrame {
         fNameTxt.setForeground ( Color.decode ( "#05203C" ) );
         fName.setBounds ( 70, 385,300,40);
         fName.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
+        fName.setBorder ( new RoundedBorder () );
 
         lNameTxt.setBounds ( 410,350,400,40 );
         lNameTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
         lNameTxt.setForeground ( Color.decode ( "#05203C" ) );
         lName.setBounds ( 410, 385,300,40);
         lName.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
+        lName.setBorder ( new RoundedBorder () );
 
         passIDTxt.setBounds ( 70,430,400,40 );
         passIDTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
         passIDTxt.setForeground ( Color.decode ( "#05203C" ) );
         passID.setBounds ( 70, 465,640,40);
         passID.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
+        passID.setBorder ( new RoundedBorder () );
 
         noText.setBounds ( 70,510,400,40 );
         noText.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
         noText.setForeground ( Color.decode ( "#05203C" ) );
         number.setBounds ( 70, 545,640,40);
         number.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
+        number.setBorder ( new RoundedBorder () );
 
         saveChanges.setBounds(70, 600, 640, 40);
         saveChanges.setFont(new Font("Arial", Font.BOLD, 18));
         saveChanges.setForeground ( Color.white );
         saveChanges.setBackground ( Color.decode ( "#0B3E91" ) );
+        saveChanges.setBorder ( BorderFactory.createEmptyBorder () );
+
 
         delTxt.setBounds ( 70, 660,400,40 );
         delTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 23 ) );
@@ -261,10 +277,98 @@ public class AccountPage extends JFrame {
         deleteAccountButton.setFont(new Font("Arial", Font.BOLD, 15));
         deleteAccountButton.setForeground ( Color.white );
         deleteAccountButton.setBackground ( Color.decode ( "#DE3341" ) );
+        deleteAccountButton.setBorder ( BorderFactory.createEmptyBorder () );
 
-
+        toggleButton.setBounds ( 610,820,100,50 );
+        toggleButton.setFont ( new Font ( "SansSerif",Font.BOLD,15 ) );
         accountFrame.setVisible(true);
+
+
+        if ( ThemeManager.isDarkMode ()) {
+            setDarkMode();
+        } else {
+            setLightMode();
+        }
+
     }
 
+    private void toggleMode() {
+        if (ThemeManager.isDarkMode ()) {
+            setLightMode();
+        } else {
+            setDarkMode();
+        }
+    }
+    private void setLightMode() {
+        System.out.println ("Light!");
+        accountPanel.setBackground(Color.decode("#ffffff"));
+        accountHeader.setForeground(Color.decode ( "#05203C" ));
+        logoutButton.setForeground ( Color.decode ( "#db3125" ) );
+        info.setForeground ( Color.decode ( "#0B3E91" ) );
+        usernameTxt.setForeground ( Color.decode ( "#05203C" ) );
+        username.setBackground ( Color.decode ( "#eeeeee" ));
+        username.setForeground ( Color.decode ( "#000000" ));
+        passwordTxt.setForeground ( Color.decode ( "#05203C" ) );
+        userPassword.setBackground ( Color.decode ( "#eeeeee" ));
+        userPassword.setForeground ( Color.decode ( "#000000" ));
+        personal.setForeground ( Color.decode ( "#0B3E91" ) );
+        fNameTxt.setForeground ( Color.decode ( "#05203C" ) );
+        fName.setBackground ( Color.decode ( "#ffffff" ));
+        fName.setForeground ( Color.decode ( "#000000" ));
+        lNameTxt.setForeground ( Color.decode ( "#05203C" ) );
+        lName.setBackground ( Color.decode ( "#ffffff" ));
+        lName.setForeground ( Color.decode ( "#000000" ));
+        passIDTxt.setForeground ( Color.decode ( "#05203C" ) );
+        passID.setBackground ( Color.decode ( "#ffffff" ));
+        passID.setForeground ( Color.decode ( "#000000" ));
+        noText.setForeground ( Color.decode ( "#05203C" ) );
+        number.setBackground ( Color.decode ( "#ffffff" ));
+        number.setForeground ( Color.decode ( "#000000" ));
+        saveChanges.setForeground ( Color.white );
+        saveChanges.setBackground ( Color.decode ( "#0B3E91" ) );
+        delTxt.setForeground ( Color.decode ( "#DE3341" ) );
+        delLabel.setForeground ( Color.decode ( "#5555555" ) );
+        toggleButton.setText ( "Dark Mode" );
+        toggleButton.setForeground ( Color.black );
+
+        ThemeManager.setDarkMode ( false );
+    }
+
+    private void setDarkMode() {
+        System.out.println ("Dark!");
+        accountPanel.setBackground(Color.decode("#111827"));
+        accountHeader.setForeground(Color.decode ( "#ffffff" ));
+        logoutButton.setForeground ( Color.decode ( "#db3125" ) );
+        info.setForeground ( Color.decode ( "#ffffff" ) );
+        usernameTxt.setForeground ( Color.decode ( "#bfbfbf" ) );
+        username.setBackground ( Color.decode ( "#0e1421" ));
+        username.setForeground ( Color.decode ( "#ffffff" ));
+        passwordTxt.setForeground ( Color.decode ( "#ffffff" ) );
+        userPassword.setBackground ( Color.decode ( "#0e1421" ));
+        userPassword.setForeground ( Color.decode ( "#ffffff" ));
+        personal.setForeground ( Color.decode ( "#ffffff" ) );
+        fNameTxt.setForeground ( Color.decode ( "#bfbfbf" ) );
+        fName.setBackground ( Color.decode ( "#111827" ));
+        fName.setForeground ( Color.decode ( "#ffffff" ));
+        lNameTxt.setForeground ( Color.decode ( "#bfbfbf" ) );
+        lName.setBackground ( Color.decode ( "#111827" ));
+        lName.setForeground ( Color.decode ( "#ffffff" ));
+        passIDTxt.setForeground ( Color.decode ( "#bfbfbf" ) );
+        passID.setBackground ( Color.decode ( "#111827" ));
+        passID.setForeground ( Color.decode ( "#ffffff" ));
+        noText.setForeground ( Color.decode ( "#bfbfbf" ) );
+        number.setBackground ( Color.decode ( "#111827" ));
+        number.setForeground ( Color.decode ( "#ffffff" ));
+        saveChanges.setForeground ( Color.white );
+        saveChanges.setBackground ( Color.decode ( "#0B3E91" ) );
+        delTxt.setForeground ( Color.decode ( "#ffffff" ) );
+        delLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
+        toggleButton.setForeground ( Color.white );
+        toggleButton.setText ( "Light Mode" );
+
+
+        ThemeManager.setDarkMode ( true );
+
+    }
 
 }
