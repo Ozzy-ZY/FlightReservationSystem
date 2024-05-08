@@ -3,6 +3,7 @@ import Controllers.LoginControl;
 import Controllers.ThemeManager;
 import Models.User;
 import Utils.RoundedBorder;
+import static Controllers.LoginControl.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,13 +79,22 @@ public class Login extends JFrame{
             }
         });
         loginButton.addActionListener(e -> {
-            if(LoginControl.ValidateUser(emailField.getText(),
-                    tostring(passwordField.getPassword()))){
+            int flag = LoginControl.ValidateUser(emailField.getText(),
+                    tostring(passwordField.getPassword()));
+            if(flag == EMAIL_VALID){
                 HomePage.currentUser = new User(emailField.getText(),
                         getUsername(emailField.getText()),
                         tostring(passwordField.getPassword()));
                 generateToken(new User(emailField.getText(),getUsername(emailField.getText()),
                         tostring(passwordField.getPassword())));
+                new HomePage();
+                loginFrame.dispose();
+            }
+            else if (flag == USERNAME_VALID){
+                HomePage.currentUser = new User(getEmail(emailField.getText())
+                        ,emailField.getText(),tostring(passwordField.getPassword()));
+                generateToken(new User(getEmail(emailField.getText())
+                        ,emailField.getText(),tostring(passwordField.getPassword())));
                 new HomePage();
                 loginFrame.dispose();
             }

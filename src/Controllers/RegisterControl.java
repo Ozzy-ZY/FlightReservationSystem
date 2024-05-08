@@ -16,12 +16,8 @@ public class RegisterControl {
     }
 
     public  static boolean ValidateUsername(String Username){
-        if(Username.contains(" ")){
-            return false;
-        }
-        else{
-            return Username.length() >= 3;
-        }
+        String regexPattern = "^[A-Za-z][A-Za-z0-9_]{2,15}$";
+        return patternMatches(Username, regexPattern);
 
     }
 
