@@ -1,4 +1,5 @@
 package GUI;
+import Controllers.ThemeManager;
 import Models.User;
 
 import javax.swing.*;
@@ -10,11 +11,13 @@ import javax.swing.JLabel;
 import java.util.HashMap;
 import java.util.Map;
 import static Controllers.SessionControl.*;
+
 public class HomePage {
 
 
     static boolean status = false;
     static User currentUser;
+
     JFrame mainFrame = new JFrame("Rihla Flights");
 
     ImageIcon logo = new ImageIcon ("Assets/logo.png");
@@ -25,12 +28,17 @@ public class HomePage {
     ImageIcon bg = new ImageIcon("Assets/homeBg.png");
     ImageIcon scaledBg = new ImageIcon(bg.getImage().
             getScaledInstance(550, 650, Image.SCALE_SMOOTH));
+    ImageIcon bgD = new ImageIcon("Assets/homeBgD.png");
+    ImageIcon scaledBgD = new ImageIcon(bgD.getImage().
+            getScaledInstance(550, 750, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
     JLabel currentUserLabel;
     JLabel regLabel = new JLabel("Register");
     JLabel loginLabel = new JLabel("Login");
     JLabel logoLabel = new JLabel(scaledIcon);
+    JLabel toggleButton = new JLabel ("Dark Mode");
     JLabel bgLabel = new JLabel(scaledBg);
+
 
     JLabel welcomeLabel = new JLabel("Welcome to Rihla Flight!");
     JButton Flights = new JButton("Flights");
@@ -60,6 +68,7 @@ public class HomePage {
         mainPanel.add(Flights);
         mainPanel.add(Tickets);
         mainPanel.add(Account);
+        mainPanel.add ( toggleButton );
         mainPanel.add(bgLabel);
         popupMenu.add(signOutItem);
 
@@ -157,6 +166,12 @@ public class HomePage {
             new AccountPage();
             mainFrame.dispose();
         });
+        toggleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        toggleButton.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                toggleMode();
+            }
+        });
         popupMenu.setPreferredSize(new Dimension(75, 30));
         regLabel.setFont(new Font("New", Font.ITALIC, 18));
         regLabel.setForeground(Color.decode ( "#FD9426" ));
@@ -168,19 +183,33 @@ public class HomePage {
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
         welcomeLabel.setForeground(Color.decode("#05203C"));
         welcomeLabel.setBounds(135, 200, 400, 30);
-        Flights.setBounds(75, 280, 400, 60);
+
+        Flights.setBounds(70, 280, 400, 60);
         Flights.setFont(new Font("Arial", Font.BOLD, 18));
         Flights.setForeground ( Color.white );
         Flights.setBackground ( Color.decode ( "#0B3E91" ) );
-        Tickets.setBounds(75, 380, 400, 60);
+        Flights.setBorder ( BorderFactory.createEmptyBorder () );
+
+        Tickets.setBounds(70, 380, 400, 60);
         Tickets.setForeground ( Color.white );
         Tickets.setBackground ( Color.decode ( "#0B3E91" ) );
         Tickets.setFont(new Font("Arial", Font.BOLD, 18));
-        Account.setBounds(75, 480, 400, 60);
+        Tickets.setBorder ( BorderFactory.createEmptyBorder () );
+
+        Account.setBounds(70, 480, 400, 60);
         Account.setFont(new Font("Arial", Font.BOLD, 18));
         Account.setForeground ( Color.white );
         Account.setBackground ( Color.decode ( "#0B3E91" ) );
+        Account.setBorder ( BorderFactory.createEmptyBorder () );
         bgLabel.setBounds ( 0,0,550,650 );
+        toggleButton.setBounds ( 440,570,100,40 );
+        toggleButton.setFont ( new Font ( "SansSerif",Font.BOLD,15 ) );
+
+        if (ThemeManager.isDarkMode ()) {
+            setDarkMode();
+        } else {
+            setLightMode();
+        }
 
         mainFrame.setVisible(true);
     }
@@ -221,4 +250,34 @@ public class HomePage {
             label.setFont(label.getFont().deriveFont(fontAttributes));
         }
     }
+
+
+    private void toggleMode() {
+        if (ThemeManager.isDarkMode ()) {
+            setLightMode();
+        } else {
+            setDarkMode();
+        }
+    }
+
+
+    private void setLightMode() {
+        mainPanel.setBackground(Color.WHITE);
+        toggleButton.setText ( "Dark Mode" );
+        welcomeLabel.setForeground ( Color.decode ( "#05203C" ) );
+        bgLabel.setIcon ( scaledBg );
+        toggleButton.setForeground(Color.BLACK);
+        ThemeManager.setDarkMode ( false );
+    }
+
+
+    private void setDarkMode() {
+        mainPanel.setBackground(Color.decode ( "#111827" ));
+        toggleButton.setText ( "Light Mode" );
+        welcomeLabel.setForeground ( Color.white );
+        bgLabel.setIcon ( scaledBgD );
+        toggleButton.setForeground(Color.WHITE);
+        ThemeManager.setDarkMode ( true );
+    }
 }
+
