@@ -82,7 +82,9 @@ public class AccountPage extends JFrame {
     // CHANGE USERNAME FRAME VARIABLES
     JFrame changeUsernamePopup = new JFrame("Change Username");
     JPanel mainPanel = new JPanel (null);
+
     JLabel changeUserNote = new JLabel ("<html>*Note: This will update your login username on our application for all future logins.");
+
     JLabel mainTxt = new JLabel ("Change your Username");
     JLabel validatePasswordLabel = new JLabel("Your Password:");
     JPasswordField validatePasswordField = new JPasswordField(30);
@@ -93,8 +95,6 @@ public class AccountPage extends JFrame {
     JLabel usernameError = new JLabel("invalid username");
 
     JSplitPane userSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-
-
 
     // CHANGE PASSWORD FRAME VARIABLES
     JFrame changePasswordPopup = new JFrame("Change Password");
@@ -319,8 +319,9 @@ public class AccountPage extends JFrame {
         accountFrame.setVisible(true);
 
         //CHANGE USERNAME POPUP
+
         changeUsernamePopup.setTitle ( "Change Username" );
-        changeUsernamePopup.setSize(450, 500);
+        changeUsernamePopup.setSize(450, 500)
         changeUsernamePopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         changeUsernamePopup.setIconImage(icon.getImage());
         changeUsernamePopup.setResizable(false);
@@ -433,6 +434,7 @@ public class AccountPage extends JFrame {
 
 
         // CHANGE PASSWORD POPUP
+      
         changePasswordPopup.setLayout ( null );
         changePasswordPopup.setSize(800, 500);
         changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -476,12 +478,13 @@ public class AccountPage extends JFrame {
         validatePasswordPopupLabel.setForeground ( Color.decode ( "#05203C" ) );
         validatePasswordPopupLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
         validatePasswordPopupField.setBounds(50, 160, 300, 30);
-        validatePasswordPopupField.setBorder ( new RoundedBorder () );
 
+        validatePasswordPopupField.setBorder ( new RoundedBorder () );
         newPasswordLabel.setBounds(50, 190, 300, 50);
         newPasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
         newPasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
         newPasswordField.setBounds(50, 230, 300, 30);
+
         newPasswordField.setBorder ( new RoundedBorder () );
 
         confirmNewPasswordLabel.setBounds(50, 260, 300, 50);
@@ -489,7 +492,6 @@ public class AccountPage extends JFrame {
         confirmNewPasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
         confirmNewPasswordField.setBorder ( new RoundedBorder () );
         confirmNewPasswordField.setBounds(50, 300, 300, 30);
-
         showPassword.setBounds ( 50,330,300,30 );
         showPassword.setOpaque(false);
         passwordError.setBounds ( 130,350,300,30 );
@@ -585,6 +587,7 @@ public class AccountPage extends JFrame {
         delLabel.setForeground ( Color.decode ( "#5555555" ) );
 
 
+
         // Password popup
 
         leftPanel.setBackground ( Color.decode ( "#0B3E91" ) );
@@ -648,7 +651,6 @@ public class AccountPage extends JFrame {
         delTxt.setForeground ( Color.decode ( "#ffffff" ) );
         delLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
 
-
         // Password popup
 
         leftPanel.setBackground ( Color.decode ( "#04193a" ) );
@@ -689,9 +691,23 @@ public class AccountPage extends JFrame {
         changeUsernameConfirmButton.setBorder ( BorderFactory.createEmptyBorder () );
 
 
+
         ThemeManager.setDarkMode ( true );
 
     }
+    private void toggleFieldType(boolean showPassword) {
+        if (showPassword) {
+            validatePasswordPopupField.setEchoChar('\u0000');
+            newPasswordField.setEchoChar('\u0000');
+            confirmNewPasswordField.setEchoChar('\u0000');
+        } else {
+            validatePasswordPopupField.setEchoChar('*');
+            newPasswordField.setEchoChar('*');
+            confirmNewPasswordField.setEchoChar('*');
+        }
+    }
+
+
     private void toggleFieldType(boolean showPassword) {
         if (showPassword) {
             validatePasswordPopupField.setEchoChar('\u0000');
