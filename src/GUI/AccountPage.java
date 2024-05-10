@@ -30,9 +30,7 @@ public class AccountPage extends JFrame {
     JLabel logo = new JLabel (scaledLogo);
     JButton backButton = new JButton("<");
     JLabel accountHeader = new JLabel(HomePage.currentUser.getUsername() + "'s Account");
-
     JLabel logoutButton = new JLabel("Logout");
-
 
     ImageIcon pencil = new ImageIcon("Assets/pen-to-square-regular.png");
     ImageIcon scaledPencil = new ImageIcon(pencil.getImage().
@@ -71,7 +69,11 @@ public class AccountPage extends JFrame {
 
     JLabel delTxt = new JLabel ("Delete Your Account");
 
-    JLabel delLabel = new JLabel("<html>Click ACCOUNT DELETE to start the process of permanently deleting your RIHLA Flights account including all personal information, flights and tickets. <br> Once your RIHLA flights account is deleted, your wallet balance will be permanently deleted as well.");
+    JLabel delLabel = new JLabel("<html>Click ACCOUNT DELETE to start the process of permanently" +
+            " deleting your RIHLA Flights account including all personal" +
+            " information, flights and tickets. <br> Once your RIHLA " +
+            "flights account is deleted, your wallet balance will be" +
+            " permanently deleted as well.");
     JButton deleteAccountButton = new JButton ("ACCOUNT DELETE");
 
     JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -82,16 +84,20 @@ public class AccountPage extends JFrame {
     // CHANGE USERNAME FRAME VARIABLES
     JFrame changeUsernamePopup = new JFrame("Change Username");
     JPanel mainPanel = new JPanel (null);
-    JLabel header = new JLabel ("Reset Username");
+
+    JLabel changeUserNote = new JLabel ("<html>*Note: This will update your login" +
+            " username on our application for all future logins.");
+
     JLabel mainTxt = new JLabel ("Change your Username");
     JLabel validatePasswordLabel = new JLabel("Your Password:");
     JPasswordField validatePasswordField = new JPasswordField(30);
 
     JLabel ChangeUsernameLabel = new JLabel("New Username:");
     JTextField ChangeUsernameField = new JTextField(30);
-    JButton changeUsernameConfirmButton = new JButton("Confirm");
+    JButton changeUsernameConfirmButton = new JButton("Confirm Changes");
     JLabel usernameError = new JLabel("invalid username");
 
+    JSplitPane userSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
     // CHANGE PASSWORD FRAME VARIABLES
     JFrame changePasswordPopup = new JFrame("Change Password");
@@ -316,8 +322,9 @@ public class AccountPage extends JFrame {
         accountFrame.setVisible(true);
 
         //CHANGE USERNAME POPUP
-        changeUsernamePopup.setTitle ( "Change Usernam" );
-        changeUsernamePopup.setSize(500, 580);
+
+        changeUsernamePopup.setTitle ( "Change Username" );
+        changeUsernamePopup.setSize(450, 500);
         changeUsernamePopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         changeUsernamePopup.setIconImage(icon.getImage());
         changeUsernamePopup.setResizable(false);
@@ -325,14 +332,16 @@ public class AccountPage extends JFrame {
         changeUsernamePopup.add(validatePasswordField);
         changeUsernamePopup.add(ChangeUsernameLabel);
         changeUsernamePopup.add(ChangeUsernameField);
+        changeUsernamePopup.add(changeUserNote);
         changeUsernamePopup.add(changeUsernameConfirmButton);
         changeUsernamePopup.add(usernameError);
+        changeUsernamePopup.add(userSplitPane);
         changeUsernamePopup.setLocationRelativeTo(null);
+        usernameError.setVisible ( false );
         changeUsernamePopup.setVisible ( false );
 
         mainPanel = new JPanel(null);
-        header = new JLabel("Reset Username");
-        mainTxt = new JLabel ("Change your Username");
+        mainTxt = new JLabel ("<html> <b>Change</b> <i>Username</i>");
 
         mainPanel.add ( mainTxt );
         mainPanel.add(validatePasswordLabel);
@@ -344,26 +353,42 @@ public class AccountPage extends JFrame {
 
         changeUsernamePopup.add(mainPanel);
 
-        mainPanel.setBounds ( 0,0,500,580 );
+        mainPanel.setBounds ( 0,0,500,500 );
         mainPanel.setBackground ( Color.decode ( "#ffffff" ) );
 
-        mainTxt.setBounds ( 20,5,450,90 );
-        mainTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 25 ) );
+        mainTxt.setBounds ( 30,5,450,90 );
+        mainTxt.setFont ( new Font ( "SansSerif", Font.PLAIN, 22 ) );
         mainTxt.setForeground ( Color.decode("#0B3E91") );
 
-        validatePasswordLabel.setBounds(80, 100,180,validatePasswordLabel.getMinimumSize().height);
-        validatePasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
-        validatePasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD, 14 ) );
-        validatePasswordField.setBounds(70, 130, 350, 30);
-        ChangeUsernameLabel.setBounds(80, 180, 300, 50);
+
+        ChangeUsernameLabel.setBounds(40, 100, 180, 30);
         ChangeUsernameLabel.setForeground ( Color.decode ( "#05203C" ) );
         ChangeUsernameLabel.setFont ( new Font ( "SansSerif", Font.BOLD, 14 ) );
-        ChangeUsernameField.setBounds(70,240,350,30);
-        changeUsernameConfirmButton.setBounds(150, 300, 170, 40);
-        changeUsernameConfirmButton.setFont(new Font("Arial", Font.BOLD, 18));
-        changeUsernameConfirmButton.setForeground ( Color.decode("#0B3E91") );
-        changeUsernameConfirmButton.setBackground ( Color.decode ( "#ffffff" ) );
+        ChangeUsernameField.setBounds(40,130,355,40);
+        ChangeUsernameField.setBorder ( new RoundedBorder () );
+        ChangeUsernameField.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
 
+        validatePasswordLabel.setBounds(40, 190,180,30);
+        validatePasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
+        validatePasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD, 14 ) );
+        validatePasswordField.setBounds(40, 220, 355, 40);
+        validatePasswordField.setBorder ( new RoundedBorder () );
+        validatePasswordField.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
+
+        changeUserNote.setBounds ( 40,270,355,50 );
+        changeUserNote.setFont ( new Font ( "SansSerif", Font.BOLD, 14 ) );
+        changeUserNote.setForeground ( Color.decode ( "#5555555" ) );
+
+        usernameError.setBounds ( 40,165,200,30 );
+        usernameError.setForeground(Color.decode("#db3125"));
+        usernameError.setFont ( new Font ( "SansSerif",Font.PLAIN,14 ) );
+
+        userSplitPane.setBounds ( 40, 360,355,3);
+        
+        changeUsernameConfirmButton.setBounds(40, 380, 355, 40);
+        changeUsernameConfirmButton.setFont(new Font("Arial", Font.BOLD, 18));
+        changeUsernameConfirmButton.setForeground ( Color.decode("#ffffff") );
+        changeUsernameConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
 
 
         changeUsernamePopup.addWindowListener(new WindowAdapter () {
@@ -412,7 +437,7 @@ public class AccountPage extends JFrame {
 
 
         // CHANGE PASSWORD POPUP
-
+      
         changePasswordPopup.setLayout ( null );
         changePasswordPopup.setSize(800, 500);
         changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -440,7 +465,6 @@ public class AccountPage extends JFrame {
         rightPanel.add(confirmNewPasswordField);
         rightPanel.add(showPassword);
 
-
         leftPanel.setBounds ( 0,0,400,500 );
         leftPanel.setBackground ( Color.decode ( "#0B3E91" ) );
         passwordImg.setBounds ( 0,10,450,320 );
@@ -457,13 +481,19 @@ public class AccountPage extends JFrame {
         validatePasswordPopupLabel.setForeground ( Color.decode ( "#05203C" ) );
         validatePasswordPopupLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
         validatePasswordPopupField.setBounds(50, 160, 300, 30);
+
+        validatePasswordPopupField.setBorder ( new RoundedBorder () );
         newPasswordLabel.setBounds(50, 190, 300, 50);
         newPasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
         newPasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
         newPasswordField.setBounds(50, 230, 300, 30);
+
+        newPasswordField.setBorder ( new RoundedBorder () );
+
         confirmNewPasswordLabel.setBounds(50, 260, 300, 50);
         confirmNewPasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
         confirmNewPasswordLabel.setFont ( new Font ( "SansSerif", Font.BOLD , 15 ) );
+        confirmNewPasswordField.setBorder ( new RoundedBorder () );
         confirmNewPasswordField.setBounds(50, 300, 300, 30);
         showPassword.setBounds ( 50,330,300,30 );
         showPassword.setOpaque(false);
@@ -543,14 +573,7 @@ public class AccountPage extends JFrame {
         userPassword.setForeground ( Color.decode ( "#000000" ));
         personal.setForeground ( Color.decode ( "#0B3E91" ) );
         fNameTxt.setForeground ( Color.decode ( "#05203C" ) );
-        fName.setBackground ( Color.decode ( "#ffffff" ));
-        fName.setForeground ( Color.decode ( "#000000" ));
-        lNameTxt.setForeground ( Color.decode ( "#05203C" ) );
-        lName.setBackground ( Color.decode ( "#ffffff" ));
-        lName.setForeground ( Color.decode ( "#000000" ));
-        passIDTxt.setForeground ( Color.decode ( "#05203C" ) );
-        passID.setBackground ( Color.decode ( "#ffffff" ));
-        passID.setForeground ( Color.decode ( "#000000" ));
+        Styling(fName, lNameTxt, lName, passIDTxt, passID);
         noText.setForeground ( Color.decode ( "#05203C" ) );
         number.setBackground ( Color.decode ( "#ffffff" ));
         number.setForeground ( Color.decode ( "#000000" ));
@@ -559,7 +582,44 @@ public class AccountPage extends JFrame {
         delTxt.setForeground ( Color.decode ( "#DE3341" ) );
         delLabel.setForeground ( Color.decode ( "#5555555" ) );
 
+
+
+        // Password popup
+
+        leftPanel.setBackground ( Color.decode ( "#0B3E91" ) );
+        passwordMainTxt.setForeground ( Color.white );
+        rightPanel.setBackground ( Color.decode ( "#ffffff" ) );
+        passwordHeader.setForeground ( Color.decode ( "#05203C" ) );
+        validatePasswordPopupLabel.setForeground ( Color.decode ( "#05203C" ) );
+        Styling(validatePasswordPopupField, newPasswordLabel, newPasswordField, confirmNewPasswordLabel, confirmNewPasswordField);
+        passwordError.setForeground ( Color.decode ( "#db3125" ) );
+        changePasswordConfirmButton.setForeground ( Color.white );
+        changePasswordConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
+
+        // Username popup
+
+        mainPanel.setBackground ( Color.decode ( "#ffffff" ) );
+        mainTxt.setForeground ( Color.decode("#0B3E91") );
+        ChangeUsernameLabel.setForeground ( Color.decode ( "#05203C" ) );
+        ChangeUsernameField.setBackground ( Color.decode ( "#ffffff" ) );
+        ChangeUsernameField.setForeground ( Color.decode ( "#000000" ) );
+        validatePasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
+        validatePasswordField.setBackground ( Color.decode ( "#ffffff" ) );
+        validatePasswordField.setForeground ( Color.decode ( "#000000" ) );
+        changeUserNote.setForeground ( Color.decode ( "#5555555" ) );
+
         ThemeManager.setDarkMode ( false );
+    }
+
+    private void Styling(JTextField fName, JLabel lNameTxt, JTextField lName, JLabel passIDTxt, JTextField passID) {
+        fName.setBackground ( Color.decode ( "#ffffff" ));
+        fName.setForeground ( Color.decode ( "#000000" ));
+        lNameTxt.setForeground ( Color.decode ( "#05203C" ) );
+        lName.setBackground ( Color.decode ( "#ffffff" ));
+        lName.setForeground ( Color.decode ( "#000000" ));
+        passIDTxt.setForeground ( Color.decode ( "#05203C" ) );
+        passID.setBackground ( Color.decode ( "#ffffff" ));
+        passID.setForeground ( Color.decode ( "#000000" ));
     }
 
     private void setDarkMode() {
@@ -591,12 +651,48 @@ public class AccountPage extends JFrame {
         delTxt.setForeground ( Color.decode ( "#ffffff" ) );
         delLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
 
+        // Password popup
+
+        leftPanel.setBackground ( Color.decode ( "#04193a" ) );
+        passwordMainTxt.setForeground ( Color.white );
+        rightPanel.setBackground ( Color.decode ( "#111827" ) );
+        passwordHeader.setForeground ( Color.decode ( "#ffffff" ) );
+
+        validatePasswordPopupLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
+        validatePasswordPopupField.setBackground ( Color.decode ( "#111827") );
+        validatePasswordPopupField.setForeground ( Color.decode ( "#ffffff" ) );
+
+        newPasswordLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
+        newPasswordField.setBackground ( Color.decode ( "#111827") );
+        newPasswordField.setForeground ( Color.decode ( "#ffffff" ) );
+
+        confirmNewPasswordLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
+        confirmNewPasswordField.setBackground ( Color.decode ( "#111827") );
+        confirmNewPasswordField.setForeground ( Color.decode ( "#ffffff" ) );
+
+        passwordError.setForeground ( Color.decode ( "#db3125" ) );
+        changePasswordConfirmButton.setForeground ( Color.white );
+        changePasswordConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
+        showPassword.setForeground ( Color.decode ( "#bfbfbf" ) );
+        changePasswordConfirmButton.setBorder ( BorderFactory.createEmptyBorder () );
+
+        // Username popup
+
+        mainPanel.setBackground ( Color.decode ( "#111827" ) );
+        mainTxt.setForeground ( Color.decode("#ffffff") );
+        ChangeUsernameLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
+        ChangeUsernameField.setBackground ( Color.decode ( "#111827" ) );
+        ChangeUsernameField.setForeground ( Color.decode ( "#ffffff" ) );
+        validatePasswordLabel.setForeground ( Color.decode ( "#bfbfbf" ) );
+        validatePasswordField.setBackground ( Color.decode ( "#111827" ) );
+        validatePasswordField.setForeground ( Color.decode ( "#ffffff" ) );
+        changeUserNote.setForeground ( Color.decode ( "#bfbfbf" ) );
+        userSplitPane.setBackground ( Color.decode ( "#04193a" ) );
+        changeUsernameConfirmButton.setBorder ( BorderFactory.createEmptyBorder () );
 
         ThemeManager.setDarkMode ( true );
 
     }
-
-
     private void toggleFieldType(boolean showPassword) {
         if (showPassword) {
             validatePasswordPopupField.setEchoChar('\u0000');
@@ -608,5 +704,4 @@ public class AccountPage extends JFrame {
             confirmNewPasswordField.setEchoChar('*');
         }
     }
-
 }
