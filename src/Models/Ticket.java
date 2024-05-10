@@ -4,6 +4,7 @@ public class Ticket {
     private Passenger passenger;
     private Flight flight;
     private int seatNumber;
+    private String ticketID;
     public Ticket(Passenger passenger,Flight flight,int seatNumber){
         this.passenger = passenger;
         this.flight = flight;
@@ -32,5 +33,12 @@ public class Ticket {
 
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
+    }
+    public void generateTicketID(){
+        this.ticketID = flight.getId() + "-" + seatNumber;
+    }
+
+    public String getTicketID() {
+        return ticketID;
     }
 }

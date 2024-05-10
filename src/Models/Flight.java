@@ -59,7 +59,7 @@ public class Flight {
 
     @Override
     public String toString() {
-        return origin+"-->"+destination+"____Date: "+date+"____Plane: "+plane.getType();
+        return origin+" --> "+destination+"__Date: "+date+"__Plane: "+plane.getType();
     }
 
 }
