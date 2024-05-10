@@ -30,9 +30,7 @@ public class AccountPage extends JFrame {
     JLabel logo = new JLabel (scaledLogo);
     JButton backButton = new JButton("<");
     JLabel accountHeader = new JLabel(HomePage.currentUser.getUsername() + "'s Account");
-
     JLabel logoutButton = new JLabel("Logout");
-
 
     ImageIcon pencil = new ImageIcon("Assets/pen-to-square-regular.png");
     ImageIcon scaledPencil = new ImageIcon(pencil.getImage().
@@ -71,7 +69,11 @@ public class AccountPage extends JFrame {
 
     JLabel delTxt = new JLabel ("Delete Your Account");
 
-    JLabel delLabel = new JLabel("<html>Click ACCOUNT DELETE to start the process of permanently deleting your RIHLA Flights account including all personal information, flights and tickets. <br> Once your RIHLA flights account is deleted, your wallet balance will be permanently deleted as well.");
+    JLabel delLabel = new JLabel("<html>Click ACCOUNT DELETE to start the process of permanently" +
+            " deleting your RIHLA Flights account including all personal" +
+            " information, flights and tickets. <br> Once your RIHLA " +
+            "flights account is deleted, your wallet balance will be" +
+            " permanently deleted as well.");
     JButton deleteAccountButton = new JButton ("ACCOUNT DELETE");
 
     JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -83,7 +85,8 @@ public class AccountPage extends JFrame {
     JFrame changeUsernamePopup = new JFrame("Change Username");
     JPanel mainPanel = new JPanel (null);
 
-    JLabel changeUserNote = new JLabel ("<html>*Note: This will update your login username on our application for all future logins.");
+    JLabel changeUserNote = new JLabel ("<html>*Note: This will update your login" +
+            " username on our application for all future logins.");
 
     JLabel mainTxt = new JLabel ("Change your Username");
     JLabel validatePasswordLabel = new JLabel("Your Password:");
@@ -321,7 +324,7 @@ public class AccountPage extends JFrame {
         //CHANGE USERNAME POPUP
 
         changeUsernamePopup.setTitle ( "Change Username" );
-        changeUsernamePopup.setSize(450, 500)
+        changeUsernamePopup.setSize(450, 500);
         changeUsernamePopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         changeUsernamePopup.setIconImage(icon.getImage());
         changeUsernamePopup.setResizable(false);
@@ -570,14 +573,7 @@ public class AccountPage extends JFrame {
         userPassword.setForeground ( Color.decode ( "#000000" ));
         personal.setForeground ( Color.decode ( "#0B3E91" ) );
         fNameTxt.setForeground ( Color.decode ( "#05203C" ) );
-        fName.setBackground ( Color.decode ( "#ffffff" ));
-        fName.setForeground ( Color.decode ( "#000000" ));
-        lNameTxt.setForeground ( Color.decode ( "#05203C" ) );
-        lName.setBackground ( Color.decode ( "#ffffff" ));
-        lName.setForeground ( Color.decode ( "#000000" ));
-        passIDTxt.setForeground ( Color.decode ( "#05203C" ) );
-        passID.setBackground ( Color.decode ( "#ffffff" ));
-        passID.setForeground ( Color.decode ( "#000000" ));
+        Styling(fName, lNameTxt, lName, passIDTxt, passID);
         noText.setForeground ( Color.decode ( "#05203C" ) );
         number.setBackground ( Color.decode ( "#ffffff" ));
         number.setForeground ( Color.decode ( "#000000" ));
@@ -595,14 +591,7 @@ public class AccountPage extends JFrame {
         rightPanel.setBackground ( Color.decode ( "#ffffff" ) );
         passwordHeader.setForeground ( Color.decode ( "#05203C" ) );
         validatePasswordPopupLabel.setForeground ( Color.decode ( "#05203C" ) );
-        validatePasswordPopupField.setBackground ( Color.decode ( "#ffffff") );
-        validatePasswordPopupField.setForeground ( Color.decode ( "#000000" ) );
-        newPasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
-        newPasswordField.setBackground ( Color.decode ( "#ffffff") );
-        newPasswordField.setForeground ( Color.decode ( "#000000" ) );
-        confirmNewPasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
-        confirmNewPasswordField.setBackground ( Color.decode ( "#ffffff") );
-        confirmNewPasswordField.setForeground ( Color.decode ( "#000000" ) );
+        Styling(validatePasswordPopupField, newPasswordLabel, newPasswordField, confirmNewPasswordLabel, confirmNewPasswordField);
         passwordError.setForeground ( Color.decode ( "#db3125" ) );
         changePasswordConfirmButton.setForeground ( Color.white );
         changePasswordConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
@@ -620,6 +609,17 @@ public class AccountPage extends JFrame {
         changeUserNote.setForeground ( Color.decode ( "#5555555" ) );
 
         ThemeManager.setDarkMode ( false );
+    }
+
+    private void Styling(JTextField fName, JLabel lNameTxt, JTextField lName, JLabel passIDTxt, JTextField passID) {
+        fName.setBackground ( Color.decode ( "#ffffff" ));
+        fName.setForeground ( Color.decode ( "#000000" ));
+        lNameTxt.setForeground ( Color.decode ( "#05203C" ) );
+        lName.setBackground ( Color.decode ( "#ffffff" ));
+        lName.setForeground ( Color.decode ( "#000000" ));
+        passIDTxt.setForeground ( Color.decode ( "#05203C" ) );
+        passID.setBackground ( Color.decode ( "#ffffff" ));
+        passID.setForeground ( Color.decode ( "#000000" ));
     }
 
     private void setDarkMode() {
@@ -690,8 +690,6 @@ public class AccountPage extends JFrame {
         userSplitPane.setBackground ( Color.decode ( "#04193a" ) );
         changeUsernameConfirmButton.setBorder ( BorderFactory.createEmptyBorder () );
 
-
-
         ThemeManager.setDarkMode ( true );
 
     }
@@ -706,18 +704,4 @@ public class AccountPage extends JFrame {
             confirmNewPasswordField.setEchoChar('*');
         }
     }
-
-
-    private void toggleFieldType(boolean showPassword) {
-        if (showPassword) {
-            validatePasswordPopupField.setEchoChar('\u0000');
-            newPasswordField.setEchoChar('\u0000');
-            confirmNewPasswordField.setEchoChar('\u0000');
-        } else {
-            validatePasswordPopupField.setEchoChar('*');
-            newPasswordField.setEchoChar('*');
-            confirmNewPasswordField.setEchoChar('*');
-        }
-    }
-
 }
