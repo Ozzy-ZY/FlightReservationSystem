@@ -1,11 +1,10 @@
 package Controllers;
-import jdk.jshell.execution.Util;
-
 import static Controllers.RegisterControl.ValidateEmail;
 import static Controllers.RegisterControl.ValidateUsername;
 import static Utils.FileManager.isFileEmpty;
 
 public class LoginControl {
+
     public static final int EMAIL_VALID = 0;
     public static final int USERNAME_VALID = 1;
     public static final int NOT_VALID = -1;
