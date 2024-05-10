@@ -1,21 +1,25 @@
 package GUI;
+import Controllers.ThemeManager;
 import Utils.QrGenerator;
+import Utils.RoundedBorder;
 import com.google.zxing.WriterException;
+
+import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.*;
 import java.awt.*;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.Timer;
 import Utils.Generator;
+
 import javax.swing.text.MaskFormatter;
 import javax.swing.JFormattedTextField;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import java.util.stream.Collectors;
 
 
 public class FlightsPage extends JFrame {
@@ -26,24 +30,76 @@ public class FlightsPage extends JFrame {
     String datepassed2;
     JFrame flightsFrame = new JFrame("Flights");
     JPanel flightsPanel = new JPanel();
+
     ImageIcon icon = new ImageIcon("Assets/Right_Flight.png");
     JButton backButton = new JButton("<");
-    JLabel flightHeader = new JLabel("Flights");
-    JLabel SearchLabel = new JLabel("Where are you travelling from?");
-    JLabel SearchLabel2 = new JLabel("Where are you travelling to?");
+
+    ImageIcon logoIcon = new ImageIcon("Assets/image-removebg-preview.png");
+
+    ImageIcon scaledLogo = new ImageIcon(logoIcon.getImage().
+            getScaledInstance(190, 80, Image.SCALE_SMOOTH));
+
+    ImageIcon bg = new ImageIcon("Assets/loginBG.png");
+    ImageIcon scaledBg = new ImageIcon(bg.getImage().
+            getScaledInstance(500, 750, Image.SCALE_SMOOTH));
+    JLabel bgIcon = new JLabel (scaledBg);
+
+    ImageIcon bgD = new ImageIcon("Assets/loginBGD.png");
+    ImageIcon scaledBgD = new ImageIcon(bgD.getImage().
+            getScaledInstance(500, 750, Image.SCALE_SMOOTH));
+
+    JLabel logoLabel = new JLabel(scaledLogo);
+
+    JSplitPane headerSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+
+    JLabel flightHello = new JLabel("HELLO, " + HomePage.currentUser.getUsername().toUpperCase ());
+
+    JLabel flightHeader = new JLabel("<html> SELECT YOUR <br>TRIP");
+
+
+    JPanel footerPanel = new JPanel ();
+
+
+    JLabel footerTxt = new JLabel("Find Your Flights");
+
+    JLabel fromLabel = new JLabel("From");
+    JSplitPane citySplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+
+    JLabel toLabel = new JLabel("To");
     JLabel errorLabel = new JLabel();
+
+    JLabel dateLabel = new JLabel ("Date");
     ImageIcon qrCode = new ImageIcon("src/Utils/qrcode.png");
     JLabel qrcode = new JLabel(qrCode);
-    JButton confirmButton = new JButton("Confirm");
-    JLabel username = new JLabel("Username: " + HomePage.currentUser.getUsername());
-    JLabel email = new JLabel("Email: " + HomePage.currentUser.getEmail());
-    JLabel ID = new JLabel("ID: " + Generator.GenerateID());
-    JButton AvailableFlights;
-    JButton AvailableFlights2;
-    JLabel DateText = new JLabel("Enter the date of your flight: ");
+    JButton confirmButton = new JButton("GO!");
+
+    JButton AvailableFlights ;
+    JButton AvailableFlights2 ;
+
+    JTextField originCityTextField = new JTextField();
+    JComboBox<String> originCityComboBox = new JComboBox<>();
+    DefaultComboBoxModel<String> originComboBoxModel = new DefaultComboBoxModel<>();
+    java.util.List<String> originCityOptions = new ArrayList<> ( Arrays.asList(Data.cities));
+    JList<String> originSuggestionList = new JList<>();
+    DefaultListModel<String> originListModel = new DefaultListModel<>();
+    JPanel originSuggestionPanel = new JPanel();
+
+
+    JTextField destinationCityTextField = new JTextField();
+    JComboBox<String> destinationCityComboBox = new JComboBox<>();
+    DefaultComboBoxModel<String> destinationComboBoxModel = new DefaultComboBoxModel<>();
+    java.util.List<String> destinationCityOptions = new ArrayList<> ( Arrays.asList(Data.cities));
+    JList<String> destinationSuggestionList = new JList<>();
+    DefaultListModel<String> destinationListModel = new DefaultListModel<>();
+    JPanel destinationSuggestionPanel = new JPanel();
 
 
 
+    // Available flights popup
+    JFrame Available_flights = new JFrame ("AvailableFlights");
+    JPanel AvailablePanel = new JPanel (null);
+    JLabel AvailableHello = new JLabel ("THIS IS");
+    JLabel AvailableHeader = new JLabel ("<html>YOUR AVAILABLE <br> FLIGHTS");
 
 
     public FlightsPage(){
@@ -51,57 +107,53 @@ public class FlightsPage extends JFrame {
         MaskFormatter dateMask;
         try {
             dateMask = new MaskFormatter("##/##/####");
-            dateMask.setPlaceholderCharacter('-');
+            dateMask.setPlaceholderCharacter('X');
         } catch (ParseException e) {
             throw new RuntimeException("Error initializing date input mask", e);
         }
 
-        JFormattedTextField dateInput = new JFormattedTextField(dateMask);
+         dateInput = new JFormattedTextField(dateMask);
 
 
-        JComboBox<String> cityList = new JComboBox<>(Data.cities);
-        JComboBox<String> cityList2 = new JComboBox<>(Data.cities);
 
-
-        cityList.addActionListener(e -> {
-            if (Objects.equals(cityList.getSelectedItem(), cityList2.getSelectedItem())) {
-                errorLabel.setText("No flights available from the city to itself");
-                errorLabel.setForeground(Color.RED);
-            } else {
-                errorLabel.setText("");
-            }
-        });
-
-        cityList2.addActionListener(e -> {
-            if (Objects.equals(cityList.getSelectedItem(), cityList2.getSelectedItem())) {
-                errorLabel.setText("No flights available from the city to itself");
-                errorLabel.setForeground(Color.RED);
-            } else {
-                errorLabel.setText("");
-            }
-        });
-
-        flightsFrame.setSize(1000, 800);
+        flightsFrame.setSize(500, 750);
         flightsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         flightsFrame.setIconImage(icon.getImage());
         flightsFrame.setResizable(false);
         flightsFrame.setLocationRelativeTo(null);
 
         flightsPanel.setLayout(null);
-        flightsPanel.add(SearchLabel);
+        flightsPanel.add(originCityTextField);
+        flightsPanel.add(originCityComboBox);
+        flightsPanel.add(originSuggestionPanel);
+        flightsPanel.add(destinationCityTextField);
+        flightsPanel.add(destinationCityComboBox);
+        flightsPanel.add(destinationSuggestionPanel);
         flightsPanel.add(backButton);
+        flightsPanel.add(logoLabel);
+        flightsPanel.add(headerSplit);
+        flightsPanel.add(flightHello);
         flightsPanel.add(flightHeader);
-        flightsPanel.add(cityList);
-        flightsPanel.add(SearchLabel2);
-        flightsPanel.add(cityList2);
+        flightsPanel.add(fromLabel);
+        flightsPanel.add(toLabel);
+        flightsPanel.add(citySplit);
+        flightsPanel.add(errorLabel);
+        flightsPanel.add(dateLabel);
         flightsPanel.add(dateInput);
-        flightsPanel.add(DateText);
+        flightsPanel.add(footerPanel);
+        footerPanel.add(confirmButton);
+        footerPanel.add(footerTxt);
+        flightsPanel.add(bgIcon);
 
+        originSuggestionPanel.setLayout(new BorderLayout());
+        originSuggestionPanel.setVisible(false);
+        originSuggestionPanel.add(new JScrollPane(originSuggestionList));
 
+        destinationSuggestionPanel.setLayout(new BorderLayout());
+        destinationSuggestionPanel.setVisible(false);
+        destinationSuggestionPanel.add(new JScrollPane(destinationSuggestionList));
 
         flightsFrame.add(flightsPanel);
-
-
 
         backButton.setLayout(new BorderLayout());
         backButton.addActionListener(e -> {
@@ -112,71 +164,93 @@ public class FlightsPage extends JFrame {
         backButton.setBounds(0, 0, 50, 30);
         backButton.setBackground(Color.white);
 
-        flightsPanel.setBackground(Color.decode("#213D58"));
+        bgIcon.setBounds ( 150,-10,500,750 );
 
-        flightHeader.setFont(new Font("Arial", Font.BOLD, 26));
-        flightHeader.setForeground(Color.WHITE);
-        flightHeader.setBounds(450, 50, 100, 30);
+        logoLabel.setBounds ( 140,10,190,80 );
 
-        SearchLabel.setBounds(50, 100, 250, 30);
-        SearchLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        SearchLabel.setForeground(Color.WHITE);
+        headerSplit.setBounds ( 20,90,445,1 );
+        headerSplit.setBackground ( Color.decode ( "#0B3E91" ) );
 
-        cityList.setBounds(50, 130, 300, 30);
-        cityList.setBackground(Color.WHITE);
-        cityList.setForeground(Color.BLACK);
+        flightHello.setFont(new Font("Arial", Font.BOLD, 16));
+        flightHello.setForeground(Color.decode ( "#FD9426" ));
+        flightHello.setBounds(20, 95, 400, 30);
 
-        SearchLabel2.setBounds(400, 100, 250, 30);
-        SearchLabel2.setFont(new Font("Arial", Font.BOLD, 14));
-        SearchLabel2.setForeground(Color.WHITE);
+        flightHeader.setFont(new Font("Arial", Font.BOLD, 40));
+        flightHeader.setForeground(Color.decode ( "#0B3E91" ));
+        flightHeader.setBounds(20, 130, 500, 80);
 
-        dateInput.setBounds(750, 130, 200, 30);
-        dateInput.setBackground(Color.WHITE);
-        dateInput.setForeground(Color.BLACK);
+        fromLabel.setBounds(40, 250, 250, 50);
+        fromLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-        DateText.setBounds(750, 100, 250, 30);
-        DateText.setFont(new Font("Arial", Font.BOLD, 14));
-        DateText.setForeground(Color.WHITE);
+        originCityTextField.setBounds(40, 290, 400, 50);
+        originCityTextField.setFont(new Font("Arial", Font.PLAIN, 20));
+        originCityTextField.setBorder ( new RoundedBorder () );
 
-        cityList2.setBounds(400, 130, 300, 30);
-        cityList2.setBackground(Color.WHITE);
-        cityList2.setForeground(Color.BLACK);
+        originSuggestionPanel.setBounds(40, 350, 400, 100);
 
-        username.setBounds(360, 420, 400, 60);
-        username.setFont(new Font("Arial", Font.BOLD, 18));
-        username.setForeground(Color.WHITE);
+        citySplit.setBounds ( 40,360,400,1 );
 
-        email.setBounds(360, 460, 400, 60);
-        email.setFont(new Font("Arial", Font.BOLD, 18));
-        email.setForeground(Color.WHITE);
+        toLabel.setBounds(40, 370, 250, 30);
+        toLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-        ID.setBounds(360, 500, 400, 60);
-        ID.setFont(new Font("Arial", Font.BOLD, 18));
-        ID.setForeground(Color.WHITE);
+        destinationCityTextField.setBounds(40, 400, 400, 50);
+        destinationCityTextField.setFont(new Font("Arial", Font.PLAIN, 20));
+        destinationCityTextField.setBorder ( new RoundedBorder () );
 
+        destinationSuggestionPanel.setBounds(40, 460, 400, 100);
 
+        errorLabel.setBounds(20, 20, 300, 30);
 
+        dateLabel.setBounds(40, 490, 40, 30);
+        dateLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
+        dateInput.setBounds(40, 520, 400, 40);
+        dateInput.setFont(new Font("Arial", Font.BOLD, 30));
+        dateInput.setBorder ( BorderFactory.createEmptyBorder () );
+        dateInput.setOpaque ( false );
 
-        errorLabel.setBounds(370, 170, 300, 30); // Set the position and size of the error label
-        flightsPanel.add(errorLabel);
+        footerPanel.setLayout ( null );
+        footerPanel.setBounds ( 0,650,500,100 );
+        footerPanel.setBackground ( Color.decode ( "#0B3E91" ) );
+
+        footerTxt.setBounds ( 10,5,300,55 );
+        footerTxt.setFont(new Font("Arial", Font.BOLD, 25));
+        footerTxt.setForeground(Color.decode ( "#ffffff" ));
+
+        confirmButton.setBounds ( 320,10,150,40 );
+        confirmButton.setBackground ( Color.decode ( "#ffffff" ) );
+        confirmButton.setForeground ( Color.decode ( "#0B3E91" ) );
+        confirmButton.setFont(new Font("Arial", Font.BOLD, 18));
+        confirmButton.setBorder ( BorderFactory.createEmptyBorder () );
+
 
         flightsFrame.setVisible(true);
 
-        confirmButton.setBounds(450, 200, 100, 30); // Set the position and size of the confirm button
+        // Confirm button action
+
         confirmButton.addActionListener(e -> {
 
-            city1 = (String) cityList.getSelectedItem();
-            city2 = (String) cityList2.getSelectedItem();
+            city1 =  originCityTextField.getText ();
+            city2 =  destinationCityTextField.getText ();
 
             if(city1.equals(city2)) {
                 JOptionPane.showMessageDialog(flightsFrame, "You cannot select the same city for departure and arrival.");
                 return;
             }
 
+            if(!Arrays.asList(Data.cities).contains(city1) ) {
+                JOptionPane.showMessageDialog(flightsFrame, "Your origin city can not be found !");
+                return;
+            }
+
+            if(!Arrays.asList(Data.cities).contains(city2) ) {
+                JOptionPane.showMessageDialog(flightsFrame, "Your destination city can not be found !");
+                return;
+            }
+
             JOptionPane.showMessageDialog(flightsFrame, "You selected: " + city1 + " and " + city2);
-            cityList.setEnabled(false);
-            cityList2.setEnabled(false);
+            originCityTextField.setEditable (false);
+            destinationCityTextField.setEditable(false);
             generateQRCode();
 
             String date = dateInput.getText();
@@ -188,7 +262,6 @@ public class FlightsPage extends JFrame {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate inputDate = LocalDate.parse(date, formatter);
-
             LocalDate currentDate = LocalDate.now();
 
             if (inputDate.isBefore(currentDate)) {
@@ -197,33 +270,373 @@ public class FlightsPage extends JFrame {
             }
 
             datepassed1= Generator.randomDateGen(date);
-            this.AvailableFlights = new JButton(Generator.flightGen(city1,city2)+datepassed1);
 
-            AvailableFlights.setBounds(360, 550, 600, 40);
+            datepassed2= Generator.randomDateGen(date);
+            this.AvailableFlights = new JButton(Generator.flightGen(city1,city2)+datepassed1);
+            this.AvailableFlights2 = new JButton(Generator.flightGen(city1,city2)+datepassed2);
+
+            Available_flights.setResizable ( false );
+            Available_flights.setSize(600, 300);
+            Available_flights.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Available_flights.setIconImage(icon.getImage());
+            Available_flights.setLocationRelativeTo(null);
+            Available_flights.add(AvailablePanel);
+            AvailablePanel.add(AvailableHello);
+            AvailablePanel.add(AvailableHeader);
+            AvailablePanel.add(AvailableFlights);
+            AvailablePanel.add(AvailableFlights2);
+
+            AvailableHello.setBounds ( 20,20,400,30 );
+            AvailableHello.setFont ( new Font ( "Arial",Font.BOLD,15 ) );
+            AvailableHello.setForeground ( Color.decode ( "#FD9426" ) );
+            AvailableHeader.setBounds ( 20,50,400,60 );
+            AvailableHeader.setFont ( new Font ( "Arial",Font.BOLD,25 ) );
+            AvailableHeader.setForeground ( Color.decode ( "#0B3E91" ) );
+
+            AvailableFlights.setBounds(20, 130, 550, 40);
             AvailableFlights.setFont(new Font("Arial", Font.BOLD, 18));
             AvailableFlights.setForeground(Color.white);
-            AvailableFlights.setBackground(Color.decode("#213D58"));
-            datepassed2= Generator.randomDateGen(date);
-            this.AvailableFlights2 = new JButton(Generator.flightGen(city1,city2)+datepassed2);
-            AvailableFlights2.setBounds(360, 600, 600, 40);
+            AvailableFlights.setBackground(Color.decode("#0B3E91"));
+
+            AvailableFlights2.setBounds(20, 190, 550, 40);
             AvailableFlights2.setFont(new Font("Arial", Font.BOLD, 18));
             AvailableFlights2.setForeground(Color.white);
-            AvailableFlights2.setBackground(Color.decode("#213D58"));
+            AvailableFlights2.setBackground(Color.decode("#0B3E91"));
+
+
+            if(ThemeManager.isDarkMode ()){
+                AvailableHello.setForeground ( Color.decode ( "#FD9426" ) );
+                AvailableHeader.setForeground ( Color.decode ( "#ffffff" ) );
+
+                AvailableFlights.setForeground(Color.white);
+                AvailableFlights.setBackground(Color.decode("#0F1522"));
+                AvailableFlights.setBorder ( BorderFactory.createEmptyBorder () );
+
+                AvailableFlights2.setForeground(Color.white);
+                AvailableFlights2.setBackground(Color.decode("#0F1522"));
+                AvailableFlights2.setBorder ( BorderFactory.createEmptyBorder () );
+            }else{
+
+                AvailableHello.setForeground ( Color.decode ( "#FD9426" ) );
+                AvailableHeader.setForeground ( Color.decode ( "#0B3E91" ) );
+
+                AvailableFlights.setForeground(Color.white);
+                AvailableFlights.setBackground(Color.decode("#0B3E91"));
+
+                AvailableFlights2.setForeground(Color.white);
+                AvailableFlights2.setBackground(Color.decode("#0B3E91"));
+            }
 
             AvailableFlights.addActionListener(e1 -> {
                 new ReservePage(city1,city2, datepassed1);
                 flightsFrame.dispose();
+                Available_flights.dispose ();
             });
 
             AvailableFlights2.addActionListener(e1 -> {
                 new ReservePage(city1,city2,datepassed2);
                 flightsFrame.dispose();
+                Available_flights.dispose ();
             });
 
-            flightsPanel.revalidate(); // Revalidate the panel
-            flightsPanel.repaint();
+            Available_flights.addWindowListener(new WindowAdapter () {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    flightsFrame.setEnabled ( true );
+                    Available_flights.dispose ();
+                    new FlightsPage ();
+                }
+            });
+            flightsFrame.setEnabled ( false );
+            Available_flights.setVisible ( true );
         });
-        flightsPanel.add(confirmButton);
+
+        // Available popup
+
+        originCityTextField.addActionListener(e -> originUpdateSuggestions());
+        originCityTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                originUpdateSuggestions();
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+
+        originCityComboBox.setVisible(false);
+        originCityComboBox.setModel(originComboBoxModel);
+        originCityComboBox.addActionListener(e -> {
+            String selectedCity = (String) originCityComboBox.getSelectedItem();
+            if (selectedCity != null) {
+                originCityTextField.setText(selectedCity);
+                originUpdateSuggestions();
+            }
+        });
+
+        originSuggestionList.setModel(originListModel);
+        originSuggestionList.setVisibleRowCount(5);
+        originSuggestionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        originSuggestionList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                String selectedSuggestion = originSuggestionList.getSelectedValue();
+                if (selectedSuggestion != null) {
+                    originCityTextField.setText(selectedSuggestion);
+                }
+            }
+        });
+
+        flightsPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!originSuggestionPanel.isVisible()) {
+                    return;
+                }
+                originSuggestionPanel.setVisible(false);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+
+        originSuggestionList.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!originSuggestionPanel.isVisible()) {
+                    return;
+                }
+                originSuggestionPanel.setVisible(false);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        destinationCityTextField.addActionListener(e -> destinationUpdateSuggestions());
+
+        destinationCityTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                destinationUpdateSuggestions();
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        destinationCityComboBox.setVisible(false);
+        destinationCityComboBox.setModel(destinationComboBoxModel);
+        destinationCityComboBox.addActionListener(e -> {
+            String selectedCity = (String) destinationCityComboBox.getSelectedItem();
+            if (selectedCity != null) {
+                destinationCityTextField.setText(selectedCity);
+                destinationUpdateSuggestions();
+            }
+        });
+
+        destinationSuggestionList.setModel(destinationListModel);
+        destinationSuggestionList.setVisibleRowCount(5);
+        destinationSuggestionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        destinationSuggestionList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                String selectedSuggestion = destinationSuggestionList.getSelectedValue();
+                if (selectedSuggestion != null) {
+                    destinationCityTextField.setText(selectedSuggestion);
+                }
+            }
+        });
+
+
+        flightsPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!destinationSuggestionPanel.isVisible()) {
+                    return;
+                }
+                destinationSuggestionPanel.setVisible(false);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        destinationSuggestionList.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!destinationSuggestionPanel.isVisible()) {
+                    return;
+                }
+                destinationSuggestionPanel.setVisible(false);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+
+        if ( ThemeManager.isDarkMode ()) {
+            setDarkMode();
+        } else {
+            setLightMode();
+        }
+    }
+
+
+    private void setLightMode() {
+        flightsPanel.setBackground(Color.decode("#EEF5FF"));
+
+        bgIcon.setBounds ( 150,-10,500,750 );
+
+        headerSplit.setBackground ( Color.decode ( "#0B3E91" ) );
+
+        flightHello.setForeground(Color.decode ( "#FD9426" ));
+
+        flightHeader.setForeground(Color.decode ( "#0B3E91" ));
+
+        fromLabel.setForeground(Color.decode ( "#000000" ));
+
+        originCityTextField.setBackground(Color.decode ( "#EEF5FF" ));
+        originCityTextField.setForeground(Color.black);
+
+        citySplit.setBackground ( Color.black );
+
+        toLabel.setForeground(Color.black);
+
+        destinationCityTextField.setBackground(Color.decode ( "#EEF5FF" ));
+        destinationCityTextField.setForeground(Color.black);
+
+
+        dateLabel.setForeground(Color.decode ( "#000000" ));
+
+        dateInput.setBackground(Color.decode ( "#EEF5FF" ));
+        dateInput.setForeground(Color.black);
+
+        footerPanel.setBackground ( Color.decode ( "#0B3E91" ) );
+
+        footerTxt.setForeground(Color.decode ( "#ffffff" ));
+
+        confirmButton.setBackground ( Color.decode ( "#ffffff" ) );
+        confirmButton.setForeground ( Color.decode ( "#0B3E91" ) );
+        bgIcon.setIcon ( scaledBg );
+        AvailablePanel.setBackground ( Color.decode ( "#ffffff" ) );
+
+        ThemeManager.setDarkMode ( false );
+
+    }
+
+    private void setDarkMode() {
+        flightsPanel.setBackground(Color.decode("#111827"));
+
+        bgIcon.setBounds ( -300,-50,500,750 );
+
+        headerSplit.setBackground ( Color.decode ( "#ffffff" ) );
+
+        flightHello.setForeground(Color.decode ( "#FD9426" ));
+
+        flightHeader.setForeground(Color.decode ( "#ffffff" ));
+
+
+        fromLabel.setForeground(Color.decode ( "#ffffff" ));
+
+        originCityTextField.setBackground(Color.decode ( "#0F1522" ));
+        originCityTextField.setForeground(Color.white);
+
+        originSuggestionList.setBackground ( Color.decode ( "#0c121c" ) );
+        originSuggestionList.setForeground ( Color.decode ( "#ffffff" ) );
+
+        destinationSuggestionList.setBackground ( Color.decode ( "#0c121c" ) );
+        destinationSuggestionList.setForeground ( Color.decode ( "#ffffff" ) );
+
+
+        citySplit.setBackground ( Color.white );
+
+        toLabel.setForeground(Color.white);
+
+        destinationCityTextField.setBackground(Color.decode ( "#0F1522" ));
+        destinationCityTextField.setForeground(Color.white);
+
+
+        dateLabel.setForeground(Color.decode ( "#ffffff" ));
+
+        dateInput.setBackground(Color.decode ( "#0F1522" ));
+        dateInput.setForeground(Color.white);
+
+        footerPanel.setBackground ( Color.decode ( "#0F1522" ) );
+
+        footerTxt.setForeground(Color.decode ( "#ffffff" ));
+
+        confirmButton.setBackground ( Color.decode ( "#111827" ) );
+        confirmButton.setForeground ( Color.decode ( "#ffffff" ) );
+
+        bgIcon.setIcon ( scaledBgD );
+        AvailablePanel.setBackground ( Color.decode ( "#111827" ) );
+
+
+        ThemeManager.setDarkMode ( true );
     }
 
     private boolean isDateValid(String date) {
@@ -251,26 +664,55 @@ public class FlightsPage extends JFrame {
                 throw new RuntimeException(z);
             }
         }
-            flightsPanel.remove(qrcode); // Remove the old QR code from the panel
+        flightsPanel.remove(qrcode);
 
-            // Create a timer that waits for 5 seconds before displaying the new QR code
-            Timer timer = new Timer(100, e -> {
-                qrCode.getImage().flush();
-                ImageIcon newQrCode = new ImageIcon("src/Utils/qrcode.png"); // Create a new ImageIcon
-                qrcode = new JLabel(newQrCode); // Assign the new ImageIcon to the JLabel
-                qrcode.setBounds(50, 400, 300, 300);
-                flightsPanel.add(qrcode); // Add the new QR code to the panel
-                flightsPanel.revalidate();
-                flightsPanel.repaint();
-                flightsPanel.add(username);
-                flightsPanel.add(email);
-                flightsPanel.add(AvailableFlights);
-                flightsPanel.add(AvailableFlights2);
-            });
-            timer.setRepeats(false); // Ensure the timer only runs once
-            timer.start(); // Start the timer
+        Timer timer = new Timer(100, e -> {
+            qrCode.getImage().flush();
+            ImageIcon newQrCode = new ImageIcon("src/Utils/qrcode.png");
+            qrcode = new JLabel(newQrCode);
+            qrcode.setBounds(50, 400, 300, 300);
+            flightsPanel.revalidate();
+            flightsPanel.repaint();
+
+        });
+        timer.setRepeats(false);
+        timer.start();
+
     }
 
-}
 
+    private void originUpdateSuggestions() {
+        String text = originCityTextField.getText().toLowerCase();
+        java.util.List<String> filteredList = originCityOptions.stream()
+                .filter(city -> city.toLowerCase().startsWith(text))
+                .collect( Collectors.toList());
+
+        originListModel.removeAllElements();
+        originListModel.addAll(filteredList);
+
+        if (filteredList.isEmpty() || originCityTextField.getText().isEmpty()) {
+            originSuggestionPanel.setVisible(false);
+        } else {
+            originSuggestionPanel.setVisible(true);
+        }
+    }
+
+    private void destinationUpdateSuggestions() {
+        String text = destinationCityTextField.getText().toLowerCase();
+        java.util.List<String> filteredList = destinationCityOptions.stream()
+                .filter(city -> city.toLowerCase().startsWith(text))
+                .collect( Collectors.toList());
+
+        destinationListModel.removeAllElements();
+        destinationListModel.addAll(filteredList);
+
+        if (filteredList.isEmpty() || destinationCityTextField.getText().isEmpty()) {
+            destinationSuggestionPanel.setVisible(false);
+        } else {
+            destinationSuggestionPanel.setVisible(true);
+        }
+    }
+
+
+}
 
