@@ -85,7 +85,7 @@ public class HomePage {
             currentUserLabel.setFont(new Font("Arial", Font.PLAIN, 18));
             currentUserLabel.setForeground(Color.decode("#FD9426"));
             currentUserLabel.setBounds(30, 10, currentUserLabel.getMinimumSize().width + 10, currentUserLabel.getMinimumSize().height);
-            if(!isEmailStored(currentUser.getEmail())){
+            if(!isemailStored(currentUser.getEmail())){
                 savePassenger( currentUser.getEmail(),  " " ,  " ",  " ",  " " );
             }
 
