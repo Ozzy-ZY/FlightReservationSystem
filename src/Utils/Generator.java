@@ -1,15 +1,35 @@
 package Utils;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import GUI.FlightsPage;
+import GUI.TicketGUI;
+import Models.Flight;
+import Models.Passenger;
+import Models.Plane;
+import Models.Ticket;
+import com.google.zxing.WriterException;
 
 public class Generator {
+    public static Ticket ticketGen(Passenger passenger, Flight flight, int seatNumber){
+        Ticket ticket = new Ticket(passenger,flight,seatNumber);
+        ticket.generateTicketID();
+        try {
+            QrGenerator.saveQRCodeImage(QrGenerator.generateQRCode(ticket.getTicketID()),
+                      ticket.getTicketID() + ".png");
+        } catch (WriterException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return ticket;
+    }
     public static String flightGen(String origin, String destination){
 
         return "Flight From " + origin + " to " + destination + " at ";
     }
-
+    public static Flight flightGen(String origin, String destination, String date){
+        return new Flight(GenerateID(),destination,origin,new Plane("747",150),date);
+    }
     public static String GenerateID(){
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder sb = new StringBuilder();

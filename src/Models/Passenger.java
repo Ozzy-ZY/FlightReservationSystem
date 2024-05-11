@@ -6,9 +6,14 @@ public class Passenger extends User {
     private String passportId;
     private String phoneNumber;
     private String birthdate;
+    private int numOfTickets = 0;
 
     public Passenger(String email, String fName,String lName, String password,String username) {
         super(email, username ,password);
+    }
+
+    public Passenger() {
+        super();
     }
 
     public void setFirstname(String firstname) {
@@ -45,5 +50,13 @@ public class Passenger extends User {
 
     public String getBirthdate() {
         return birthdate;
+    }
+
+    public int getNumOfTickets() {
+        return numOfTickets;
+    }
+
+    public void setNumOfTickets(int numOfTickets) {
+        this.numOfTickets = numOfTickets;
     }
 }
