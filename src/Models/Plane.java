@@ -3,11 +3,6 @@ package Models;
 public class Plane {
     private String type;
     private int numOfPassengers;
-
-    public Plane() {
-        this.type = "";
-        this.numOfPassengers = 0;
-    }
     public Plane(String Type, int NumOfPassengers){
         type = Type;
         numOfPassengers = NumOfPassengers;

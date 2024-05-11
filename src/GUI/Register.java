@@ -1,4 +1,5 @@
 package GUI;
+import Controllers.ThemeManager;
 import Models.User;
 import Utils.RoundedBorder;
 
@@ -7,8 +8,6 @@ import java.awt.*;
 import static Controllers.SessionControl.*;
 
 import static Controllers.RegisterControl.*;
-
-import Controllers.ThemeManager;
 
 public class Register extends JFrame{
 
@@ -39,11 +38,8 @@ public class Register extends JFrame{
             getScaledInstance(500, 200, Image.SCALE_SMOOTH));
 
     ImageIcon bgD = new ImageIcon("Assets/cloudsD.png");
-
     ImageIcon scaledBgD = new ImageIcon(bgD.getImage().
-
             getScaledInstance(500, 200, Image.SCALE_SMOOTH));
-
 
     ImageIcon logo = new ImageIcon("Assets/logo.png");
     ImageIcon scaledLogo = new ImageIcon(logo.getImage().
@@ -55,10 +51,10 @@ public class Register extends JFrame{
     public Register(){
         regFrame.setSize(450, 700);
         regFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        regFrame.setIconImage(icon.getImage());
+        regFrame.setIconImage(logo.getImage());
         regFrame.setResizable(false);
         regFrame.setLocationRelativeTo(null);
-        regFrame.setIconImage(logo.getImage());
+        regFrame.setIconImage(icon.getImage());
         regFrame.add(regPanel);
 
         topPanel.setLayout ( null );
@@ -193,7 +189,7 @@ public class Register extends JFrame{
             }
 
             if(totalStatus[0] && totalStatus[1] && totalStatus[2]){
-                saveUser(email, username, password);
+                saveData(email, username, password);
                 generateToken(new User(email,username,password));
                 new HomePage();
                 regFrame.dispose();
@@ -227,6 +223,7 @@ public class Register extends JFrame{
         errorUsername.setForeground(Color.decode("#db3125"));
         errorUsername.setBounds(50, 382, 350, 30);
 
+
         emailLabel.setBounds(50, 400, 100, 30);
         emailLabel.setFont(new Font("SansSerif",Font.BOLD, 15));
         emailLabel.setForeground(Color.decode ( "#05203C" ));
@@ -244,7 +241,7 @@ public class Register extends JFrame{
         passwordLabel.setFont(new Font("SansSerif",Font.BOLD, 15));
         passwordLabel.setForeground(Color.decode ( "#05203C" ));
         passwordField.setBounds(50, 510, 330, 40);
-        passwordField.setBorder ( new RoundedBorder() );
+        passwordField.setBorder ( new RoundedBorder () );
         errorPassword.setHorizontalAlignment(SwingConstants.LEFT);
         errorPassword.setForeground(Color.decode("#db3125"));
         errorPassword.setBounds(50, 542, 300, 30);
@@ -255,69 +252,38 @@ public class Register extends JFrame{
         regButton.setFont ( new Font("SansSeirf", Font.BOLD,15) );
         regButton.setBorder ( BorderFactory.createEmptyBorder () );
         regFrame.setVisible(true);
-        backButton.setFocusPainted(false);
-        regButton.setFocusPainted(false);
+
+
         if ( ThemeManager.isDarkMode ()) {
-
             setDarkMode();
-
         } else {
-
             setLightMode();
-
         }
-
     }
-
-
 
     private void setLightMode() {
-
         regPanel.setBackground(Color.decode("#ffffff"));
-
         topPanel.setBackground ( Color.decode ( "#28437a" ) );
-
         registerHeader.setForeground(Color.decode ( "#05203C" ));
-
         backButton.setBackground(Color.white);
-
         usernameLabel.setForeground(Color.decode ( "#05203C" ));
-
         emailLabel.setForeground(Color.decode ( "#05203C" ));
-
         passwordLabel.setForeground(Color.decode ( "#05203C" ));
-
         cloudsImg.setIcon ( scaledBg );
-
         ThemeManager.setDarkMode ( false );
-
     }
 
-
-
     private void setDarkMode() {
-
         regPanel.setBackground(Color.decode("#111827"));
-
         topPanel.setBackground ( Color.decode ( "#4877bd" ) );
-
         logoTxt.setForeground ( Color.white );
-
         registerHeader.setForeground(Color.decode ( "#ffffff" ));
-
         backButton.setBackground(Color.white);
-
         usernameLabel.setForeground(Color.decode ( "#ffffff" ));
-
         emailLabel.setForeground(Color.decode ( "#ffffff" ));
-
         passwordLabel.setForeground(Color.decode ( "#ffffff" ));
-
         cloudsImg.setIcon ( scaledBgD );
-
         ThemeManager.setDarkMode ( true );
-
-
 
     }
 

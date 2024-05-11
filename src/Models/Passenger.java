@@ -7,33 +7,13 @@ public class Passenger extends User {
     private String phoneNumber;
     private String birthdate;
     private int numOfTickets = 0;
-    public Passenger(String email, String fName,String lName, String password,String username, String phoneNumber, String passportId, String birthdate) {
+
+    public Passenger(String email, String fName,String lName, String password,String username) {
         super(email, username ,password);
-        this.firstname = fName;
-        this.lastname = lName;
-        this.phoneNumber = phoneNumber;
-        this.passportId = passportId;
-        this.birthdate = birthdate;
     }
+
     public Passenger() {
-
         super();
-    }
-    public Passenger(String email, String username,String password, String fName,String lName, String phoneNumber, String passportId) {
-        super(email, username ,password);
-        this.firstname = fName;
-        this.lastname = lName;
-        this.phoneNumber = phoneNumber;
-        this.passportId = passportId;
-    }
-
-    public Passenger(String email, String password,String username) {
-        super(email, username ,password);
-        this.firstname = " ";
-        this.lastname = " ";
-        this.phoneNumber = " ";
-        this.passportId = " ";
-        this.birthdate = " ";
     }
 
     public void setFirstname(String firstname) {
@@ -67,18 +47,16 @@ public class Passenger extends User {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    public int getNumOfTickets() {
-
-        return numOfTickets;
-
-    }
-    public void setNumOfTickets(int numOfTickets) {
-
-        this.numOfTickets = numOfTickets;
-
-    }
 
     public String getBirthdate() {
         return birthdate;
+    }
+
+    public int getNumOfTickets() {
+        return numOfTickets;
+    }
+
+    public void setNumOfTickets(int numOfTickets) {
+        this.numOfTickets = numOfTickets;
     }
 }
