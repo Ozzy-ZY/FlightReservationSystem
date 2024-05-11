@@ -596,11 +596,11 @@ public class AccountPage extends JFrame {
         changeUsernamePopup.add(ChangeUsernameLabel);
 
         changeUsernamePopup.add(ChangeUsernameField);
-
+        changeUsernamePopup.add(changeUserNote);
         changeUsernamePopup.add(changeUsernameConfirmButton);
 
         changeUsernamePopup.add(usernameError);
-        changeUsernamePopup.add(changeUserNote);
+
 
         changeUsernamePopup.setLocationRelativeTo(null);
 
@@ -632,7 +632,8 @@ public class AccountPage extends JFrame {
 
 
         changeUsernamePopup.add(mainPanel);
-        changeUserNote.setForeground ( Color.decode ( "#5555555" ) );mainPanel.setBounds ( 0,0,500,500 );
+        changeUserNote.setForeground ( Color.decode ( "#5555555" ) );
+        mainPanel.setBounds ( 0,0,500,500 );
 
         mainPanel.setBackground ( Color.decode ( "#ffffff" ) );
         usernameError.setForeground(Color.decode("#db3125"));mainTxt.setBounds ( 30,5,450,90 );
@@ -702,7 +703,11 @@ public class AccountPage extends JFrame {
         usernameError.setBounds ( 40,165,200,30 );
 
         usernameError.setForeground(Color.decode("#db3125"));
+        userSplitPane.setBounds ( 40, 360,355,3);
 
+
+
+        changeUsernameConfirmButton.setBounds(40, 380, 355, 40);
         usernameError.setFont ( new Font ( "SansSerif",Font.PLAIN,14 ) );
 
         changeUsernameConfirmButton.setFont(new Font("Arial", Font.BOLD, 18));
@@ -712,11 +717,7 @@ public class AccountPage extends JFrame {
         changeUsernameConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
 
         changeUsernameConfirmButton.setBounds(150, 300, 170, 40);
-        userSplitPane.setBounds ( 40, 360,355,3);
 
-
-
-        changeUsernameConfirmButton.setBounds(40, 380, 355, 40);
 
 
         changeUsernamePopup.addWindowListener(new WindowAdapter() {
@@ -1050,6 +1051,7 @@ public class AccountPage extends JFrame {
         else{
             NumberField.setForeground(Color.BLACK);
         }
+        Styling(fName, lNameTxt, lName, passIDTxt, passIDField);
         accountPanel.setBackground(Color.decode("#ffffff"));
         accountHeader.setForeground(Color.decode ( "#05203C" ));
         logoutButton.setForeground ( Color.decode ( "#db3125" ) );
@@ -1075,9 +1077,74 @@ public class AccountPage extends JFrame {
         saveChanges.setBackground ( Color.decode ( "#0B3E91" ) );
         delTxt.setForeground ( Color.decode ( "#DE3341" ) );
         delLabel.setForeground ( Color.decode ( "#5555555" ) );
+        // Password popup
+
+
+
+        leftPanel.setBackground ( Color.decode ( "#0B3E91" ) );
+
+        passwordMainTxt.setForeground ( Color.white );
+
+        rightPanel.setBackground ( Color.decode ( "#ffffff" ) );
+
+        passwordHeader.setForeground ( Color.decode ( "#05203C" ) );
+
+        validatePasswordPopupLabel.setForeground ( Color.decode ( "#05203C" ) );
+
+        Styling(validatePasswordPopupField, newPasswordLabel, newPasswordField, confirmNewPasswordLabel, confirmNewPasswordField);
+
+        passwordError.setForeground ( Color.decode ( "#db3125" ) );
+
+        changePasswordConfirmButton.setForeground ( Color.white );
+
+        changePasswordConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
+
+
+
+        // Username popup
+
+
+
+        mainPanel.setBackground ( Color.decode ( "#ffffff" ) );
+
+        mainTxt.setForeground ( Color.decode("#0B3E91") );
+
+        ChangeUsernameLabel.setForeground ( Color.decode ( "#05203C" ) );
+
+        ChangeUsernameField.setBackground ( Color.decode ( "#ffffff" ) );
+
+        ChangeUsernameField.setForeground ( Color.decode ( "#000000" ) );
+
+        validatePasswordLabel.setForeground ( Color.decode ( "#05203C" ) );
+
+        validatePasswordField.setBackground ( Color.decode ( "#ffffff" ) );
+
+        validatePasswordField.setForeground ( Color.decode ( "#000000" ) );
+
+        changeUserNote.setForeground ( Color.decode ( "#5555555" ) );
+
+
         ThemeManager.setDarkMode ( false );
     }
+    private void Styling(JTextField fName, JLabel lNameTxt, JTextField lName, JLabel passIDTxt, JTextField passID) {
 
+        fName.setBackground ( Color.decode ( "#ffffff" ));
+
+        fName.setForeground ( Color.decode ( "#000000" ));
+
+        lNameTxt.setForeground ( Color.decode ( "#05203C" ) );
+
+        lName.setBackground ( Color.decode ( "#ffffff" ));
+
+        lName.setForeground ( Color.decode ( "#000000" ));
+
+        passIDTxt.setForeground ( Color.decode ( "#05203C" ) );
+
+        passID.setBackground ( Color.decode ( "#ffffff" ));
+
+        passID.setForeground ( Color.decode ( "#000000" ));
+
+    }
     private void setDarkMode() {
         if(Passenger.getFirstName().equals(" "))
         {
