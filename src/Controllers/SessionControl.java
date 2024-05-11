@@ -8,7 +8,7 @@ import static Utils.FileManager.*;
 public class SessionControl {
     public static void generateToken(User user){
         try{
-        write("token.txt", user.getUsername() +"\n"+ user.getEmail() + "\n" + user.getPassword());
+            write("token.txt", user.getUsername() +"\n"+ user.getEmail() + "\n" + user.getPassword());
         }
         catch (Exception ex){
             System.err.println(ex.getMessage());
@@ -34,12 +34,12 @@ public class SessionControl {
     }
     public static boolean removeToken(){
         File file = new File("token.txt");
-            try{
-                return file.delete();
-            }
-            catch (Exception ex){
-                System.err.println(ex.getMessage());
-            }
+        try{
+            return file.delete();
+        }
+        catch (Exception ex){
+            System.err.println(ex.getMessage());
+        }
         return false;
     }
 }

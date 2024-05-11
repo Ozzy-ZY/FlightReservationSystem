@@ -10,13 +10,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import java.util.HashMap;
 import java.util.Map;
+import static Controllers.Account_FlightControls.*;
 import static Controllers.SessionControl.*;
-
 public class HomePage {
 
-    static boolean status = false;
-    static User currentUser;
 
+    static boolean status = false;
+    public static User currentUser;
     JFrame mainFrame = new JFrame("Rihla Flights");
 
     ImageIcon logo = new ImageIcon ("Assets/logo.png");
@@ -28,7 +28,9 @@ public class HomePage {
     ImageIcon scaledBg = new ImageIcon(bg.getImage().
             getScaledInstance(550, 650, Image.SCALE_SMOOTH));
     ImageIcon bgD = new ImageIcon("Assets/homeBgD.png");
+
     ImageIcon scaledBgD = new ImageIcon(bgD.getImage().
+
             getScaledInstance(550, 750, Image.SCALE_SMOOTH));
     JPanel mainPanel = new JPanel();
     JLabel currentUserLabel;
@@ -37,7 +39,6 @@ public class HomePage {
     JLabel logoLabel = new JLabel(scaledIcon);
     JLabel toggleButton = new JLabel ("Dark Mode");
     JLabel bgLabel = new JLabel(scaledBg);
-
 
     JLabel welcomeLabel = new JLabel("Welcome to Rihla Flight!");
     JButton Flights = new JButton("Flights");
@@ -67,9 +68,9 @@ public class HomePage {
         mainPanel.add(Flights);
         mainPanel.add(Tickets);
         mainPanel.add(Account);
-        mainPanel.add ( toggleButton );
         mainPanel.add(bgLabel);
         popupMenu.add(signOutItem);
+        mainPanel.add (toggleButton);
 
 
         mainFrame.add(mainPanel);
@@ -84,6 +85,9 @@ public class HomePage {
             currentUserLabel.setFont(new Font("Arial", Font.PLAIN, 18));
             currentUserLabel.setForeground(Color.decode("#FD9426"));
             currentUserLabel.setBounds(30, 10, currentUserLabel.getMinimumSize().width + 10, currentUserLabel.getMinimumSize().height);
+            if(!isemailStored(currentUser.getEmail())){
+                savePassenger( currentUser.getEmail(),  " " ,  " ",  " ",  " " );
+            }
 
             mainFrame.addMouseListener(new MouseAdapter() {
 
@@ -142,14 +146,34 @@ public class HomePage {
                 new Register();
                 mainFrame.dispose();
             }
+            @Override
+            public void mouseEntered(MouseEvent e) {underlineLabel(regLabel);}
+            @Override
+            public void mouseExited(MouseEvent e) {
+                removeUnderline(regLabel);
+            }
         });
         loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 new Login();
                 mainFrame.dispose();
             }
+            @Override
+            public void mouseEntered(MouseEvent e) {underlineLabel(loginLabel);}
+            @Override
+            public void mouseExited(MouseEvent e) {
+                removeUnderline(loginLabel);
+            }
         });
         Flights.addActionListener(e -> {
+            if(!status){
+                JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
+                return;
+            }
+            new FlightsPage();
+            mainFrame.dispose();
+        });
+        Tickets.addActionListener(e -> {
             if(!status){
                 JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
                 return;
@@ -166,15 +190,18 @@ public class HomePage {
             mainFrame.dispose();
         });
         toggleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         toggleButton.addMouseListener(new MouseAdapter() {
+
             public void mouseClicked(MouseEvent e) {
+
                 toggleMode();
             }
         });
         popupMenu.setPreferredSize(new Dimension(75, 30));
         regLabel.setFont(new Font("New", Font.ITALIC, 18));
         regLabel.setForeground(Color.decode ( "#FD9426" ));
-        regLabel.setBounds(30, 10, 100, 30);
+        regLabel.setBounds(30, 10, regLabel.getMinimumSize().width, regLabel.getMinimumSize().height);
         loginLabel.setFont(new Font("New", Font.ITALIC, 18));
         loginLabel.setForeground(Color.decode ( "#FD9426" ));
         loginLabel.setBounds(460, 10, 100, 30);
@@ -182,19 +209,16 @@ public class HomePage {
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
         welcomeLabel.setForeground(Color.decode("#05203C"));
         welcomeLabel.setBounds(135, 200, 400, 30);
-
         Flights.setBounds(70, 280, 400, 60);
         Flights.setFont(new Font("Arial", Font.BOLD, 18));
         Flights.setForeground ( Color.white );
         Flights.setBackground ( Color.decode ( "#0B3E91" ) );
         Flights.setBorder ( BorderFactory.createEmptyBorder () );
-
         Tickets.setBounds(70, 380, 400, 60);
         Tickets.setForeground ( Color.white );
         Tickets.setBackground ( Color.decode ( "#0B3E91" ) );
         Tickets.setFont(new Font("Arial", Font.BOLD, 18));
         Tickets.setBorder ( BorderFactory.createEmptyBorder () );
-
         Account.setBounds(70, 480, 400, 60);
         Account.setFont(new Font("Arial", Font.BOLD, 18));
         Account.setForeground ( Color.white );
@@ -203,13 +227,18 @@ public class HomePage {
         bgLabel.setBounds ( 0,0,550,650 );
         toggleButton.setBounds ( 440,570,100,40 );
         toggleButton.setFont ( new Font ( "SansSerif",Font.BOLD,15 ) );
-
         if (ThemeManager.isDarkMode ()) {
-            setDarkMode();
-        } else {
-            setLightMode();
-        }
 
+            setDarkMode();
+
+        } else {
+
+            setLightMode();
+
+        }
+        Tickets.setFocusPainted(false);
+        Flights.setFocusPainted(false);
+        Account.setFocusPainted(false);
         mainFrame.setVisible(true);
     }
     private void handleSignOut() {
@@ -237,12 +266,12 @@ public class HomePage {
     public void showPopupMenu(JLabel label, int x, int y) {
         popupMenu.show(label, x, y);
     }
-    public void underlineLabel(JLabel label) {
+    public static void underlineLabel(JLabel label) {
         Map<TextAttribute, Object> fontAttributes = new HashMap<>();
         fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         label.setFont(label.getFont().deriveFont(fontAttributes));
     }
-    public void removeUnderline(JLabel label) {
+    public static void removeUnderline(JLabel label) {
         if (label.getFont() != null) {
             Map<TextAttribute, Object> fontAttributes = new HashMap<>(label.getFont().getAttributes());
             fontAttributes.put(TextAttribute.UNDERLINE, -1);
@@ -251,32 +280,59 @@ public class HomePage {
     }
 
 
+
+
     private void toggleMode() {
+
         if (ThemeManager.isDarkMode ()) {
+
             setLightMode();
+
         } else {
+
             setDarkMode();
+
         }
+
     }
+
+
+
 
 
     private void setLightMode() {
+
         mainPanel.setBackground(Color.WHITE);
+
         toggleButton.setText ( "Dark Mode" );
+
         welcomeLabel.setForeground ( Color.decode ( "#05203C" ) );
+
         bgLabel.setIcon ( scaledBg );
+
         toggleButton.setForeground(Color.BLACK);
+
         ThemeManager.setDarkMode ( false );
+
     }
+
+
+
 
 
     private void setDarkMode() {
+
         mainPanel.setBackground(Color.decode ( "#111827" ));
+
         toggleButton.setText ( "Light Mode" );
+
         welcomeLabel.setForeground ( Color.white );
+
         bgLabel.setIcon ( scaledBgD );
+
         toggleButton.setForeground(Color.WHITE);
+
         ThemeManager.setDarkMode ( true );
+
     }
 }
-

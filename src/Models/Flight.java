@@ -7,6 +7,13 @@ public class Flight {
     private Plane plane;
     private String date;
 
+    public Flight(){
+        this.id = "";
+        this.destination = "";
+        this.origin = "";
+        this.plane = new Plane();
+        this.date = "";
+    }
     public Flight(String id,String destination,String origin,Plane plane,String date){
         this.id = id;
         this.destination = destination;
@@ -59,7 +66,7 @@ public class Flight {
 
     @Override
     public String toString() {
-        return origin+" --> "+destination+"__Date: "+date+"__Plane: "+plane.getType();
+        return origin+"-->"+destination+"____Date: "+date+"____Plane: "+plane.getType();
     }
 
 }
