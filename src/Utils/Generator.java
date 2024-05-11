@@ -17,7 +17,7 @@ public class Generator {
         ticket.generateTicketID();
         try {
             QrGenerator.saveQRCodeImage(QrGenerator.generateQRCode(ticket.getTicketID()),
-                    ticket.getTicketID() + ".png");
+                      ticket.getTicketID() + ".png");
         } catch (WriterException | IOException e) {
             throw new RuntimeException(e);
         }
