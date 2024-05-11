@@ -391,6 +391,8 @@ public class AccountPage extends JFrame {
         changeUsernameConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
 
 
+
+
         changeUsernamePopup.addWindowListener(new WindowAdapter () {
             @Override
             public void windowClosing(WindowEvent e) {
