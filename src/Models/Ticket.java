@@ -30,14 +30,12 @@ public class Ticket {
     public int getSeatNumber() {
         return seatNumber;
     }
-
-    public void setSeatNumber(int seatNumber) {
-        this.seatNumber = seatNumber;
-    }
     public void generateTicketID(){
         this.ticketID = flight.getId() + "-" + seatNumber;
     }
-
+    public void setSeatNumber(int seatNumber) {
+        this.seatNumber = seatNumber;
+    }
     public String getTicketID() {
         return ticketID;
     }
