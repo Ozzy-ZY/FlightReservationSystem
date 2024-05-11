@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 
+import Controllers.PassengerControl;
 import Controllers.ThemeManager;
 import Models.Passenger;
 import Models.Ticket;
@@ -247,6 +248,15 @@ public class ReservePage extends JFrame {
         } else {
             setLightMode();
         }
+
+        // Auto Complete Fields If User Details Exits
+        if( PassengerControl.isEmailStored ( HomePage.currentUser.getEmail () ) ){
+            firstnameField.setText ( getFirstname ( HomePage.currentUser.getEmail () ) );
+            lastnameField.setText ( getLastname ( HomePage.currentUser.getEmail () ) );
+            PassportField.setText ( getPassportID ( HomePage.currentUser.getEmail () ) );
+            PhoneNumField.setText ( getPhoneNumber ( HomePage.currentUser.getEmail () ) );
+
+        }
     }
 
     private void updateDayList() {
@@ -333,4 +343,6 @@ public class ReservePage extends JFrame {
 
         ThemeManager.setDarkMode(true);
     }
+
+
 }
