@@ -1,19 +1,24 @@
 package Controllers;
 
+import GUI.HomePage;
+import Models.Passenger;
+
 import static Utils.FileManager.isFileEmpty;
 
 public class Account_FlightControls {
     public  static boolean Validatename(String name){
-        return name.length() == 1 || name.contains(" ") || !name.matches("^[a-zA-Z]+$") && !name.isEmpty();
-
+        return name.length() == 1 ||!name.matches("^[a-zA-Z]+$");
     }
     public  static boolean ValidatePassportId(String PassID) {
-        return (PassID.contains(" ") || !PassID.matches("^[A-Z0-9]{7,9}+$"));
+        return (!PassID.matches("^[A-Z0-9]{7,9}+$"));
     }
         public  static boolean Validatephonenumber(String phoneNumber){
-            return (!phoneNumber.matches("[0-9]{10,13}+$") || phoneNumber.contains(" ")&&phoneNumber.matches("^Number$"));
+            return (!phoneNumber.matches("[0-9]{10,13}+$"));
         }
-    public static boolean isemailStored(String email){
+    public static boolean passengerValidation (String fname,String lname, String PassID, String phoneNumber,String Date){
+        return Validatename(fname) ||Validatename(lname)|| ValidatePassportId(PassID) || Validatephonenumber(phoneNumber);
+    }
+    public static boolean isEmailStored(String email){
         if(isFileEmpty("Passenger.txt"))
             return false;
         String data = Utils.FileManager.read("Passenger.txt");
@@ -29,7 +34,7 @@ public class Account_FlightControls {
     public static boolean isFirstnameStored(String firstname, String Email) {
         if (isFileEmpty("Passenger.txt"))
             return false;
-        if (isemailStored(Email)) {
+        if (isEmailStored(Email)) {
             String data = Utils.FileManager.read("Passenger.txt");
             String[] firstnames = data.split("\n");
             for (String fname : firstnames) {
@@ -45,7 +50,7 @@ public class Account_FlightControls {
     public static boolean isLastnameStored(String lastname, String Email) {
         if (isFileEmpty("Passenger.txt"))
             return false;
-        if (isemailStored(Email)) {
+        if (isEmailStored(Email)) {
             String data = Utils.FileManager.read("Passenger.txt");
             String[] lastnames = data.split("\n");
             for (String lname : lastnames) {
@@ -61,7 +66,7 @@ public class Account_FlightControls {
     public static boolean isPhoneNumberStored(String Phonenumber, String Email) {
         if (isFileEmpty("Passenger.txt"))
             return false;
-        if (isemailStored(Email)) {
+        if (isEmailStored(Email)) {
             String data = Utils.FileManager.read("Passenger.txt");
             String[] Phonenumbers = data.split("\n");
             for (String PhoneNumber : Phonenumbers) {
@@ -77,7 +82,7 @@ public class Account_FlightControls {
     public static boolean isPassIdStored(String PassID, String Email) {
         if (isFileEmpty("Passenger.txt"))
             return false;
-        if (isemailStored(Email)) {
+        if (isEmailStored(Email)) {
             String data = Utils.FileManager.read("Passenger.txt");
             String[] PassIDs = data.split("\n");
             for (String PassId : PassIDs) {
@@ -149,6 +154,10 @@ public class Account_FlightControls {
 
     public static void savePassenger(String email, String firstName , String lastName, String phoneNumber, String passportNo ){
         String data = email + "," + firstName + "," + lastName  + "," +phoneNumber + "," + passportNo + "\n";
+        Utils.FileManager.append("Passenger.txt", data);
+    }
+    public static void savePassengerData(Passenger passenger){
+        String data = HomePage.currentUser.getEmail() + "," + passenger.getFirstName() + "," + passenger.getLastName() + "," + passenger.getPassportId() + "," + passenger.getPhoneNumber() + "," + passenger.getBirthdate()+ "\n";
         Utils.FileManager.append("Passenger.txt", data);
     }
 }

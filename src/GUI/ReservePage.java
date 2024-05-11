@@ -9,6 +9,8 @@ import Models.Passenger;
 import Models.Ticket;
 import Utils.Generator;
 import Utils.RoundedBorder;
+
+import static Controllers.Account_FlightControls.*;
 //import static Controllers.PassengerControl.*;
 
 public class ReservePage extends JFrame {
@@ -185,60 +187,60 @@ public class ReservePage extends JFrame {
         panel.add(reservimg);
         panel.add(reservimgserd);
         add(panel);
-//        firstnameField.addActionListener(e -> {
-//            if(nameValidation(firstnameField.getText())){
-//                PassengerData.setFirstname(firstnameField.getText());
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Invalid First Name");
-//            }
-//        });
-//        lastnameField.addActionListener(e -> {
-//            if(nameValidation(lastnameField.getText())){
-//                PassengerData.setLastname(lastnameField.getText());
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Invalid Last Name");
-//            }
-//        });
-//        PassportField.addActionListener(e -> {
-//            if(passportIdValidation(PassportField.getText())){
-//                PassengerData.setPassportId(PassportField.getText());
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Invalid Passport Number");
-//            }
-//        });
-//        PhoneNumField.addActionListener(e -> {
-//            if(phoneNumberValidation(PhoneNumField.getText())){
-//                PassengerData.setPhoneNumber(PhoneNumField.getText());
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Invalid Phone Number");
-//            }
-//        });
-//        confirmButton.addActionListener(e -> {
-//            if(passengerValidation(firstnameField.getText(),lastnameField.getText(),
-//                    PassportField.getText(),PhoneNumField.getText(),dayComboBox.getSelectedItem().
-//                            toString()+"/"+monthComboBox.getSelectedItem().toString()+
-//                            "/"+yearComboBox.getSelectedItem().toString())&& PassengerData.getNumOfTickets()<= 3){
-//                PassengerData.setUsername(HomePage.currentUser.getUsername());
-//                PassengerData.setEmail(HomePage.currentUser.getEmail());
-//                PassengerData.setPassword(HomePage.currentUser.getPassword());
-//                PassengerData.setFirstname(firstnameField.getText());
-//                PassengerData.setLastname(lastnameField.getText());
-//                PassengerData.setPassportId(PassportField.getText());
-//                PassengerData.setPhoneNumber(PhoneNumField.getText());
-//                PassengerData.setBirthdate(dayComboBox.getSelectedItem().toString()+"/"+monthComboBox.getSelectedItem().toString()+"/"+yearComboBox.getSelectedItem().toString());
-//                savePassengerData(PassengerData);
-//                Ticket ticket  = Generator.ticketGen(PassengerData,Generator.flightGen(origin,destination,date),41);;
-//                PassengerData.setNumOfTickets(PassengerData.getNumOfTickets()+1);
-//                JOptionPane.showMessageDialog(null, "Reservation Successful");
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Invalid Data");
-//            }
-//        });
+        firstnameField.addActionListener(e -> {
+            if(Validatename(firstnameField.getText())){
+                PassengerData.setFirstname(firstnameField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid First Name");
+            }
+        });
+        lastnameField.addActionListener(e -> {
+            if(Validatename(lastnameField.getText())){
+                PassengerData.setLastname(lastnameField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Last Name");
+            }
+        });
+        PassportField.addActionListener(e -> {
+            if(ValidatePassportId(PassportField.getText())){
+                PassengerData.setPassportId(PassportField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Passport Number");
+            }
+        });
+        PhoneNumField.addActionListener(e -> {
+            if(Validatephonenumber(PhoneNumField.getText())){
+                PassengerData.setPhoneNumber(PhoneNumField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Phone Number");
+            }
+        });
+        confirmButton.addActionListener(e -> {
+            if(passengerValidation(firstnameField.getText(),lastnameField.getText(),
+                    PassportField.getText(),PhoneNumField.getText(),dayComboBox.getSelectedItem().
+                            toString()+"/"+monthComboBox.getSelectedItem().toString()+
+                            "/"+yearComboBox.getSelectedItem().toString())&& PassengerData.getNumOfTickets()<= 3){
+                PassengerData.setUsername(HomePage.currentUser.getUsername());
+                PassengerData.setEmail(HomePage.currentUser.getEmail());
+                PassengerData.setPassword(HomePage.currentUser.getPassword());
+                PassengerData.setFirstname(firstnameField.getText());
+                PassengerData.setLastname(lastnameField.getText());
+                PassengerData.setPassportId(PassportField.getText());
+                PassengerData.setPhoneNumber(PhoneNumField.getText());
+                PassengerData.setBirthdate(dayComboBox.getSelectedItem().toString()+"/"+monthComboBox.getSelectedItem().toString()+"/"+yearComboBox.getSelectedItem().toString());
+                savePassengerData(PassengerData);
+                Ticket ticket  = Generator.ticketGen(PassengerData,Generator.flightGen(origin,destination,date),41);;
+                PassengerData.setNumOfTickets(PassengerData.getNumOfTickets()+1);
+                JOptionPane.showMessageDialog(null, "Reservation Successful");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Data");
+            }
+        });
 
         setVisible(true);
 
@@ -248,6 +250,7 @@ public class ReservePage extends JFrame {
             setLightMode();
         }
     }
+
 
     private void updateDayList() {
         int month = monthComboBox.getSelectedIndex();

@@ -144,7 +144,7 @@ public class AccountPage extends JFrame {
     JLabel logo1 = new JLabel(scaledPasswordLogo);
 
     AccountPage() {
-        if(isemailStored(currentUser.getEmail()))
+        if(isEmailStored(currentUser.getEmail()))
         {
             Passenger = new Passenger(currentUser.getEmail(), currentUser.getUsername(), currentUser.getPassword(),getFirstname(currentUser.getEmail()),getLastname(currentUser.getEmail()),getPhoneNumber(currentUser.getEmail()),getPassportId(currentUser.getEmail()));
         }
@@ -287,7 +287,6 @@ public class AccountPage extends JFrame {
                             System.out.println(ex.getMessage());
                             throw new RuntimeException(ex);
                         }
-
                     }
                 }
                 Passenger.setFirstname(firstname);
