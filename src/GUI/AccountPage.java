@@ -716,10 +716,6 @@ public class AccountPage extends JFrame {
 
         changeUsernameConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
 
-        changeUsernameConfirmButton.setBounds(150, 300, 170, 40);
-
-
-
         changeUsernamePopup.addWindowListener(new WindowAdapter() {
 
             @Override
