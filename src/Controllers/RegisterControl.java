@@ -17,6 +17,7 @@ public class RegisterControl {
 
     public  static boolean ValidateUsername(String Username){
         String regexPattern = "^[A-Za-z][A-Za-z0-9_]{2,15}$";
+
         return patternMatches(Username, regexPattern);
 
     }
@@ -66,7 +67,7 @@ public class RegisterControl {
      * @param username user's Username
      * @param password user's Password
      */
-    public static void saveData(String email, String username, String password){
+    public static void saveUser(String email, String username, String password){
         String data = username + " " + email + " " + password + "\n";
         Utils.FileManager.append("Users.txt", data);
     }

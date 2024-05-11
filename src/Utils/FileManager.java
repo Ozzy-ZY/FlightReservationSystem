@@ -4,6 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
+import GUI.HomePage;
+import Models.Passenger;
 
 public class FileManager {
     public static void write(String path, String data) {
@@ -13,7 +16,7 @@ public class FileManager {
             System.err.println("Error writing to file: " + e.getMessage());
         }
     }
-    
+
     public static String read(String path) {
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -26,7 +29,7 @@ public class FileManager {
         }
         return content.toString();
     }
-    
+
     public static void append(String path, String data) {
         try (FileWriter writer = new FileWriter(path, true)) {
             writer.write(data);
@@ -45,6 +48,26 @@ public class FileManager {
         for (int i = 0; i < lines.size(); i++) {
             if (lines.get(i).equals(lineToReplace)) {
                 lines.set(i, newLine);
+            }
+        }
+        Files.write(Path.of(filePath), lines);
+    }
+
+    public static void updateField(String filePath, String email, String fieldName, String newValue,int index) throws IOException{
+        List<String> lines = Files.readAllLines(Path.of(filePath));
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i).startsWith(email)) {
+                String[] passengerData = lines.get(i).split(",");
+                if(index >= passengerData.length){
+                    System.err.println("Index out of bounds");
+                    return;
+                }
+                else {
+                    passengerData[index] = newValue;
+                    lines.set(i, String.join(",", passengerData));
+                }
+            }
+            else {lines.get(i);
             }
         }
         Files.write(Path.of(filePath), lines);
