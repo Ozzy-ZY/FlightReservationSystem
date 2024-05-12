@@ -11,6 +11,7 @@ import jdk.jshell.execution.Util;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import static Controllers.SessionControl.*;
 import static GUI.HomePage.currentUser;
@@ -215,7 +216,8 @@ public class AccountPage extends JFrame {
                             + " " + fName.getText ()
                             + " " + lName.getText ()
                             + " " + passID.getText ()
-                            + " " + number.getText () + "\n");
+                            + " " + number.getText ()
+                            + " "+ PassengerControl.getNumOfTickets(currentUser.getUsername())+ "\n");
 
             if(fName.getText () != "" && lName.getText () != "" && passID.getText ()!="" && number.getText ()!=""){
             };
@@ -427,6 +429,7 @@ public class AccountPage extends JFrame {
                 changeUsernamePopup.setVisible(false);
 
             }
+            String oldUsername = currentUser.getUsername();
             String oldUser = currentUser.toString();
             if (currentUser.getPassword().equals(String.valueOf
                     (validatePasswordField.getPassword())) &&
@@ -440,6 +443,14 @@ public class AccountPage extends JFrame {
                 try {
                     FileManager.replaceLines("Users.txt", oldUser, currentUser.toString());
                     FileManager.replaceLines("token.txt", oldUser, currentUser.toString());
+                    File originalFile = new File("tickets/"+oldUsername+"Tickets.txt");
+                    File newFile = new File("tickets/"+ChangeUsernameField.getText()+"Tickets.txt");
+                    if (originalFile.renameTo(newFile)) {
+                        System.out.println("File renamed successfully!");
+                    } else {
+                        System.out.println("Failed to rename file!");
+                    }
+
 
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());

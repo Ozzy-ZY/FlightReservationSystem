@@ -127,4 +127,37 @@ public class PassengerControl {
         }
         return false;
     }
+    public static Passenger getPassenger(String username){
+        if(isFileEmpty("Passengers.txt"))
+            return null;
+        String data = Utils.FileManager.read("Passengers.txt");
+        String[] passengers = data.split("\n");
+        for (String passenger : passengers) {
+            String[] passengerData = passenger.split(" ");
+            if (passengerData[0].equals(username)) {
+                Passenger passengerObj = new Passenger(passengerData[1], passengerData[3],
+                        passengerData[4], passengerData[2], passengerData[0]);
+                passengerObj.setPassportId(passengerData[5]);
+                passengerObj.setPhoneNumber(passengerData[6]);
+                passengerObj.setBirthdate(passengerData[7]);
+                passengerObj.setNumOfTickets(Integer.parseInt(passengerData[8]));
+                return passengerObj;
+            }
+        }
+        return null;
+    }
+    public static int getNumOfTickets(String username){
+        if(isFileEmpty("Passengers.txt"))
+            return 0;
+        String data = Utils.FileManager.read("Passengers.txt");
+        String[] passengers = data.split("\n");
+        for (String passenger : passengers) {
+            String[] passengerData = passenger.split(" ");
+            if (passengerData[0].equals(username)) {
+                if(passengerData.length != 9)
+                    return Integer.parseInt(passengerData[8]);
+            }
+        }
+        return 0;
+    }
 }
