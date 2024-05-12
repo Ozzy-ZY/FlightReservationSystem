@@ -215,7 +215,8 @@ public class AccountPage extends JFrame {
                             + " " + fName.getText ()
                             + " " + lName.getText ()
                             + " " + passID.getText ()
-                            + " " + number.getText () + "\n");
+                            + " " + number.getText ()
+                            + " "+ PassengerControl.getNumOfTickets(currentUser.getUsername())+ "\n");
 
             if(fName.getText () != "" && lName.getText () != "" && passID.getText ()!="" && number.getText ()!=""){
             };
