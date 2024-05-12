@@ -21,11 +21,11 @@ public class PassengerControl {
                 passportIdValidation(passportId) && phoneNumberValidation(phoneNumber);
     }
     public static void savePassengerData(Passenger passenger){ // 0: username, 1: email,
-        // 2: password, 3: firstname, 4: lastname, 5: passportId, 6: phoneNumber, 7: birthdate
+        // 2: password, 3: firstname, 4: lastname, 5: passportId, 6: phoneNumber, 7: birthdate 8: NumOfTickets
         try{
             Utils.FileManager.append ("Passengers.txt", passenger.getUsername() + " " + passenger.getEmail() + " " +
                     passenger.getPassword() + " " + passenger.getFirstName() + " " + passenger.getLastName() + " " +
-                    passenger.getPassportId() + " " + passenger.getPhoneNumber() + " " + passenger.getBirthdate() + "\n");
+                    passenger.getPassportId() + " " + passenger.getPhoneNumber() + " " + passenger.getBirthdate() +" "+ passenger.getNumOfTickets()+ "\n");
         }
         catch (Exception ex){
             System.err.println(ex.getMessage());

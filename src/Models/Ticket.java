@@ -37,7 +37,7 @@ public class Ticket {
         this.seatNumber = seatNumber;
     }
     public void generateTicketID(){
-        this.ticketID = flight.getId() + "-" + seatNumber;
+        this.ticketID = flight.getId() + "_" + seatNumber;
     }
 
     public String getTicketID() {
@@ -48,7 +48,7 @@ public class Ticket {
             var data = Utils.FileManager.read("tickets/"+username+".txt");
             var dataArray = data.split("\n");
             for(var ticket: dataArray){
-                var ticketData = ticket.split("_");
+                var ticketData = ticket.split("-");
                 if(ticketData[0].equals(ticketID)){
                     this.ticketID = ticketData[0];
                     this.flight.setOrigin(ticketData[1]);

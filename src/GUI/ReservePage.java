@@ -232,7 +232,7 @@ public class ReservePage extends JFrame {
             if(passengerValidation(firstnameField.getText(),lastnameField.getText(),
                     PassportField.getText(),PhoneNumField.getText(),dayComboBox.getSelectedItem().
                             toString()+"/"+monthComboBox.getSelectedItem().toString()+
-                            "/"+yearComboBox.getSelectedItem().toString())&& PassengerData.getNumOfTickets()<= 3){
+                            "/"+yearComboBox.getSelectedItem().toString()) && PassengerData.getNumOfTickets() <= 3){
                 PassengerData.setUsername(HomePage.currentUser.getUsername());
                 PassengerData.setEmail(HomePage.currentUser.getEmail());
                 PassengerData.setPassword(HomePage.currentUser.getPassword());
@@ -240,6 +240,7 @@ public class ReservePage extends JFrame {
                 PassengerData.setLastname(lastnameField.getText());
                 PassengerData.setPassportId(PassportField.getText());
                 PassengerData.setPhoneNumber(PhoneNumField.getText());
+                PassengerData.setNumOfTickets(PassengerData.getNumOfTickets()+1);
                 PassengerData.setBirthdate(dayComboBox.getSelectedItem().toString()+"/"+monthComboBox.getSelectedItem().toString()+"/"+yearComboBox.getSelectedItem().toString());
                 savePassengerData(PassengerData);
                 Ticket ticket  = Generator.ticketGen(PassengerData,Generator.flightGen(origin,destination,date),41);
@@ -248,9 +249,8 @@ public class ReservePage extends JFrame {
                             "-"+ticket.getFlight().getOrigin()+
                             "-"+ticket.getFlight().getDestination()+
                             "-"+ticket.getFlight().getDate()+
-                            " "+ticket.getPassenger().getLastName()+
+                            "-"+ticket.getPassenger().getLastName()+
                             "-"+ticket.getSeatNumber()+"\n");
-                PassengerData.setNumOfTickets(PassengerData.getNumOfTickets()+1);
                 JOptionPane.showMessageDialog(null, "Reservation Successful");
                 dispose();
                 new HomePage();
