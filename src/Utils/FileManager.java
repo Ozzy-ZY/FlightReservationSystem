@@ -1,4 +1,6 @@
 package Utils;
+import Models.Ticket;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,4 +67,18 @@ public class FileManager {
             }
             return EveryTicketID;
     }
+    public static Ticket[] GetEveryTicketGivenUsername(String username) {
+        var data = read("tickets/" + username + "Tickets.txt");
+        var dataArr = data.split("\n");
+        Ticket[] EveryTicket = new Ticket[dataArr.length];
+        int i = 0;
+        for (var ticket : dataArr) {
+            var ticketData = ticket.split("-");
+            EveryTicket[i] = new Ticket( ticketData[0], ticketData[1],
+                    ticketData[2], ticketData[3], ticketData[4], ticketData[5], Integer.parseInt(ticketData[6]));
+            i++;
+        }
+        return EveryTicket;
+    }
+
 }

@@ -21,7 +21,7 @@ public class AccountPage extends JFrame {
 
     static User user;
 
-    boolean[] totalStatus = {false, false, false};
+    boolean[] totalStatus = {false, false, false,false};
 
     JFrame accountFrame = new JFrame("Account");
 
@@ -59,7 +59,13 @@ public class AccountPage extends JFrame {
     JLabel personal = new JLabel ("Personal Details");
 
     JLabel fNameTxt = new JLabel ("First Name");
-    JLabel error = new JLabel ();
+    JLabel errorFName = new JLabel("Invalid Name");
+
+    JLabel errorLName = new JLabel("Invalid Name");
+
+    JLabel errorPassport = new JLabel("Invalid valid passport");
+
+    JLabel errorNumber = new JLabel("Invalid phone number");
     JTextField fName = new JTextField (PassengerControl.getFirstname ( currentUser.getEmail () ) );
 
     JLabel lNameTxt = new JLabel ("Last Name");
@@ -173,6 +179,21 @@ public class AccountPage extends JFrame {
         accountPanel.add(delTxt);
         accountPanel.add(delLabel);
         accountPanel.add(deleteAccountButton);
+        accountPanel.add(errorFName);
+
+        accountPanel.add(errorLName);
+
+        accountPanel.add(errorPassport);
+
+        accountPanel.add(errorNumber);
+
+        errorFName.setVisible ( false );
+
+        errorLName.setVisible ( false );
+
+        errorPassport.setVisible ( false );
+
+        errorNumber.setVisible ( false );
 
         backButton.addActionListener(e -> {
             new HomePage();
@@ -208,17 +229,132 @@ public class AccountPage extends JFrame {
 
         saveChanges.addActionListener(e -> {
 
-            Controllers.PassengerControl.saveAccountData ( "Passengers.txt",
-                    currentUser.getUsername ()
-                            + " " + currentUser.getEmail ()
-                            + " " + currentUser.getPassword ()
-                            + " " + fName.getText ()
-                            + " " + lName.getText ()
-                            + " " + passID.getText ()
-                            + " " + number.getText () + "\n");
 
-            if(fName.getText () != "" && lName.getText () != "" && passID.getText ()!="" && number.getText ()!=""){
-            };
+
+            String first_name = fName.getText();
+
+            if(PassengerControl.nameValidation (first_name)) {
+
+                totalStatus[0] = true;
+
+                errorFName.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[0] = false;
+
+                errorFName.setVisible(true);
+
+            }
+
+
+
+            String last_name = fName.getText();
+
+            if(PassengerControl.nameValidation (last_name)) {
+
+                totalStatus[1] = true;
+
+                errorLName.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[1] = false;
+
+                errorLName.setVisible(true);
+
+            }
+
+
+
+            String passport = passID.getText();
+
+            if(PassengerControl.passportIdValidation (passport)) {
+
+                totalStatus[2] = true;
+
+                errorPassport.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[2] = false;
+
+                errorPassport.setVisible(true);
+
+            }
+
+
+
+            String phone_number = number.getText();
+
+            if(PassengerControl.phoneNumberValidation (phone_number)) {
+
+                totalStatus[3] = true;
+
+                errorNumber.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[3] = false;
+
+                errorNumber.setVisible(true);
+
+            }
+
+
+
+
+
+            if(totalStatus[0] && totalStatus[1] && totalStatus[2] && totalStatus[3] && !PassengerControl.isEmailStored ( currentUser.getEmail () )){
+
+                Controllers.PassengerControl.saveAccountData ( "Passengers.txt",
+
+                        currentUser.getUsername ()
+
+                                + " " + currentUser.getEmail ()
+
+                                + " " + currentUser.getPassword ()
+
+                                + " " + fName.getText ()
+
+                                + " " + lName.getText ()
+
+                                + " " + passID.getText ()
+
+                                + " " + number.getText () + "\n");
+
+
+
+            }else if (totalStatus[0] && totalStatus[1] && totalStatus[2] && totalStatus[3] && PassengerControl.isEmailStored ( currentUser.getEmail () )){
+
+                String passenger = PassengerControl.getPassenger (currentUser.getEmail ());
+
+                Controllers.PassengerControl.updateAccountData ( "Passengers.txt", passenger
+
+                        , currentUser.getUsername ()
+
+                                + " " + currentUser.getEmail ()
+
+                                + " " + currentUser.getPassword ()
+
+                                + " " + fName.getText ()
+
+                                + " " + lName.getText ()
+
+                                + " " + passID.getText ()
+
+                                + " " + number.getText () );
+
+            }
+
         });
 
 
@@ -294,6 +430,8 @@ public class AccountPage extends JFrame {
         fName.setBounds ( 70, 385,300,40);
         fName.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         fName.setBorder ( new RoundedBorder () );
+        errorFName.setBounds ( 70,415,300,30 );
+        errorFName.setForeground ( Color.decode ( "#DE3341" ) );
 
         lNameTxt.setBounds ( 410,350,400,40 );
         lNameTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
@@ -301,6 +439,8 @@ public class AccountPage extends JFrame {
         lName.setBounds ( 410, 385,300,40);
         lName.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         lName.setBorder ( new RoundedBorder () );
+        errorLName.setBounds ( 410,415,300,30 );
+        errorLName.setForeground ( Color.decode ( "#DE3341" ) );
 
         passIDTxt.setBounds ( 70,430,400,40 );
         passIDTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
@@ -308,6 +448,8 @@ public class AccountPage extends JFrame {
         passID.setBounds ( 70, 465,640,40);
         passID.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         passID.setBorder ( new RoundedBorder () );
+        errorPassport.setBounds ( 70,495,300,30 );
+        errorPassport.setForeground ( Color.decode ( "#DE3341" ) );
 
         noText.setBounds ( 70,510,400,40 );
         noText.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
@@ -315,6 +457,8 @@ public class AccountPage extends JFrame {
         number.setBounds ( 70, 545,640,40);
         number.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         number.setBorder ( new RoundedBorder () );
+        errorNumber.setBounds ( 70,575,300,30 );
+        errorNumber.setForeground ( Color.decode ( "#DE3341" ) );
 
         saveChanges.setBounds(70, 600, 640, 40);
         saveChanges.setFont(new Font("Arial", Font.BOLD, 18));

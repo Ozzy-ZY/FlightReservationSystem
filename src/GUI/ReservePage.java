@@ -3,13 +3,13 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
-
 import Controllers.PassengerControl;
 import Controllers.ThemeManager;
 import Models.Passenger;
 import Models.Ticket;
 import Utils.Generator;
 import Utils.RoundedBorder;
+import static Utils.FileManager.*;
 import static Controllers.PassengerControl.*;
 
 public class ReservePage extends JFrame {
@@ -19,10 +19,8 @@ public class ReservePage extends JFrame {
     JLabel reserveHeader = new JLabel("Reservation with");
     JLabel reservrihla = new JLabel("Rihla");
     JLabel firstNameLabel = new JLabel("First Name");
-
     JLabel lastNamelabel = new JLabel("Last Name");
     JButton backButton = new JButton("<-");
-
     JLabel PassportLabel = new JLabel("Passport Number");
     JLabel phoneNumLabel = new JLabel("Phone Number");
     JLabel BirthDateLabel = new JLabel("Birth Date");
@@ -232,7 +230,8 @@ public class ReservePage extends JFrame {
             if(passengerValidation(firstnameField.getText(),lastnameField.getText(),
                     PassportField.getText(),PhoneNumField.getText(),dayComboBox.getSelectedItem().
                             toString()+"/"+monthComboBox.getSelectedItem().toString()+
-                            "/"+yearComboBox.getSelectedItem().toString()) && PassengerData.getNumOfTickets() <= 3){
+                            "/"+yearComboBox.getSelectedItem().toString()) &&
+                    GetEveryTicketIDGivenUsername(HomePage.currentUser.getUsername()).length <= 3){
                 PassengerData.setUsername(HomePage.currentUser.getUsername());
                 PassengerData.setEmail(HomePage.currentUser.getEmail());
                 PassengerData.setPassword(HomePage.currentUser.getPassword());
@@ -249,11 +248,12 @@ public class ReservePage extends JFrame {
                             "-"+ticket.getFlight().getOrigin()+
                             "-"+ticket.getFlight().getDestination()+
                             "-"+ticket.getFlight().getDate()+
+                            "-"+ticket.getPassenger().getFirstName ()+
                             "-"+ticket.getPassenger().getLastName()+
                             "-"+ticket.getSeatNumber()+"\n");
                 JOptionPane.showMessageDialog(null, "Reservation Successful");
                 dispose();
-                new HomePage();
+                new TicketGUI (ticket);
             }
             else{
                 JOptionPane.showMessageDialog(null, "Invalid Data");
