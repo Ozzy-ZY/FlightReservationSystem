@@ -43,13 +43,14 @@ public class Ticket {
     public String getTicketID() {
         return ticketID;
     }
-    public Ticket(String ticketID,String origin, String destination,String date, String lastName, int sNumber){
+    public Ticket(String ticketID,String origin, String destination,String date, String firstName, String lastName, int sNumber){
         flight = new Flight();
         passenger = new Passenger();
         this.ticketID = ticketID;
         flight.setOrigin(origin);
         flight.setDestination(destination);
         flight.setDate(date);
+        passenger.setFirstname (firstName);
         passenger.setLastname(lastName);
         seatNumber = sNumber;
 
@@ -67,8 +68,10 @@ public class Ticket {
                     this.flight.setOrigin(ticketData[1]);
                     this.flight.setDestination(ticketData[2]);
                     this.flight.setDate(ticketData[3]);
-                    this.passenger.setLastname(ticketData[4]);
-                    this.seatNumber = Integer.parseInt(ticketData[5]);
+                    this.passenger.setFirstname (ticketData[4]);
+                    this.passenger.setLastname(ticketData[5]);
+                    this.seatNumber = Integer.parseInt(ticketData[6]);
+
                 }
             }
         }
@@ -76,4 +79,5 @@ public class Ticket {
             System.out.println("Error reading ticket file: "+e.getMessage());
         }
     }
+
 }

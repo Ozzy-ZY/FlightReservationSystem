@@ -157,6 +157,14 @@ public class HomePage {
             new FlightsPage();
             mainFrame.dispose();
         });
+        Tickets.addActionListener(e -> {
+            if(!status){
+                JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
+                return;
+            }
+            new TicketsPage ();
+            mainFrame.dispose();
+        });
         Account.addActionListener(e -> {
             if(!status){
                 JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
