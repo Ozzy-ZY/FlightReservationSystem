@@ -3,8 +3,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-import GUI.FlightsPage;
-import GUI.TicketGUI;
 import Models.Flight;
 import Models.Passenger;
 import Models.Plane;
@@ -17,7 +15,7 @@ public class Generator {
         ticket.generateTicketID();
         try {
             QrGenerator.saveQRCodeImage(QrGenerator.generateQRCode(ticket.getTicketID()),
-                      ticket.getTicketID() + ".png");
+                      "qr_codes/"+ticket.getTicketID() + ".png");
         } catch (WriterException | IOException e) {
             throw new RuntimeException(e);
         }
