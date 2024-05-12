@@ -1,10 +1,12 @@
 package GUI;
 
 import Controllers.RegisterControl;
+import Controllers.PassengerControl;
 import Controllers.ThemeManager;
 import Models.User;
 import Utils.FileManager;
 import Utils.RoundedBorder;
+import jdk.jshell.execution.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,10 @@ import static GUI.HomePage.status;
 public class AccountPage extends JFrame {
 
     static User user;
-     JFrame accountFrame = new JFrame("Account");
+
+    boolean[] totalStatus = {false, false, false,false};
+
+    JFrame accountFrame = new JFrame("Account");
 
     JPanel accountPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/logo.png");
@@ -54,16 +59,23 @@ public class AccountPage extends JFrame {
     JLabel personal = new JLabel ("Personal Details");
 
     JLabel fNameTxt = new JLabel ("First Name");
-    JTextField fName = new JTextField ();
+    JLabel errorFName = new JLabel("Invalid Name");
+
+    JLabel errorLName = new JLabel("Invalid Name");
+
+    JLabel errorPassport = new JLabel("Invalid valid passport");
+
+    JLabel errorNumber = new JLabel("Invalid phone number");
+    JTextField fName = new JTextField (PassengerControl.getFirstname ( currentUser.getEmail () ) );
 
     JLabel lNameTxt = new JLabel ("Last Name");
-    JTextField lName = new JTextField ();
+    JTextField lName = new JTextField (PassengerControl.getLastname ( currentUser.getEmail () ));
 
     JLabel passIDTxt = new JLabel ("Passport ID");
-    JTextField passID = new JTextField ();
+    JTextField passID = new JTextField (PassengerControl.getPassportID ( currentUser.getEmail () ));
 
     JLabel noText = new JLabel ("Phone number");
-    JTextField number = new JTextField ();
+    JTextField number = new JTextField (PassengerControl.getPhoneNumber ( currentUser.getEmail () ));
 
     JButton saveChanges = new JButton ("Save Changes");
 
@@ -167,6 +179,21 @@ public class AccountPage extends JFrame {
         accountPanel.add(delTxt);
         accountPanel.add(delLabel);
         accountPanel.add(deleteAccountButton);
+        accountPanel.add(errorFName);
+
+        accountPanel.add(errorLName);
+
+        accountPanel.add(errorPassport);
+
+        accountPanel.add(errorNumber);
+
+        errorFName.setVisible ( false );
+
+        errorLName.setVisible ( false );
+
+        errorPassport.setVisible ( false );
+
+        errorNumber.setVisible ( false );
 
         backButton.addActionListener(e -> {
             new HomePage();
@@ -186,7 +213,6 @@ public class AccountPage extends JFrame {
         changeUsernameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-
                 changeUsernamePopup.setVisible(true);
                 accountFrame.setEnabled(false);
 
@@ -200,6 +226,137 @@ public class AccountPage extends JFrame {
                 accountFrame.setEnabled(false);
             }
         });
+
+        saveChanges.addActionListener(e -> {
+
+
+
+            String first_name = fName.getText();
+
+            if(PassengerControl.nameValidation (first_name)) {
+
+                totalStatus[0] = true;
+
+                errorFName.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[0] = false;
+
+                errorFName.setVisible(true);
+
+            }
+
+
+
+            String last_name = fName.getText();
+
+            if(PassengerControl.nameValidation (last_name)) {
+
+                totalStatus[1] = true;
+
+                errorLName.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[1] = false;
+
+                errorLName.setVisible(true);
+
+            }
+
+
+
+            String passport = passID.getText();
+
+            if(PassengerControl.passportIdValidation (passport)) {
+
+                totalStatus[2] = true;
+
+                errorPassport.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[2] = false;
+
+                errorPassport.setVisible(true);
+
+            }
+
+
+
+            String phone_number = number.getText();
+
+            if(PassengerControl.phoneNumberValidation (phone_number)) {
+
+                totalStatus[3] = true;
+
+                errorNumber.setVisible(false);
+
+            }
+
+            else{
+
+                totalStatus[3] = false;
+
+                errorNumber.setVisible(true);
+
+            }
+
+
+
+
+
+            if(totalStatus[0] && totalStatus[1] && totalStatus[2] && totalStatus[3] && !PassengerControl.isEmailStored ( currentUser.getEmail () )){
+
+                Controllers.PassengerControl.saveAccountData ( "Passengers.txt",
+
+                        currentUser.getUsername ()
+
+                                + " " + currentUser.getEmail ()
+
+                                + " " + currentUser.getPassword ()
+
+                                + " " + fName.getText ()
+
+                                + " " + lName.getText ()
+
+                                + " " + passID.getText ()
+
+                                + " " + number.getText () + "\n");
+
+
+
+            }else if (totalStatus[0] && totalStatus[1] && totalStatus[2] && totalStatus[3] && PassengerControl.isEmailStored ( currentUser.getEmail () )){
+
+                String passenger = PassengerControl.getPassenger (currentUser.getEmail ());
+
+                Controllers.PassengerControl.updateAccountData ( "Passengers.txt", passenger
+
+                        , currentUser.getUsername ()
+
+                                + " " + currentUser.getEmail ()
+
+                                + " " + currentUser.getPassword ()
+
+                                + " " + fName.getText ()
+
+                                + " " + lName.getText ()
+
+                                + " " + passID.getText ()
+
+                                + " " + number.getText () );
+
+            }
+
+        });
+
 
         deleteAccountButton.addActionListener(new ActionListener () {
             @Override
@@ -251,7 +408,6 @@ public class AccountPage extends JFrame {
 
         changeUsernameButton.setBounds(340, 245, 40, 40);
 
-
         passwordTxt.setBounds ( 410,210,400,40 );
         passwordTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
         passwordTxt.setForeground ( Color.decode ( "#05203C" ) );
@@ -274,6 +430,8 @@ public class AccountPage extends JFrame {
         fName.setBounds ( 70, 385,300,40);
         fName.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         fName.setBorder ( new RoundedBorder () );
+        errorFName.setBounds ( 70,415,300,30 );
+        errorFName.setForeground ( Color.decode ( "#DE3341" ) );
 
         lNameTxt.setBounds ( 410,350,400,40 );
         lNameTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
@@ -281,6 +439,8 @@ public class AccountPage extends JFrame {
         lName.setBounds ( 410, 385,300,40);
         lName.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         lName.setBorder ( new RoundedBorder () );
+        errorLName.setBounds ( 410,415,300,30 );
+        errorLName.setForeground ( Color.decode ( "#DE3341" ) );
 
         passIDTxt.setBounds ( 70,430,400,40 );
         passIDTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
@@ -288,6 +448,8 @@ public class AccountPage extends JFrame {
         passID.setBounds ( 70, 465,640,40);
         passID.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         passID.setBorder ( new RoundedBorder () );
+        errorPassport.setBounds ( 70,495,300,30 );
+        errorPassport.setForeground ( Color.decode ( "#DE3341" ) );
 
         noText.setBounds ( 70,510,400,40 );
         noText.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
@@ -295,6 +457,8 @@ public class AccountPage extends JFrame {
         number.setBounds ( 70, 545,640,40);
         number.setFont ( new Font ( "SansSerif", Font.PLAIN, 15 ) );
         number.setBorder ( new RoundedBorder () );
+        errorNumber.setBounds ( 70,575,300,30 );
+        errorNumber.setForeground ( Color.decode ( "#DE3341" ) );
 
         saveChanges.setBounds(70, 600, 640, 40);
         saveChanges.setFont(new Font("Arial", Font.BOLD, 18));
@@ -384,7 +548,7 @@ public class AccountPage extends JFrame {
         usernameError.setFont ( new Font ( "SansSerif",Font.PLAIN,14 ) );
 
         userSplitPane.setBounds ( 40, 360,355,3);
-        
+
         changeUsernameConfirmButton.setBounds(40, 380, 355, 40);
         changeUsernameConfirmButton.setFont(new Font("Arial", Font.BOLD, 18));
         changeUsernameConfirmButton.setForeground ( Color.decode("#ffffff") );
@@ -439,7 +603,7 @@ public class AccountPage extends JFrame {
 
 
         // CHANGE PASSWORD POPUP
-      
+
         changePasswordPopup.setLayout ( null );
         changePasswordPopup.setSize(800, 500);
         changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -550,8 +714,6 @@ public class AccountPage extends JFrame {
                 passwordError.setVisible(true);
             }
         });
-
-
 
 
         if ( ThemeManager.isDarkMode ()) {
@@ -706,4 +868,7 @@ public class AccountPage extends JFrame {
             confirmNewPasswordField.setEchoChar('*');
         }
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package GUI;
 import Controllers.ThemeManager;
 import Models.User;
+import Utils.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -155,6 +156,18 @@ public class HomePage {
                 return;
             }
             new FlightsPage();
+            mainFrame.dispose();
+        });
+        Tickets.addActionListener(e -> {
+            if(!status){
+                JOptionPane.showMessageDialog(mainFrame, "Please login to access this page");
+                return;
+            }
+            if( FileManager.isFileEmpty ( "tickets/"+currentUser.getUsername ()+"Tickets.txt" ) ){
+                JOptionPane.showMessageDialog(mainFrame, "You have no tickets yet !");
+                return;
+            }
+            new TicketsPage ();
             mainFrame.dispose();
         });
         Account.addActionListener(e -> {
