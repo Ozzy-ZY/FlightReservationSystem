@@ -267,8 +267,14 @@ public class Register extends JFrame{
         registerHeader.setForeground(Color.decode ( "#05203C" ));
         backButton.setBackground(Color.white);
         usernameLabel.setForeground(Color.decode ( "#05203C" ));
+        usernameField.setBackground ( Color.decode ( "#ffffff" ) );
+        usernameField.setForeground ( Color.decode ( "#000000" ) );
         emailLabel.setForeground(Color.decode ( "#05203C" ));
+        emailField.setBackground ( Color.decode ( "#ffffff" ) );
+        emailField.setForeground ( Color.decode ( "#000000" ) );
         passwordLabel.setForeground(Color.decode ( "#05203C" ));
+        passwordField.setBackground ( Color.decode ( "#ffffff" ) );
+        passwordField.setForeground ( Color.decode ( "#000000" ) );
         cloudsImg.setIcon ( scaledBg );
         ThemeManager.setDarkMode ( false );
     }
@@ -280,8 +286,14 @@ public class Register extends JFrame{
         registerHeader.setForeground(Color.decode ( "#ffffff" ));
         backButton.setBackground(Color.white);
         usernameLabel.setForeground(Color.decode ( "#ffffff" ));
+        usernameField.setBackground ( Color.decode ( "#111827" ) );
+        usernameField.setForeground ( Color.decode ( "#ffffff" ) );
         emailLabel.setForeground(Color.decode ( "#ffffff" ));
+        emailField.setBackground ( Color.decode ( "#111827" ) );
+        emailField.setForeground ( Color.decode ( "#ffffff" ) );
         passwordLabel.setForeground(Color.decode ( "#ffffff" ));
+        passwordField.setBackground ( Color.decode ( "#111827" ) );
+        passwordField.setForeground ( Color.decode ( "#ffffff" ) );
         cloudsImg.setIcon ( scaledBgD );
         ThemeManager.setDarkMode ( true );
 
