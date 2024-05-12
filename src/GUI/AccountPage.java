@@ -1,10 +1,12 @@
 package GUI;
 
 import Controllers.RegisterControl;
+import Controllers.PassengerControl;
 import Controllers.ThemeManager;
 import Models.User;
 import Utils.FileManager;
 import Utils.RoundedBorder;
+import jdk.jshell.execution.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,10 @@ import static GUI.HomePage.status;
 public class AccountPage extends JFrame {
 
     static User user;
-     JFrame accountFrame = new JFrame("Account");
+
+    boolean[] totalStatus = {false, false, false};
+
+    JFrame accountFrame = new JFrame("Account");
 
     JPanel accountPanel = new JPanel();
     ImageIcon icon = new ImageIcon("Assets/logo.png");
@@ -54,16 +59,17 @@ public class AccountPage extends JFrame {
     JLabel personal = new JLabel ("Personal Details");
 
     JLabel fNameTxt = new JLabel ("First Name");
-    JTextField fName = new JTextField ();
+    JLabel error = new JLabel ();
+    JTextField fName = new JTextField (PassengerControl.getFirstname ( currentUser.getEmail () ) );
 
     JLabel lNameTxt = new JLabel ("Last Name");
-    JTextField lName = new JTextField ();
+    JTextField lName = new JTextField (PassengerControl.getLastname ( currentUser.getEmail () ));
 
     JLabel passIDTxt = new JLabel ("Passport ID");
-    JTextField passID = new JTextField ();
+    JTextField passID = new JTextField (PassengerControl.getPassportID ( currentUser.getEmail () ));
 
     JLabel noText = new JLabel ("Phone number");
-    JTextField number = new JTextField ();
+    JTextField number = new JTextField (PassengerControl.getPhoneNumber ( currentUser.getEmail () ));
 
     JButton saveChanges = new JButton ("Save Changes");
 
@@ -186,7 +192,6 @@ public class AccountPage extends JFrame {
         changeUsernameButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-
                 changeUsernamePopup.setVisible(true);
                 accountFrame.setEnabled(false);
 
@@ -200,6 +205,22 @@ public class AccountPage extends JFrame {
                 accountFrame.setEnabled(false);
             }
         });
+
+        saveChanges.addActionListener(e -> {
+
+            Controllers.PassengerControl.saveAccountData ( "Passengers.txt",
+                    currentUser.getUsername ()
+                            + " " + currentUser.getEmail ()
+                            + " " + currentUser.getPassword ()
+                            + " " + fName.getText ()
+                            + " " + lName.getText ()
+                            + " " + passID.getText ()
+                            + " " + number.getText () + "\n");
+
+            if(fName.getText () != "" && lName.getText () != "" && passID.getText ()!="" && number.getText ()!=""){
+            };
+        });
+
 
         deleteAccountButton.addActionListener(new ActionListener () {
             @Override
@@ -250,7 +271,6 @@ public class AccountPage extends JFrame {
         username.setBorder ( new RoundedBorder () );
 
         changeUsernameButton.setBounds(340, 245, 40, 40);
-
 
         passwordTxt.setBounds ( 410,210,400,40 );
         passwordTxt.setFont ( new Font ( "SansSerif", Font.BOLD, 17 ) );
@@ -384,11 +404,13 @@ public class AccountPage extends JFrame {
         usernameError.setFont ( new Font ( "SansSerif",Font.PLAIN,14 ) );
 
         userSplitPane.setBounds ( 40, 360,355,3);
-        
+
         changeUsernameConfirmButton.setBounds(40, 380, 355, 40);
         changeUsernameConfirmButton.setFont(new Font("Arial", Font.BOLD, 18));
         changeUsernameConfirmButton.setForeground ( Color.decode("#ffffff") );
         changeUsernameConfirmButton.setBackground ( Color.decode ( "#0B3E91" ) );
+
+
 
 
         changeUsernamePopup.addWindowListener(new WindowAdapter () {
@@ -437,7 +459,7 @@ public class AccountPage extends JFrame {
 
 
         // CHANGE PASSWORD POPUP
-      
+
         changePasswordPopup.setLayout ( null );
         changePasswordPopup.setSize(800, 500);
         changePasswordPopup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -548,8 +570,6 @@ public class AccountPage extends JFrame {
                 passwordError.setVisible(true);
             }
         });
-
-
 
 
         if ( ThemeManager.isDarkMode ()) {
@@ -704,4 +724,7 @@ public class AccountPage extends JFrame {
             confirmNewPasswordField.setEchoChar('*');
         }
     }
+
+
+
 }

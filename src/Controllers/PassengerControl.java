@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.Passenger;
 
+import static Utils.FileManager.isFileEmpty;
 import static Utils.FileManager.write;
 
 public class PassengerControl {
@@ -20,11 +21,11 @@ public class PassengerControl {
                 passportIdValidation(passportId) && phoneNumberValidation(phoneNumber);
     }
     public static void savePassengerData(Passenger passenger){ // 0: username, 1: email,
-        // 2: password, 3: firstname, 4: lastname, 5: passportId, 6: phoneNumber, 7: birthdate
+        // 2: password, 3: firstname, 4: lastname, 5: passportId, 6: phoneNumber, 7: birthdate 8: NumOfTickets
         try{
-            write("Passengers.txt", passenger.getUsername() + " " + passenger.getEmail() + " " +
+            Utils.FileManager.append ("Passengers.txt", passenger.getUsername() + " " + passenger.getEmail() + " " +
                     passenger.getPassword() + " " + passenger.getFirstName() + " " + passenger.getLastName() + " " +
-                    passenger.getPassportId() + " " + passenger.getPhoneNumber() + " " + passenger.getBirthdate());
+                    passenger.getPassportId() + " " + passenger.getPhoneNumber() + " " + passenger.getBirthdate() +" "+ passenger.getNumOfTickets()+ "\n");
         }
         catch (Exception ex){
             System.err.println(ex.getMessage());
@@ -40,5 +41,90 @@ public class PassengerControl {
             passengerObj.setPhoneNumber(passenger[6]);
             passengerObj.setBirthdate(passenger[7]);
             return passengerObj;
+    }
+
+    public static void saveAccountData(String path, String data){ // 0: username, 1: email,
+        // 2: password, 3: firstname, 4: lastname, 5: passportId, 6: phoneNumber,
+        try{
+            Utils.FileManager.append ("Passengers.txt", data);
+        }
+        catch (Exception ex){
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    public static String getFirstname(String email){
+        if(!Utils.FileManager.isFileEmpty ( "Passengers.txt" )) {
+            String data = Utils.FileManager.read ( "Passengers.txt" );
+            String[] users = data.split ( "\n" );
+            for (String user : users) {
+                String[] userData = user.split ( " " );
+                if ( userData[ 1 ].equals ( email ) ) {
+                    return userData[ 3 ];
+                }
+            }
+            return "";
+        }
+        return "";
+    }
+
+    public static String getLastname(String email){
+        if(!Utils.FileManager.isFileEmpty ( "Passengers.txt" )) {
+            String data = Utils.FileManager.read ( "Passengers.txt" );
+            String[] users = data.split ( "\n" );
+            for (String user : users) {
+                String[] userData = user.split ( " " );
+                if ( userData[ 1 ].equals ( email ) ) {
+                    return userData[ 4 ];
+                }
+            }
+            return "";
+        }
+        return "";
+    }
+    public static String getPassportID(String email){
+        if(!Utils.FileManager.isFileEmpty ( "Passengers.txt" )) {
+
+            String data = Utils.FileManager.read ( "Passengers.txt" );
+            String[] users = data.split ( "\n" );
+            for (String user : users) {
+                String[] userData = user.split ( " " );
+                if ( userData[ 1 ].equals ( email ) ) {
+                    return userData[ 5 ];
+                }
+            }
+            return "";
+        }
+        return "";
+
+    }
+    public static String getPhoneNumber(String email){
+        if(!Utils.FileManager.isFileEmpty ( "Passengers.txt" )) {
+
+            String data = Utils.FileManager.read ( "Passengers.txt" );
+            String[] users = data.split ( "\n" );
+            for (String user : users) {
+                String[] userData = user.split ( " " );
+                if ( userData[ 1 ].equals ( email ) ) {
+                    return userData[ 6 ];
+                }
+            }
+            return "";
+        }
+        return "";
+
+    }
+    public static boolean isEmailStored(String email){
+        if(isFileEmpty("Passengers.txt"))
+            return false;
+        String data = Utils.FileManager.read("Passengers.txt");
+        String[] emails = data.split("\n");
+        for (String emailLine : emails) {
+            String[] userData = emailLine.split(" ");
+            if (userData[1].equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
