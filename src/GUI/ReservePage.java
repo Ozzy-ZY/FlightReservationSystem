@@ -4,16 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 
+import Controllers.PassengerControl;
 import Controllers.ThemeManager;
+import Models.Passenger;
+import Models.Ticket;
+import Utils.Generator;
 import Utils.RoundedBorder;
+import static Controllers.PassengerControl.*;
 
 public class ReservePage extends JFrame {
-
+    static Passenger PassengerData = new Passenger();
+    public Ticket ticket;
     JPanel panel;
     JLabel reserveHeader = new JLabel("Reservation with");
-    JLabel reservrehla = new JLabel("Rehla");
+    JLabel reservrihla = new JLabel("Rihla");
     JLabel firstNameLabel = new JLabel("First Name");
+
     JLabel lastNamelabel = new JLabel("Last Name");
+    JButton backButton = new JButton("<-");
 
     JLabel PassportLabel = new JLabel("Passport Number");
     JLabel phoneNumLabel = new JLabel("Phone Number");
@@ -73,6 +81,13 @@ public class ReservePage extends JFrame {
         firstNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
 
         panel.add(firstNameLabel);
+        panel.add(backButton);
+        backButton.setBounds(0, 0, 50, 20);
+        backButton.setBackground(Color.white);
+        backButton.addActionListener(e -> {
+            dispose();
+            new FlightsPage();
+        });
 
         firstnameField.setBounds(20, 120, 300, 30);
         firstnameField.setFont(new Font("Arial", Font.BOLD, 20));
@@ -173,15 +188,77 @@ public class ReservePage extends JFrame {
         Thankslabel.setBounds(10, 390, 450, 40);
         Thankslabel.setFont(new Font("Segoe Script", Font.BOLD, 25));
 
-        reservrehla.setBounds(320, 14, 250, 40);
-        reservrehla.setFont(new Font("Segoe Script", Font.BOLD, 35));
-        panel.add(reservrehla);
+        reservrihla.setBounds(320, 14, 250, 40);
+        reservrihla.setFont(new Font("Segoe Script", Font.BOLD, 35));
+        panel.add(reservrihla);
         panel.add(Thankslabel);
         panel.add(confirmButton);
         panel.add(reservimg);
         panel.add(reservimgserd);
-
         add(panel);
+        firstnameField.addActionListener(e -> {
+            if(nameValidation(firstnameField.getText())){
+                PassengerData.setFirstname(firstnameField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid First Name");
+            }
+        });
+        lastnameField.addActionListener(e -> {
+            if(nameValidation(lastnameField.getText())){
+                PassengerData.setLastname(lastnameField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Last Name");
+            }
+        });
+        PassportField.addActionListener(e -> {
+            if(passportIdValidation(PassportField.getText())){
+                PassengerData.setPassportId(PassportField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Passport Number");
+            }
+        });
+        PhoneNumField.addActionListener(e -> {
+            if(phoneNumberValidation(PhoneNumField.getText())){
+                PassengerData.setPhoneNumber(PhoneNumField.getText());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Phone Number");
+            }
+        });
+        confirmButton.addActionListener(e -> {
+            if(passengerValidation(firstnameField.getText(),lastnameField.getText(),
+                    PassportField.getText(),PhoneNumField.getText(),dayComboBox.getSelectedItem().
+                            toString()+"/"+monthComboBox.getSelectedItem().toString()+
+                            "/"+yearComboBox.getSelectedItem().toString()) && PassengerData.getNumOfTickets() <= 3){
+                PassengerData.setUsername(HomePage.currentUser.getUsername());
+                PassengerData.setEmail(HomePage.currentUser.getEmail());
+                PassengerData.setPassword(HomePage.currentUser.getPassword());
+                PassengerData.setFirstname(firstnameField.getText());
+                PassengerData.setLastname(lastnameField.getText());
+                PassengerData.setPassportId(PassportField.getText());
+                PassengerData.setPhoneNumber(PhoneNumField.getText());
+                PassengerData.setNumOfTickets(PassengerData.getNumOfTickets()+1);
+                PassengerData.setBirthdate(dayComboBox.getSelectedItem().toString()+"/"+monthComboBox.getSelectedItem().toString()+"/"+yearComboBox.getSelectedItem().toString());
+                savePassengerData(PassengerData);
+                Ticket ticket  = Generator.ticketGen(PassengerData,Generator.flightGen(origin,destination,date),41);
+                Utils.FileManager.append("tickets/"+HomePage.currentUser.getUsername()+"Tickets.txt",
+                        ticket.getTicketID()+
+                            "-"+ticket.getFlight().getOrigin()+
+                            "-"+ticket.getFlight().getDestination()+
+                            "-"+ticket.getFlight().getDate()+
+                            "-"+ticket.getPassenger().getLastName()+
+                            "-"+ticket.getSeatNumber()+"\n");
+                JOptionPane.showMessageDialog(null, "Reservation Successful");
+                dispose();
+                new HomePage();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid Data");
+            }
+        });
 
         setVisible(true);
 
@@ -189,6 +266,15 @@ public class ReservePage extends JFrame {
             setDarkMode();
         } else {
             setLightMode();
+        }
+
+        // Auto Complete Fields If User Details Exits
+        if( PassengerControl.isEmailStored ( HomePage.currentUser.getEmail () ) ){
+            firstnameField.setText ( getFirstname ( HomePage.currentUser.getEmail () ) );
+            lastnameField.setText ( getLastname ( HomePage.currentUser.getEmail () ) );
+            PassportField.setText ( getPassportID ( HomePage.currentUser.getEmail () ) );
+            PhoneNumField.setText ( getPhoneNumber ( HomePage.currentUser.getEmail () ) );
+
         }
     }
 
@@ -224,7 +310,7 @@ public class ReservePage extends JFrame {
         confirmButton.setBackground(Color.decode("#1A3492"));
         confirmButton.setForeground(Color.decode("#fc7303"));
         Thankslabel.setForeground(Color.decode("#fc7303"));
-        reservrehla.setForeground(Color.decode("#fc7303"));
+        reservrihla.setForeground(Color.decode("#fc7303"));
         BirthDateLabel.setForeground(Color.decode("#1A3492"));
         dayComboBox.setBackground(Color.decode("#ffffff"));
         dayComboBox.setForeground(Color.decode("#fc7303"));
@@ -260,7 +346,7 @@ public class ReservePage extends JFrame {
         confirmButton.setForeground(Color.decode("#fc7303"));
         //confirmButton.setForeground(Color.black);
         Thankslabel.setForeground(Color.decode("#fc7303"));
-        reservrehla.setForeground(Color.decode("#fc7303"));
+        reservrihla.setForeground(Color.decode("#fc7303"));
         BirthDateLabel.setForeground(Color.decode("#ffffff"));
         dayComboBox.setBackground(Color.decode("#000000"));
         dayComboBox.setForeground(Color.decode("#fc7303"));
@@ -276,4 +362,6 @@ public class ReservePage extends JFrame {
 
         ThemeManager.setDarkMode(true);
     }
+
+
 }

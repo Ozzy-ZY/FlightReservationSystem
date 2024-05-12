@@ -2,7 +2,6 @@ package Utils;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class FileManager {
@@ -53,5 +52,17 @@ public class FileManager {
     public static boolean isFileEmpty(String path){
         File file = new File(path);
         return file.length() == 0;
+    }
+    public static String[] GetEveryTicketIDGivenUsername(String username) {
+            var data = read("tickets/" + username + "Tickets.txt");
+            var dataArr = data.split("\n");
+            String[] EveryTicketID = new String[dataArr.length];
+            int i = 0;
+            for (var ticket : dataArr) {
+                var ticketData = ticket.split("-");
+                EveryTicketID[i] = ticketData[0];
+                i++;
+            }
+            return EveryTicketID;
     }
 }

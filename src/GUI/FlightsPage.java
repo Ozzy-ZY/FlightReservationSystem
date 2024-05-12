@@ -1,5 +1,6 @@
 package GUI;
 import Controllers.ThemeManager;
+import Models.Flight;
 import Utils.QrGenerator;
 import Utils.RoundedBorder;
 import com.google.zxing.WriterException;
@@ -251,7 +252,6 @@ public class FlightsPage extends JFrame {
             JOptionPane.showMessageDialog(flightsFrame, "You selected: " + city1 + " and " + city2);
             originCityTextField.setEditable (false);
             destinationCityTextField.setEditable(false);
-            generateQRCode();
 
             String date = dateInput.getText();
 
@@ -270,10 +270,11 @@ public class FlightsPage extends JFrame {
             }
 
             datepassed1= Generator.randomDateGen(date);
-
             datepassed2= Generator.randomDateGen(date);
-            this.AvailableFlights = new JButton(Generator.flightGen(city1,city2)+datepassed1);
-            this.AvailableFlights2 = new JButton(Generator.flightGen(city1,city2)+datepassed2);
+            Flight flight1 = Generator.flightGen(city1, city2, datepassed1);
+            Flight flight2 = Generator.flightGen(city1, city2, datepassed2);
+            this.AvailableFlights = new JButton(flight1.toString());
+            this.AvailableFlights2 = new JButton(flight2.toString());
 
             Available_flights.setResizable ( false );
             Available_flights.setSize(600, 300);
@@ -648,38 +649,6 @@ public class FlightsPage extends JFrame {
             return false;
         }
     }
-
-
-    private void generateQRCode() {
-        if(city1 != null && city2 != null && !city1.equals(city2)) {
-            try {
-                try {
-                    QrGenerator.saveQRCodeImage(QrGenerator.
-                            generateQRCode(HomePage.currentUser.getUsername() +
-                                    " Going From " + city1 + " To " + city2), "src/Utils/qrcode.png");
-                } catch (IOException z) {
-                    throw new RuntimeException(z);
-                }
-            } catch (WriterException z) {
-                throw new RuntimeException(z);
-            }
-        }
-        flightsPanel.remove(qrcode);
-
-        Timer timer = new Timer(100, e -> {
-            qrCode.getImage().flush();
-            ImageIcon newQrCode = new ImageIcon("src/Utils/qrcode.png");
-            qrcode = new JLabel(newQrCode);
-            qrcode.setBounds(50, 400, 300, 300);
-            flightsPanel.revalidate();
-            flightsPanel.repaint();
-
-        });
-        timer.setRepeats(false);
-        timer.start();
-
-    }
-
 
     private void originUpdateSuggestions() {
         String text = originCityTextField.getText().toLowerCase();
