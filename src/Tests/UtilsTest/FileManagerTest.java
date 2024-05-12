@@ -31,10 +31,10 @@ public class FileManagerTest{
     }
 
     @Test
-    public void isFileEmptyReturnsTrueForEmptyFile() {
+    public void isFileEmptyReturnsFalseForEmptyFile() {
         String path = "test.txt";
-        FileManager.write(path, "");
-        assertTrue(FileManager.isFileEmpty(path));
+        FileManager.append(path, "");
+        assertFalse(FileManager.isFileEmpty(path));
     }
 
     @Test
