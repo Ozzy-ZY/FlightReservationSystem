@@ -43,7 +43,20 @@ public class Ticket {
     public String getTicketID() {
         return ticketID;
     }
+    public Ticket(String ticketID,String origin, String destination,String date, String lastName, int sNumber){
+        flight = new Flight();
+        passenger = new Passenger();
+        this.ticketID = ticketID;
+        flight.setOrigin(origin);
+        flight.setDestination(destination);
+        flight.setDate(date);
+        passenger.setLastname(lastName);
+        seatNumber = sNumber;
+
+    }
     public Ticket(String username, String ticketID){
+        flight = new Flight();
+        passenger = new Passenger();
         try{
             var data = Utils.FileManager.read("tickets/"+username+".txt");
             var dataArray = data.split("\n");

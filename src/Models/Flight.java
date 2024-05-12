@@ -14,6 +14,9 @@ public class Flight {
         this.plane = plane;
         this.date = date;
     }
+    public Flight(){
+
+    }
 
 
     public String getId() {
