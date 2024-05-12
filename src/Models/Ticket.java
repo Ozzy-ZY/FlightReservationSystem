@@ -43,13 +43,14 @@ public class Ticket {
     public String getTicketID() {
         return ticketID;
     }
-    public Ticket(String ticketID,String origin, String destination,String date, String lastName, int sNumber){
+    public Ticket(String ticketID,String origin, String destination,String date, String firstName, String lastName, int sNumber){
         flight = new Flight();
         passenger = new Passenger();
         this.ticketID = ticketID;
         flight.setOrigin(origin);
         flight.setDestination(destination);
         flight.setDate(date);
+        passenger.setFirstname (firstName);
         passenger.setLastname(lastName);
         seatNumber = sNumber;
 

@@ -16,7 +16,7 @@ public class TicketGUI {
     public TicketGUI(Ticket ticket) {
         // Create a new JFrame
         frame = new JFrame( "Ticket");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(650, 400);
 
         ImageIcon icon = new ImageIcon("Assets/airplane.png");
@@ -95,21 +95,21 @@ public class TicketGUI {
 
         JLabel FromCity = new JLabel(ticket.getFlight ().getOrigin ());
         FromCity.setForeground(Color.decode ( "#0B3E91" ));
-        FromCity.setBounds(0, 90, 250, 150);
-        FromCity.setFont(new Font("Arial", Font.BOLD, 55));
+        FromCity.setBounds(0, 90, 200, 150);
+        FromCity.setFont(new Font("Arial", Font.BOLD, 45));
         FromCity.setHorizontalAlignment ( JLabel.RIGHT );
         centerPanel.add(FromCity);
 
 
         JLabel planeIcon = new JLabel(scaledIcon);
-        planeIcon.setBounds(105, 60, 450, 150);
+        planeIcon.setBounds(40, 60, 450, 150);
         centerPanel.add(planeIcon);
 
 
         JLabel ToCity = new JLabel(ticket.getFlight ().getDestination ());
         ToCity.setForeground(Color.decode ( "#FD8F1C" ));
-        ToCity.setBounds(400, 90, 450, 150);
-        ToCity.setFont(new Font("Arial", Font.BOLD, 55));
+        ToCity.setBounds(320, 90, 450, 150);
+        ToCity.setFont(new Font("Arial", Font.BOLD, 45));
         centerPanel.add(ToCity);
 
 
@@ -125,10 +125,10 @@ public class TicketGUI {
         centerPanel.add( flightTxt );
 
 
-        JLabel flightID = new JLabel(ticket.getFlight ().getId ());
+        JLabel flightID = new JLabel(ticket.getTicketID ().split("_")[0]);
         flightID.setForeground(Color.decode ( "#002FA4" ));
         flightID.setBounds(150, 300, 150, 20);
-        flightID.setFont(new Font("Arial", Font.BOLD, 16));
+        flightID.setFont(new Font("Arial", Font.BOLD, 12));
         centerPanel.add( flightID );
 
         JLabel dateText = new JLabel("DATE");
@@ -141,7 +141,7 @@ public class TicketGUI {
         JLabel date = new JLabel(ticket.getFlight ().getDate ());
         date.setForeground(Color.decode ( "#002FA4" ));
         date.setBounds(340, 300, 150, 20);
-        date.setFont(new Font("Arial", Font.BOLD, 16));
+        date.setFont(new Font("Arial", Font.BOLD, 12));
         centerPanel.add(date);
 
 

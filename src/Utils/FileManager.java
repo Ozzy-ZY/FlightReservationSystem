@@ -74,10 +74,11 @@ public class FileManager {
         int i = 0;
         for (var ticket : dataArr) {
             var ticketData = ticket.split("-");
-            EveryTicket[i] = new Ticket(ticketData[0], ticketData[1],
-                    ticketData[2], ticketData[3], ticketData[4], Integer.parseInt(ticketData[5]));
+            EveryTicket[i] = new Ticket( ticketData[0], ticketData[1],
+                    ticketData[2], ticketData[3], ticketData[4], ticketData[5], Integer.parseInt(ticketData[6]));
             i++;
         }
         return EveryTicket;
     }
+
 }
