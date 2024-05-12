@@ -249,11 +249,12 @@ public class ReservePage extends JFrame {
                             "-"+ticket.getFlight().getOrigin()+
                             "-"+ticket.getFlight().getDestination()+
                             "-"+ticket.getFlight().getDate()+
+                            "-"+ticket.getPassenger().getFirstName ()+
                             "-"+ticket.getPassenger().getLastName()+
                             "-"+ticket.getSeatNumber()+"\n");
                 JOptionPane.showMessageDialog(null, "Reservation Successful");
                 dispose();
-                new HomePage();
+                new TicketGUI (ticket);
             }
             else{
                 JOptionPane.showMessageDialog(null, "Invalid Data");

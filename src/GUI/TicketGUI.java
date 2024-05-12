@@ -2,11 +2,9 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import Models.Flight;
-import Models.Plane;
+
 import Models.Ticket;
 import javax.swing.JPanel;
-import static GUI.HomePage.*;
 
 public class TicketGUI {
 
@@ -15,7 +13,7 @@ public class TicketGUI {
     //use this to fill the ticket page data **URGENT**
     //private Ticket ticket = new Ticket();
     ///////////////////////////////////////
-    public TicketGUI() {
+    public TicketGUI(Ticket ticket) {
         // Create a new JFrame
         frame = new JFrame( "Ticket");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +27,7 @@ public class TicketGUI {
         ImageIcon scaledLogo = new ImageIcon(logo.getImage().
                 getScaledInstance(100, 80, Image.SCALE_SMOOTH));
 
-        ImageIcon QR = new ImageIcon("");
+        ImageIcon QR = new ImageIcon("qr_codes/" + ticket.getTicketID () + ".png");
         ImageIcon scaledQR = new ImageIcon(QR.getImage().
                 getScaledInstance(100, 100, Image.SCALE_SMOOTH));
 
@@ -41,28 +39,28 @@ public class TicketGUI {
         JPanel northPanel = new JPanel();
         northPanel.setLayout ( null );
 
-        JLabel flightText = new JLabel();
-        flightText.setForeground(Color.white);
-        flightText.setFont(new Font("Arial", Font.BOLD, 12));
-        flightText.setBounds(30, 15, 200, 20);
-        northPanel.add(flightText);
+        JLabel ticketTxt = new JLabel("Ticket ID.");
+        ticketTxt.setForeground(Color.white);
+        ticketTxt.setFont(new Font("Arial", Font.BOLD, 12));
+        ticketTxt.setBounds(30, 15, 200, 20);
+        northPanel.add(ticketTxt);
         northPanel.setBackground(Color.decode("#3E6BE8"));
 
 
-        JLabel firstName = new JLabel();
-        firstName.setForeground(Color.white);
-        firstName.setBounds(30, 35, 200, 20);
-        firstName.setFont(new Font("Arial", Font.BOLD, 18));
-        northPanel.add(firstName);
+        JLabel ticketID = new JLabel(ticket.getTicketID ());
+        ticketID.setForeground(Color.white);
+        ticketID.setBounds(30, 35, 200, 20);
+        ticketID.setFont(new Font("Arial", Font.BOLD, 17));
+        northPanel.add(ticketID);
 
 
-        JLabel PassengerText = new JLabel("PASSENGER");
-        PassengerText.setForeground(Color.white);
-        PassengerText.setFont(new Font("Arial", Font.BOLD, 12));
-        PassengerText.setBounds(280, 15, 200, 20);
-        northPanel.add(PassengerText);
+        JLabel passengerTxt = new JLabel("Passenger");
+        passengerTxt.setForeground(Color.white);
+        passengerTxt.setFont(new Font("Arial", Font.BOLD, 12));
+        passengerTxt.setBounds(280, 15, 200, 20);
+        northPanel.add(passengerTxt);
 
-        JLabel PassengerName = new JLabel("ADEL KAIZER");
+        JLabel PassengerName = new JLabel(ticket.getPassenger ().getFirstName ().toUpperCase () + " " + ticket.getPassenger ().getLastName ().toUpperCase ());
         PassengerName.setForeground(Color.white);
         PassengerName.setBounds(280, 35, 200, 20);
         PassengerName.setFont(new Font("Arial", Font.BOLD, 18));
@@ -76,7 +74,7 @@ public class TicketGUI {
         northPanel.add(SeatTxt);
 
 
-        JLabel SeatNum = new JLabel("A4");
+        JLabel SeatNum = new JLabel(Integer.toString ( ticket.getSeatNumber () ));
         SeatNum.setForeground(Color.white);
         SeatNum.setBounds(500,35, 100, 23);
         SeatNum.setFont(new Font("Arial", Font.BOLD, 18));
@@ -95,7 +93,7 @@ public class TicketGUI {
         centerPanel.setBackground ( Color.decode ( "#E0E2E1" ) );
 
 
-        JLabel FromCity = new JLabel();
+        JLabel FromCity = new JLabel(ticket.getFlight ().getOrigin ());
         FromCity.setForeground(Color.decode ( "#0B3E91" ));
         FromCity.setBounds(0, 90, 250, 150);
         FromCity.setFont(new Font("Arial", Font.BOLD, 55));
@@ -108,7 +106,7 @@ public class TicketGUI {
         centerPanel.add(planeIcon);
 
 
-        JLabel ToCity = new JLabel();
+        JLabel ToCity = new JLabel(ticket.getFlight ().getDestination ());
         ToCity.setForeground(Color.decode ( "#FD8F1C" ));
         ToCity.setBounds(400, 90, 450, 150);
         ToCity.setFont(new Font("Arial", Font.BOLD, 55));
@@ -120,30 +118,30 @@ public class TicketGUI {
         centerPanel.add(logoIcon);
 
 
-        JLabel PassTxt = new JLabel("FLIGHT ID.");
-        PassTxt.setForeground(Color.decode ( "#FD8F1C" ));
-        PassTxt.setBounds(150, 280, 150, 20);
-        PassTxt.setFont(new Font("Arial", Font.BOLD, 15));
-        centerPanel.add(PassTxt);
+        JLabel flightTxt = new JLabel("FLIGHT ID.");
+        flightTxt.setForeground(Color.decode ( "#FD8F1C" ));
+        flightTxt.setBounds(150, 280, 150, 20);
+        flightTxt.setFont(new Font("Arial", Font.BOLD, 15));
+        centerPanel.add( flightTxt );
 
 
-        JLabel PassNum = new JLabel();
-        PassNum.setForeground(Color.decode ( "#002FA4" ));
-        PassNum.setBounds(150, 300, 150, 20);
-        PassNum.setFont(new Font("Arial", Font.BOLD, 23));
-        centerPanel.add(PassNum);
+        JLabel flightID = new JLabel(ticket.getFlight ().getId ());
+        flightID.setForeground(Color.decode ( "#002FA4" ));
+        flightID.setBounds(150, 300, 150, 20);
+        flightID.setFont(new Font("Arial", Font.BOLD, 16));
+        centerPanel.add( flightID );
 
         JLabel dateText = new JLabel("DATE");
         dateText.setForeground(Color.decode ( "#FD8F1C" ));
-        dateText.setBounds(280, 280, 150, 20);
+        dateText.setBounds(340, 280, 150, 20);
         dateText.setFont(new Font("Arial", Font.BOLD, 15));
         centerPanel.add(dateText);
 
 
-        JLabel date = new JLabel();
+        JLabel date = new JLabel(ticket.getFlight ().getDate ());
         date.setForeground(Color.decode ( "#002FA4" ));
-        date.setBounds(280, 300, 150, 20);
-        date.setFont(new Font("Arial", Font.BOLD, 23));
+        date.setBounds(340, 300, 150, 20);
+        date.setFont(new Font("Arial", Font.BOLD, 16));
         centerPanel.add(date);
 
 
@@ -177,8 +175,5 @@ public class TicketGUI {
         frame.setLocationRelativeTo(null);
     }
 
-    public static void main(String[] args) {
-        TicketGUI start = new TicketGUI();
-    }
 
 }

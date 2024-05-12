@@ -54,8 +54,10 @@ public class Ticket {
                     this.flight.setOrigin(ticketData[1]);
                     this.flight.setDestination(ticketData[2]);
                     this.flight.setDate(ticketData[3]);
-                    this.passenger.setLastname(ticketData[4]);
-                    this.seatNumber = Integer.parseInt(ticketData[5]);
+                    this.passenger.setFirstname (ticketData[4]);
+                    this.passenger.setLastname(ticketData[5]);
+                    this.seatNumber = Integer.parseInt(ticketData[6]);
+
                 }
             }
         }
@@ -63,4 +65,5 @@ public class Ticket {
             System.out.println("Error reading ticket file: "+e.getMessage());
         }
     }
+
 }
