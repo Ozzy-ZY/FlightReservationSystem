@@ -1,14 +1,20 @@
 package GUI;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 import Models.Ticket;
 import javax.swing.JPanel;
 
 public class TicketGUI {
-
+    private Clip audioClip;
     private JFrame frame;
+    JFrame EASTEREGGFRAME = new JFrame ("NEVER GONNA GIVE YOU UP");
+    JPanel EASTEREGGPANEL = new JPanel ();
     ///////////////////////////////////////
     //use this to fill the ticket page data **URGENT**
     //private Ticket ticket = new Ticket();
@@ -18,6 +24,8 @@ public class TicketGUI {
         frame = new JFrame( "Ticket");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(650, 400);
+        EASTEREGGFRAME.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        EASTEREGGFRAME.setSize(200, 200);
 
         ImageIcon icon = new ImageIcon("Assets/airplane.png");
         ImageIcon scaledIcon = new ImageIcon(icon.getImage().
@@ -145,8 +153,6 @@ public class TicketGUI {
         centerPanel.add(date);
 
 
-
-
         JLabel QRico = new JLabel(scaledQR);
         QRico.setBounds(515, 240, 100, 100);
         centerPanel.add(QRico);
@@ -157,13 +163,9 @@ public class TicketGUI {
         square.setBounds(515, 240, 100, 100);
         centerPanel.add ( square );
 
-
-
         JLabel bgIco = new JLabel(scaledBG);
         bgIco.setBounds(-50, 50, 700, 330);
         centerPanel.add(bgIco);
-
-
 
         // Add panels to the frame
         frame.add(northPanel);
@@ -173,7 +175,32 @@ public class TicketGUI {
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+
+        ticketTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playEasterEggSound("Assets/EASTEREGGS/Never gonna give you up.wav", 1f);
+
+            }
+        });
     }
+
+    private void playEasterEggSound(String audioFilePath, float volume) {
+        File audioFile = new File(audioFilePath);
+
+        try {
+            Clip audioClip = AudioSystem.getClip();
+            audioClip.open(AudioSystem.getAudioInputStream(audioFile));
+
+            // Adjust the volume
+            FloatControl volumeControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControl.setValue(volume);
+
+            audioClip.start();
+        } catch (Exception e) {
+            System.err.println("Error playing sound: " + e.getMessage());
+        }
+    }
+
 
 
 }
