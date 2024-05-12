@@ -11,9 +11,9 @@ public class Data {
             "Houston", "Phoenix", "Philadelphia", "San Antonio", "Luffy", "Dallas", "San Jose", "Austin", "Jacksonville",
             "San Francisco", "Indianapolis", "Columbus", "Fort Worth", "Charlotte", "Memphis", "Boston", "Baltimore", "Detroit",
             "El Paso", "Seattle", "Denver",  "Nashville", "Portland", "Oklahoma City", "Las Vegas", "Louisville",
-            "Milwaukee", "Albuquerque", "Tucson", "Fresno", "Sacramento", "Kansas City", "Long Beach", "Mesa", "Atlanta",
+            "Milwaukee", "Albuquerque", "Tucson", "Fresno", "Sacramento", "Kansas City", "Long Beach", "ZEFTA", "Atlanta",
              "Raleigh", "Omaha", "Miami", "Oakland", "Minneapolis", "Tulsa", "Wichita", "New Orleans", "Auckland",
-            "Bangkok", "Cairo", "Dubai", "Istanbul", "SigmaBalls", "Mexico City", "Moscow", "SunSoft", "Shanghai"
+            "Bangkok", "Cairo", "Dubai", "Istanbul", "SigmaBalls", "Al-Haram", "Moscow", "SunSoft", "Shanghai"
     };
     public Data() {
         Arrays.sort(cities);

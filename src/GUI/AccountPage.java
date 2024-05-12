@@ -180,21 +180,13 @@ public class AccountPage extends JFrame {
         accountPanel.add(delLabel);
         accountPanel.add(deleteAccountButton);
         accountPanel.add(errorFName);
-
         accountPanel.add(errorLName);
-
         accountPanel.add(errorPassport);
-
         accountPanel.add(errorNumber);
-
         errorFName.setVisible ( false );
-
         errorLName.setVisible ( false );
-
         errorPassport.setVisible ( false );
-
         errorNumber.setVisible ( false );
-
         backButton.addActionListener(e -> {
             new HomePage();
             accountFrame.dispose();
@@ -242,14 +234,9 @@ public class AccountPage extends JFrame {
             }
 
             else{
-
                 totalStatus[0] = false;
-
                 errorFName.setVisible(true);
-
             }
-
-
 
             String last_name = fName.getText();
 
